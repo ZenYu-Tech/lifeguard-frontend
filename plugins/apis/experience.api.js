@@ -1,10 +1,10 @@
 export default axios => ({
-  getNews(id) {
+  getExperience(id) {
     return axios(`/experiences/${id}`, {
       method: 'GET'
     })
   },
-  getAllNews() {
+  getAllExperiences() {
     return axios(`/experiences`, {
       method: 'GET'
     })
