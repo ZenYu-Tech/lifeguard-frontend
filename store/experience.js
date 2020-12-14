@@ -18,7 +18,7 @@ const mutations = {
 }
 
 const actions = {
-  async getNews({ commit }, id) {
+  async getExperience({ commit }, id) {
     try {
       const { data } = await this.$experienceApi.getExperience(id)
       commit('SET_experience', data)
@@ -26,7 +26,7 @@ const actions = {
       console.error(error)
     }
   },
-  async getAllNews({ commit }) {
+  async getAllExperiences({ commit }) {
     try {
       const { data } = await this.$experienceApi.getAllExperiences()
       commit('SET_experiences', data)
