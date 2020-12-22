@@ -1,5 +1,5 @@
 {
   "editor.formatOnSave": true,
-  "cSpell.words": ["nuxt", "nuxtjs", "tailwindcss"],
+  "cSpell.words": ["nuxt", "nuxtjs"],
   "javascript.format.insertSpaceBeforeFunctionParenthesis": false
 }
