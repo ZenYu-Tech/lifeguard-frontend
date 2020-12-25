@@ -1,10 +1,26 @@
 <template>
-  <el-row class="header" type="flex" justify="space-between" align="middle">
+  <el-row
+    type="flex"
+    justify="space-between"
+    align="middle"
+    class="header"
+    :class="{ 'side-menu-expand': isSideMenuExpand }"
+  >
     <div class="header__logo">LOGO</div>
     <div
       class="header__menu hidden-lg-only"
       :style="{ 'background-image': `url(${require('@/assets/icons/menu.svg')})` }"
-    ></div>
+      @click="isSideMenuExpand = !isSideMenuExpand"
+    >
+      <transition name="right-to-left" mode="out-in">
+        <SideMenu
+          v-show="isSideMenuExpand"
+          :title="'西灣學院 國立中山大學'"
+          :menu-list="menuList"
+          @collapse="isSideMenuExpand = false"
+        />
+      </transition>
+    </div>
     <div class="header__menu hidden-md-and-down">
       <NavMenuGroup :menu-list="menuList" />
     </div>
@@ -16,7 +32,25 @@ export default {
   name: 'LayoutHeader',
   data() {
     return {
+      isSideMenuExpand: false,
       menuList: [
+        {
+          title: '公告',
+          subMenuList: [
+            {
+              title: '開課公告',
+              action: 'internal-link'
+            },
+            {
+              title: '檢定公告',
+              action: 'external-link'
+            },
+            {
+              title: '徵才資訊',
+              action: 'external-link'
+            }
+          ]
+        },
         {
           title: '報名',
           subMenuList: [
@@ -47,17 +81,47 @@ export default {
             },
             {
               title: '影片',
-              action: 'external-link'
+              action: 'internal-link'
             },
             {
               title: '題庫',
-              action: 'outer-link'
+              action: 'external-link'
+            }
+          ]
+        },
+        {
+          title: '檢定專區',
+          subMenuList: [
+            {
+              title: '相關法規',
+              action: 'external-link'
+            },
+            {
+              title: '相關表格',
+              action: 'external-link'
+            },
+            {
+              title: '檢定報名Q&A',
+              action: 'external-link'
+            },
+            {
+              title: '檢定通過名單',
+              action: 'internal-link'
             }
           ]
         },
         {
           title: '活動花絮',
           subMenuList: []
+        },
+        {
+          title: '相關網站',
+          subMenuList: [
+            {
+              title: 'i 運動平台',
+              action: 'external-link'
+            }
+          ]
         }
       ]
     }
@@ -76,6 +140,7 @@ export default {
   backdrop-filter: blur(4px);
   width: 100vw;
   padding: 0px 18px 0px 24px;
+  transition: all 0.3s ease;
   &__logo {
     width: 200px;
     height: 40px;
@@ -93,6 +158,14 @@ export default {
     background-repeat: no-repeat;
     background-size: contain;
   }
+
+  &.side-menu-expand {
+    height: 0px;
+    > div {
+      height: 0px;
+    }
+  }
+
   @media (min-width: 768px) {
     height: 70px;
     padding: 0px 24px 0px 40px;
@@ -106,6 +179,17 @@ export default {
       width: auto;
       align-self: flex-end;
     }
+  }
+}
+
+.right-to-left {
+  &-enter-active,
+  &-leave-active {
+    transition: all 0.3s ease;
+  }
+  &-enter,
+  &-leave-to {
+    transform: translateX(345px);
   }
 }
 </style>
