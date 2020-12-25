@@ -13,8 +13,13 @@ export default {
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     { src: 'element-ui/lib/theme-chalk/index.css' },
-    { src: 'element-ui/lib/theme-chalk/display.css' }
+    { src: 'element-ui/lib/theme-chalk/display.css' },
+    { src: '@/assets/scss/main.scss' }
   ],
+
+  styleResources: {
+    scss: ['~/assets/scss/variable/*.scss'],
+  },
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
@@ -29,6 +34,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
+    '@nuxtjs/style-resources'
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
