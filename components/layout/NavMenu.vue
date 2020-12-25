@@ -2,13 +2,25 @@
   <div class="nav-menu" :class="{ expand: isExpand }">
     <div class="nav-menu__item">
       <span>{{ menu.title }}</span>
-      <i v-if="!haveNoSubMenu" :style="{ 'mask-image': `url(${require('@/assets/icons/chevron-up.svg')})` }"></i>
+      <i
+        v-if="!haveNoSubMenu"
+        class="icon-svg"
+        :style="{ 'mask-image': `url(${require('@/assets/icons/chevron-up.svg')})` }"
+      ></i>
     </div>
     <ul v-if="!haveNoSubMenu && isExpand" class="nav-menu__dropdown">
       <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
         <span>{{ subMenu.title }}</span>
-        <i v-if="subMenu.action === 'download'" class="icon icon-download"></i>
-        <i v-else-if="subMenu.action === 'external-link'" class="icon icon-external"></i>
+        <i
+          v-if="subMenu.action === 'download'"
+          class="icon-svg"
+          :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"
+        ></i>
+        <i
+          v-else-if="subMenu.action === 'external-link'"
+          class="icon-svg"
+          :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"
+        ></i>
       </li>
     </ul>
   </div>
@@ -53,10 +65,10 @@ export default {
     cursor: pointer;
     &:hover {
       span {
-        color: #4284f7;
+        color: map-get($colors, primary);
       }
       i {
-        background-color: #4284f7;
+        background-color: map-get($colors, primary);
       }
     }
     span {
@@ -65,12 +77,7 @@ export default {
       line-height: 29px;
       margin-right: 3px;
     }
-    i {
-      width: 20px;
-      height: 20px;
-      mask-size: contain;
-      mask-repeat: no-repeat;
-      mask-position: center;
+    i.icon-svg {
       background-color: black;
       transform: rotate(180deg);
       transition: all 0.3s;
@@ -78,30 +85,20 @@ export default {
   }
 
   &__dropdown {
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
     width: max-content;
     background-color: rgba(255, 255, 255, 0.8);
     position: absolute;
     top: 100%;
     margin-top: 11px;
     > li {
-      padding: 8px 20px;
-
-      .icon {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        &-download {
-          background-image: url('~@/assets/icons/download.svg');
-        }
-        &-external {
-          background-image: url('~@/assets/icons/external-link.svg');
-        }
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      i.icon-svg {
+        width: 18px;
+        height: 18px;
+        margin-left: 4px;
+        background-color: black;
       }
     }
   }

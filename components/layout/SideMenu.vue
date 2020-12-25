@@ -2,7 +2,11 @@
   <div class="side-menu" @click.stop>
     <div class="side-menu__title">
       <h4>{{ title }}</h4>
-      <i :style="{ 'mask-image': `url(${require('@/assets/icons/cross.svg')})` }" @click="$emit('collapse')"></i>
+      <i
+        class="icon-svg"
+        :style="{ 'mask-image': `url(${require('@/assets/icons/cross.svg')})` }"
+        @click="$emit('collapse')"
+      ></i>
     </div>
     <div class="side-menu__link-section">
       <div v-for="menu in menuList" :key="menu.title" class="link-section">
@@ -54,13 +58,7 @@ export default {
       color: white;
       font-weight: 300;
     }
-    i {
-      display: block;
-      width: 20px;
-      height: 20px;
-      mask-size: contain;
-      mask-repeat: no-repeat;
-      mask-position: center;
+    i.icon-svg {
       background-color: white;
     }
   }
@@ -78,9 +76,6 @@ export default {
     color: white;
   }
   &__link-group {
-    list-style-type: none;
-    margin: 0px;
-    padding: 0px;
     display: grid;
     grid-template-columns: 1fr;
     grid-auto-rows: 38px;
