@@ -1,11 +1,5 @@
 <template>
-  <el-row
-    type="flex"
-    justify="space-between"
-    align="middle"
-    class="header"
-    :class="{ 'side-menu-expand': isSideMenuExpand }"
-  >
+  <header class="header" :class="{ 'side-menu-expand': isSideMenuExpand }">
     <div class="header__logo">LOGO</div>
     <div
       class="header__menu hidden-lg-only"
@@ -24,7 +18,7 @@
     <div class="header__menu hidden-md-and-down">
       <NavMenuGroup :menu-list="menuList" />
     </div>
-  </el-row>
+  </header>
 </template>
 
 <script>
@@ -138,6 +132,9 @@ export default {
   height: 65px;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100vw;
   padding: 0px 18px 0px 24px;
   transition: all 0.3s ease;
