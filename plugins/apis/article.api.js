@@ -1,11 +1,11 @@
 export default axios => ({
-  getArticle(category, id) {
+  fetchArticle(category, id) {
     return axios(`/articles/${category}/${id}`, {
       method: 'GET'
     })
   },
-  getArticles(category) {
-    return axios(`/experiences/${category}`, {
+  fetchArticles(category) {
+    return axios(`/articles/${category}`, {
       method: 'GET'
     })
   }

@@ -3,6 +3,8 @@
  */
 
 export default function ({ $axios }, inject) {
+  $axios.setBaseURL('http://localhost:3001')
+
   $axios.onRequest(config => {
     console.log('Making request to ' + config.url)
   })

@@ -25,7 +25,31 @@ const state = () => ({
   /**
    * @type {Array<Article>}
    */
-  articles: [],
+  articles: [
+    {
+      articleId: '1',
+      title: '資管系 12/10  專題演講：Visualized Data Analysis',
+      content: `電子商務與商業分析數位學習碩專班（網路同步上課
+      適合全球在職行動辦公人士。電子商務與商業分析數位學習碩專班（網路同步上課） 適合全球在職行動辦公人士。`,
+      category: 'news',
+      createdAt: new Date()
+    },
+    {
+      articleId: '2',
+      title: '資管系 12/10  專題演講：Visualized Data Analysis',
+      content: '電子商務與商業分與商業分析數位學習碩專班（網路同步上課） 適合全球在職行動辦公人士。',
+      category: 'news',
+      createdAt: new Date()
+    },
+    {
+      articleId: '3',
+      title: '資管系 12/10  專題演講：Visualized Data Analysis',
+      content: `電子商務與商業分析數位學習碩專班（網路同步上課
+      適合全球在職行動辦公人士。電子商務與商業分析數位學習碩專班（網路同步上課） 適合全球在職行動辦公人士。`,
+      category: 'news',
+      createdAt: new Date()
+    }
+  ],
   /**
    * @type {Article}
    */
@@ -35,7 +59,7 @@ const state = () => ({
 const getters = {
   getArticles: state => state.articles,
   getArticlesByCategory: state => category => {
-    return state.articles.filters(article => article.category === category)
+    return state.articles.filter(article => article.category === category)
   },
   getArticle: state => state.article,
   getArticleById: state => id => {
@@ -53,17 +77,17 @@ const mutations = {
 }
 
 const actions = {
-  async getArticle({ commit }, { category, id }) {
+  async fetchArticle({ commit }, { category, id }) {
     try {
-      const { data } = await this.$articleApi.getArticle(category, id)
+      const { data } = await this.$articleApi.fetchArticle(category, id)
       commit('SET_article', data)
     } catch (error) {
       console.error(error)
     }
   },
-  async getArticles({ commit }, { category }) {
+  async fetchArticles({ commit }, { category }) {
     try {
-      const { data } = await this.$articleApi.getArticles(category)
+      const { data } = await this.$articleApi.fetchArticles(category)
       commit('SET_articles', data)
     } catch (error) {
       console.error(error)
