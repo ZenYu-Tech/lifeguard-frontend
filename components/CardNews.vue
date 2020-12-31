@@ -73,12 +73,12 @@ export default {
       content: '';
       position: absolute;
       top: 0px;
-      transform: translateY(-100%);
+      transform: translateY(-90%);
       left: 18px;
       width: 0;
       height: 0;
       border-style: solid;
-      border-width: 0 10px 12px 10px;
+      border-width: 0 10px 14px 10px;
       border-color: transparent transparent map-get($map: $colors, $key: primary) transparent;
     }
   }

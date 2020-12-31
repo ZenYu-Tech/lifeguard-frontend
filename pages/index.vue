@@ -8,6 +8,7 @@
       </section>
       <section class="section__container__training">
         <h3 class="section__title">訓練影片</h3>
+        <card-video v-for="video in getVideos.slice(0, 2)" :key="video.id" :video="video"></card-video>
       </section>
       <section class="section__container__highlight">
         <h3 class="section__title">活動花絮</h3>
@@ -22,11 +23,9 @@ export default {
   name: 'Home',
   computed: {
     ...mapGetters({
-      getArticlesByCategory: 'article/getArticlesByCategory'
+      getArticlesByCategory: 'article/getArticlesByCategory',
+      getVideos: 'video/getVideos'
     })
-  },
-  created() {
-    console.log(this.getArticlesByCategory('news'))
   }
 }
 </script>
@@ -43,6 +42,9 @@ export default {
 .section {
   &__wrapper {
     padding: 50px 17px;
+    display: grid;
+    grid-auto-flow: row;
+    row-gap: 50px;
   }
   &__container {
     &__news {
@@ -59,6 +61,15 @@ export default {
         left: 12px;
         top: 0px;
         transform: translateY(-50%);
+      }
+    }
+    &__training {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-flow: row;
+      row-gap: 30px;
+      & .section__title {
+        justify-self: center;
       }
     }
   }
@@ -88,8 +99,26 @@ export default {
     }
     &__container {
       &__news {
-        width: 57%;
-        padding: 40px 28px 30px 28px;
+        padding: 40px 30px 30px 30px;
+      }
+      &__training {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        grid-template-areas:
+          'title title'
+          'video1 video2';
+        row-gap: 23px;
+        column-gap: 30px;
+        & .section__title {
+          justify-self: start;
+          grid-area: title;
+        }
+        & > :nth-child(2) {
+          grid-area: video1;
+        }
+        & > :nth-child(3) {
+          grid-area: video2;
+        }
       }
     }
     &__title {
@@ -107,6 +136,31 @@ export default {
   @media (min-width: 1200px) {
     &__wrapper {
       padding: 80px 100px;
+      display: grid;
+      grid-template-columns: auto 358px;
+      grid-template-rows: max-content auto;
+      grid-template-areas:
+        'news training'
+        'highlight highlight';
+      column-gap: 80px;
+      row-gap: 90px;
+    }
+    &__container {
+      &__news {
+        grid-area: news;
+      }
+      &__training {
+        grid-area: training;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(3, auto);
+        grid-template-areas:
+          'title'
+          'video1'
+          'video2';
+      }
+      &__highlight {
+        grid-area: highlight;
+      }
     }
   }
 }
