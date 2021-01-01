@@ -121,11 +121,9 @@ $color-content: rgba(255, 255, 255, 0.4);
   &__contact {
     text-align: center;
     color: $color-content;
-    font-weight: 300;
     > div:nth-child(1) {
       margin-bottom: 60px;
       h6 {
-        font-weight: 300;
         font-size: 32px;
         line-height: 46px;
         color: $color-title;
@@ -172,7 +170,6 @@ $color-content: rgba(255, 255, 255, 0.4);
 
 .link-section {
   &__title {
-    font-weight: 300;
     font-size: 24px;
     line-height: 24px;
     color: $color-title;
@@ -188,9 +185,11 @@ $color-content: rgba(255, 255, 255, 0.4);
     justify-items: center;
     > li {
       color: $color-content;
-      font-weight: 300;
       font-size: 18px;
       line-height: 18px;
+      &:hover {
+        color: $color-title;
+      }
     }
   }
   @media (min-width: 768px) {

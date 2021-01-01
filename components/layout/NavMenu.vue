@@ -72,7 +72,6 @@ export default {
       }
     }
     span {
-      font-weight: 300;
       font-size: 20px;
       line-height: 29px;
       margin-right: 3px;
@@ -90,6 +89,9 @@ export default {
     position: absolute;
     top: 100%;
     margin-top: 11px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 5px 5px;
+    backdrop-filter: blur(4px);
     > li {
       padding: 8px 18px;
       display: flex;
@@ -99,6 +101,12 @@ export default {
         height: 18px;
         margin-left: 4px;
         background-color: black;
+      }
+      &:hover {
+        color: map-get($map: $colors, $key: primary);
+        i.icon-svg {
+          background-color: map-get($map: $colors, $key: primary) !important;
+        }
       }
     }
   }

@@ -4,7 +4,9 @@
     <div class="section__wrapper">
       <section class="section__container__news">
         <h3 class="section__title">最新消息</h3>
-        <card-news v-for="news in getArticlesByCategory('news')" :key="news.id" :news="news"></card-news>
+        <div>
+          <card-news v-for="news in getArticlesByCategory('news').slice(0, 4)" :key="news.id" :news="news"></card-news>
+        </div>
       </section>
       <section class="section__container__training">
         <h3 class="section__title">訓練影片</h3>
@@ -78,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .banner {
-  width: 100vw;
+  width: 100%;
   height: 667px;
   background-repeat: no-repeat;
   background-position: right;
@@ -96,17 +98,31 @@ export default {
     &__news {
       background: #f2f5f9;
       border-radius: 5px;
-      display: grid;
-      grid-auto-flow: row;
-      grid-auto-rows: max-content;
-      row-gap: 26px;
-      padding: 40px 12px 30px 12px;
       position: relative;
       & > .section__title {
         position: absolute;
         left: 12px;
         top: 0px;
         transform: translateY(-50%);
+      }
+      > div:nth-child(2) {
+        display: grid;
+        grid-auto-flow: row;
+        grid-auto-rows: max-content;
+        row-gap: 26px;
+        margin: 40px 30px;
+        padding: 0px 12px;
+        height: 636px;
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+          display: none;
+        }
+        & > :nth-child(odd) {
+          justify-self: start;
+        }
+        & > :nth-child(even) {
+          justify-self: end;
+        }
       }
     }
     &__training {
@@ -242,9 +258,15 @@ export default {
   background-clip: content-box;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 0px 5px;
+  padding: 0px 10px;
   outline: none;
   cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+    @media (min-width: 1200px) {
+      transform: scale(1.1);
+    }
+  }
   > img {
     display: block;
     width: 100%;

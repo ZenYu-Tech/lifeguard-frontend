@@ -36,13 +36,11 @@ export default {
 .video {
   &__title {
     font-style: normal;
-    font-weight: 300;
     font-size: 24px;
     line-height: 30px;
   }
   &__upload-time {
     font-style: normal;
-    font-weight: 300;
     font-size: 12px;
     line-height: 12px;
     color: rgba(0, 0, 0, 0.7);

@@ -1,5 +1,5 @@
 <template>
-  <div class="side-menu" @click.stop>
+  <div class="side-menu" @click.stop @scroll.stop>
     <div class="side-menu__title">
       <h4>{{ title }}</h4>
       <i
@@ -48,15 +48,18 @@ export default {
   background: rgba(66, 132, 247, 0.8);
   backdrop-filter: blur(4px);
   padding: 14px 32px;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20px auto;
+  row-gap: 15px;
   &__title {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 15px;
     h4 {
       font-size: 20px;
       color: white;
-      font-weight: 300;
     }
     i.icon-svg {
       background-color: white;
@@ -65,6 +68,10 @@ export default {
   &__link-section {
     display: grid;
     row-gap: 17px;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
@@ -86,7 +93,6 @@ export default {
       align-items: center;
       padding: 4px 11px;
       color: white;
-      font-weight: 300;
       font-size: 20px;
       background: rgba(49, 93, 165, 0.9);
       height: 100%;
