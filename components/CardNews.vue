@@ -27,6 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .news {
+  width: 80%;
   &__header {
     display: grid;
     grid-template-columns: 14px 1fr 83px;
@@ -43,6 +44,9 @@ export default {
       background-color: map-get($map: $colors, $key: primary);
     }
   }
+  &:nth-child(even) &__header::before {
+    background-color: #75c26a;
+  }
   &__title {
     font-family: Noto Sans TC;
     overflow: hidden;
@@ -58,6 +62,7 @@ export default {
     font-size: 16px;
     line-height: 25px;
     color: #a9abb3;
+    white-space: nowrap;
   }
   &__content {
     margin-top: 16px;
@@ -80,6 +85,12 @@ export default {
       border-width: 0 10px 14px 10px;
       border-color: transparent transparent map-get($map: $colors, $key: primary) transparent;
     }
+  }
+  &:nth-child(even) &__content::before {
+    border-color: transparent transparent #75c26a transparent;
+  }
+  &:nth-child(even) &__content {
+    background-color: #75c26a;
   }
 }
 </style>

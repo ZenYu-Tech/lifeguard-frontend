@@ -89,6 +89,9 @@ export default {
     position: absolute;
     top: 100%;
     margin-top: 11px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 0px 0px 5px 5px;
+    backdrop-filter: blur(4px);
     > li {
       padding: 8px 18px;
       display: flex;

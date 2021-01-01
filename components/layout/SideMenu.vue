@@ -69,6 +69,9 @@ export default {
     display: grid;
     row-gap: 17px;
     overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 
