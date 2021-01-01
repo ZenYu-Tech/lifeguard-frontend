@@ -1,35 +1,32 @@
 <template>
-  <main>
-    <section class="banner" :style="{ 'background-image': `url(${require('@/assets/images/banner.png')})` }"></section>
-    <div class="section__wrapper">
-      <section class="section__container__news">
-        <h3 class="section__title">最新消息</h3>
-        <div>
-          <card-news v-for="news in getArticlesByCategory('news').slice(0, 4)" :key="news.id" :news="news"></card-news>
+  <main class="section__wrapper">
+    <section class="section__container__news">
+      <h3 class="section__title">最新消息</h3>
+      <div>
+        <card-news v-for="news in getArticlesByCategory('news').slice(0, 4)" :key="news.id" :news="news"></card-news>
+      </div>
+    </section>
+    <section class="section__container__training">
+      <h3 class="section__title">訓練影片</h3>
+      <card-video v-for="video in getVideos.slice(0, 2)" :key="video.id" :video="video"></card-video>
+    </section>
+    <section class="section__container__highlight">
+      <h3 class="section__title">活動花絮</h3>
+      <slick-carousel :width="'90vw'" :height="231" :options="slickOptions">
+        <div
+          v-for="highlight in getArticlesByCategory('news').slice(0, 4)"
+          :key="highlight.id"
+          class="carousel__item"
+          :style="{ height: '231px' }"
+        >
+          <img :src="`data:image/png;base64,${highlight.mainImage}`" alt="ss" />
         </div>
-      </section>
-      <section class="section__container__training">
-        <h3 class="section__title">訓練影片</h3>
-        <card-video v-for="video in getVideos.slice(0, 2)" :key="video.id" :video="video"></card-video>
-      </section>
-      <section class="section__container__highlight">
-        <h3 class="section__title">活動花絮</h3>
-        <slick-carousel :width="'90vw'" :height="231" :options="slickOptions">
-          <div
-            v-for="highlight in getArticlesByCategory('news').slice(0, 4)"
-            :key="highlight.id"
-            class="carousel__item"
-            :style="{ height: '231px' }"
-          >
-            <img :src="`data:image/png;base64,${highlight.mainImage}`" alt="ss" />
-          </div>
-        </slick-carousel>
-        <button>
-          看更多成果照片
-          <i></i>
-        </button>
-      </section>
-    </div>
+      </slick-carousel>
+      <button>
+        看更多成果照片
+        <i></i>
+      </button>
+    </section>
   </main>
 </template>
 
@@ -37,6 +34,9 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Home',
+  meta: {
+    haveBanner: true
+  },
   async asyncData({ store }) {
     await store.dispatch('article/fetchArticles', { category: 'news' })
   },
@@ -79,14 +79,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.banner {
-  width: 100%;
-  height: 667px;
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: cover;
-}
-
 .section {
   &__wrapper {
     padding: 50px 17px;
