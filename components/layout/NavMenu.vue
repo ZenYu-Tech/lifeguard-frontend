@@ -68,7 +68,7 @@ export default {
         color: map-get($colors, primary);
       }
       i {
-        background-color: map-get($colors, primary);
+        background-color: map-get($colors, primary) !important;
       }
     }
     span {
