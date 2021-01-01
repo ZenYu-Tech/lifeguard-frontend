@@ -103,7 +103,7 @@ export default {
             {
               title: '檢定通過名單',
               action: 'internal-link',
-              link: '/training'
+              link: '/certification'
             }
           ]
         },
@@ -129,7 +129,7 @@ export default {
 <style lang="scss" scoped>
 .header {
   position: fixed;
-  z-index: 100;
+  z-index: 10000;
   top: 0px;
   left: 0px;
   height: 65px;

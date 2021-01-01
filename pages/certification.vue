@@ -14,12 +14,25 @@
         </div>
       </div>
     </section>
+    <section class="news">
+      <h3 class="news__title">最新消息</h3>
+      <client-only>
+        <div class="news__wrapper">
+          <card-news-square
+            v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
+            :key="news.id"
+            :news="news"
+          ></card-news-square>
+        </div>
+      </client-only>
+    </section>
     <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
   </main>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'Certification',
   meta: {
@@ -29,11 +42,23 @@ export default {
     await store.dispatch('article/fetchArticles', { category: 'news' })
     await store.dispatch('file/fetchFiles', { category: 'certification' })
   },
+  data() {
+    return {
+      newsDisplayAmount: 3
+    }
+  },
   computed: {
     ...mapGetters({
       getArticlesByCategory: 'article/getArticlesByCategory',
-      getFilesByCategory: 'file/getFilesByCategory'
+      getFilesByCategory: 'file/getFilesByCategory',
+      getCurrentDevice: 'helper/getCurrentDevice'
     })
+  },
+  created() {
+    // only active at client side
+    if (this.getCurrentDevice === 'tablet') {
+      this.newsDisplayAmount = 4
+    }
   },
   methods: {
     ...mapActions({
@@ -45,14 +70,19 @@ export default {
 
 <style lang="scss" scoped>
 .section-wrapper {
-  padding: 30px 17px;
-  display: grid;
-  grid-auto-flow: row;
-  row-gap: 30px;
   position: relative;
+  > section:nth-child(3) {
+    margin: 60px 17px;
+  }
   @media (min-width: 768px) {
+    > section:nth-child(3) {
+      margin: 60px 30px;
+    }
   }
   @media (min-width: 1200px) {
+    > section:nth-child(3) {
+      margin: 60px 80px;
+    }
   }
 }
 
@@ -117,6 +147,39 @@ export default {
       span {
         max-width: 500px;
       }
+    }
+  }
+}
+
+.news {
+  background-color: rgba(117, 193, 106, 0.3);
+  padding: 136px 17px 84px 17px;
+  &__title {
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 40px;
+    text-align: center;
+    color: #2f2f2f;
+    margin-bottom: 30px;
+  }
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: 342px;
+    grid-auto-flow: row;
+    row-gap: 30px;
+  }
+  @media (min-width: 768px) {
+    &__wrapper {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 30px;
+    }
+  }
+  @media (min-width: 1200px) {
+    padding: 136px 90px 84px 90px;
+    &__wrapper {
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 50px;
     }
   }
 }
