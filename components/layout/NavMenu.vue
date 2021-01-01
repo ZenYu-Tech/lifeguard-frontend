@@ -100,6 +100,12 @@ export default {
         margin-left: 4px;
         background-color: black;
       }
+      &:hover {
+        color: map-get($map: $colors, $key: primary);
+        i.icon-svg {
+          background-color: map-get($map: $colors, $key: primary) !important;
+        }
+      }
     }
   }
 

@@ -191,6 +191,9 @@ $color-content: rgba(255, 255, 255, 0.4);
       font-weight: 300;
       font-size: 18px;
       line-height: 18px;
+      &:hover {
+        color: $color-title;
+      }
     }
   }
   @media (min-width: 768px) {

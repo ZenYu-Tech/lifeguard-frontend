@@ -242,9 +242,15 @@ export default {
   background-clip: content-box;
   background-position: center;
   background-repeat: no-repeat;
-  padding: 0px 5px;
+  padding: 0px 10px;
   outline: none;
   cursor: pointer;
+  &:hover {
+    opacity: 0.7;
+    @media (min-width: 1200px) {
+      transform: scale(1.1);
+    }
+  }
   > img {
     display: block;
     width: 100%;
