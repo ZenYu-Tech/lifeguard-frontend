@@ -12,6 +12,20 @@
       </section>
       <section class="section__container__highlight">
         <h3 class="section__title">活動花絮</h3>
+        <slick-carousel :width="'90vw'" :height="231" :options="slickOptions">
+          <div
+            v-for="highlight in getArticlesByCategory('news').slice(0, 4)"
+            :key="highlight.id"
+            class="carousel__item"
+            :style="{ height: '231px' }"
+          >
+            <img :src="`data:image/png;base64,${highlight.mainImage}`" alt="ss" />
+          </div>
+        </slick-carousel>
+        <button>
+          看更多成果照片
+          <i></i>
+        </button>
       </section>
     </div>
   </main>
@@ -21,6 +35,38 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Home',
+  async asyncData({ store }) {
+    await store.dispatch('article/fetchArticles', { category: 'news' })
+  },
+  data() {
+    return {
+      slickOptions: {
+        dots: true,
+        arrows: false,
+        speed: 500,
+        initialSlide: 0,
+        slidesToScroll: 1,
+        slidesToShow: 4,
+        swipe: false,
+        responsive: [
+          {
+            breakpoint: 1200,
+            settings: {
+              slidesToShow: 2,
+              swipe: true
+            }
+          },
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: 1,
+              swipe: true
+            }
+          }
+        ]
+      }
+    }
+  },
   computed: {
     ...mapGetters({
       getArticlesByCategory: 'article/getArticlesByCategory',
@@ -72,6 +118,27 @@ export default {
         justify-self: center;
       }
     }
+    &__highlight {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      grid-auto-flow: row;
+      row-gap: 30px;
+      & .section__title {
+        justify-self: center;
+      }
+      > button:nth-child(3) {
+        justify-self: end;
+        margin-top: 20px;
+        border: none;
+        outline: none;
+        background-color: map-get($map: $colors, $key: primary);
+        padding: 10px 20px;
+        border-radius: 5px;
+        color: white;
+        font-size: 20px;
+      }
+    }
   }
   &__title {
     font-weight: bold;
@@ -120,6 +187,11 @@ export default {
           grid-area: video2;
         }
       }
+      &__highlight {
+        & .section__title {
+          justify-self: start;
+        }
+      }
     }
     &__title {
       font-size: 40px;
@@ -162,6 +234,22 @@ export default {
         grid-area: highlight;
       }
     }
+  }
+}
+
+.carousel__item {
+  background-size: cover;
+  background-clip: content-box;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 0px 5px;
+  outline: none;
+  cursor: pointer;
+  > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 </style>
