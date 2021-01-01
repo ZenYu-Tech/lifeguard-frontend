@@ -1,7 +1,9 @@
 <template>
   <section class="training">
     <h3 class="training__title">訓練影片</h3>
-    <card-video v-for="video in videos" :key="video.id" :video="video"></card-video>
+    <div class="training__wrapper">
+      <card-video v-for="video in videos" :key="video.id" :video="video"></card-video>
+    </div>
   </section>
 </template>
 
@@ -21,7 +23,7 @@ export default {
 .training {
   display: grid;
   grid-template-columns: 1fr;
-  grid-auto-flow: row;
+  grid-template-rows: 40px auto;
   row-gap: 30px;
 
   &__title {
@@ -43,25 +45,17 @@ export default {
       border-radius: 50%;
     }
   }
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-flow: row;
+    row-gap: 30px;
+    height: min-content;
+  }
 
   @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-      'title title'
-      'video1 video2';
-    row-gap: 23px;
-    column-gap: 30px;
-    & > :nth-child(2) {
-      grid-area: video1;
-    }
-    & > :nth-child(3) {
-      grid-area: video2;
-    }
-
     &__title {
       justify-self: start;
-      grid-area: title;
       font-size: 40px;
       line-height: 40px;
       &:before {
@@ -71,15 +65,15 @@ export default {
         left: -20px;
       }
     }
+    &__wrapper {
+      grid-template-columns: 1fr 1fr;
+      column-gap: 30px;
+    }
   }
   @media (min-width: 1200px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 40px 1fr 1fr;
-    grid-template-areas:
-      'title'
-      'video1'
-      'video2';
-    height: min-content;
+    &__wrapper {
+      grid-template-columns: 1fr;
+    }
   }
 }
 </style>

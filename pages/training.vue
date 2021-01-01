@@ -1,26 +1,10 @@
 <template>
-  <main>
-    <section class="section__container__training">
-      <h3 class="section__title">訓練影片</h3>
-      <card-video v-for="video in getVideos.slice(0, 2)" :key="video.id" :video="video"></card-video>
-    </section>
-    <section class="section__container__highlight">
-      <h3 class="section__title">活動花絮</h3>
-      <slick-carousel :width="'90vw'" :height="231" :options="slickOptions">
-        <div
-          v-for="highlight in getArticlesByCategory('news').slice(0, 4)"
-          :key="highlight.id"
-          class="carousel__item"
-          :style="{ height: '231px' }"
-        >
-          <img :src="`data:image/png;base64,${highlight.mainImage}`" alt="ss" />
-        </div>
-      </slick-carousel>
-      <button>
-        看更多成果照片
-        <i></i>
-      </button>
-    </section>
+  <main class="section-wrapper">
+    <client-only>
+      <section-training :videos="getVideos.slice(0, videoDisplayAmount)"></section-training>
+      <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
+    </client-only>
+    <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
   </main>
 </template>
 
@@ -36,40 +20,61 @@ export default {
   },
   data() {
     return {
-      slickOptions: {
-        dots: true,
-        arrows: false,
-        speed: 500,
-        initialSlide: 0,
-        slidesToScroll: 1,
-        slidesToShow: 4,
-        swipe: false,
-        responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: 2,
-              swipe: true
-            }
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: 1,
-              swipe: true
-            }
-          }
-        ]
-      }
+      videoDisplayAmount: 6
     }
   },
   computed: {
     ...mapGetters({
       getArticlesByCategory: 'article/getArticlesByCategory',
-      getVideos: 'video/getVideos'
-    })
+      getVideos: 'video/getVideos',
+      getCurrentDevice: 'helper/getCurrentDevice'
+    }),
+    noMoreVideo() {
+      return this.videoDisplayAmount === this.getVideos.length
+    },
+    increaseUnit() {
+      return this.getCurrentDevice === 'desktop' ? 3 : 4
+    }
+  },
+  created() {
+    // only active at client side
+    if (this.getCurrentDevice === 'mobile') {
+      this.videoDisplayAmount = 4
+    }
+  },
+  methods: {
+    loadMoreVideo() {
+      this.videoDisplayAmount = Math.min(this.getVideos.length, this.videoDisplayAmount + 4)
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.section-wrapper {
+  padding: 30px 17px;
+  display: grid;
+  grid-auto-flow: row;
+  row-gap: 30px;
+
+  > span:nth-child(2) {
+    justify-self: center;
+    font-size: 16px;
+    line-height: 16px;
+    color: map-get($map: $colors, $key: primary);
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  @media (min-width: 768px) {
+    padding: 50px 30px;
+  }
+  @media (min-width: 1200px) {
+    padding: 50px 100px;
+    &::v-deep {
+      > .training > .training__wrapper {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  }
+}
+</style>
