@@ -48,7 +48,6 @@ export default {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    font-weight: 300;
     font-size: 18px;
     line-height: 25px;
   }

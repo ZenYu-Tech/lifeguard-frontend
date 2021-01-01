@@ -56,7 +56,6 @@ export default {
     h4 {
       font-size: 20px;
       color: white;
-      font-weight: 300;
     }
     i.icon-svg {
       background-color: white;
@@ -86,7 +85,6 @@ export default {
       align-items: center;
       padding: 4px 11px;
       color: white;
-      font-weight: 300;
       font-size: 20px;
       background: rgba(49, 93, 165, 0.9);
       height: 100%;

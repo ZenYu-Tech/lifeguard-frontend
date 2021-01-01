@@ -72,7 +72,6 @@ export default {
       }
     }
     span {
-      font-weight: 300;
       font-size: 20px;
       line-height: 29px;
       margin-right: 3px;
