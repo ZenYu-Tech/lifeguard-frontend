@@ -1,6 +1,6 @@
 <template>
   <header class="header" :class="{ 'side-menu-expand': isSideMenuExpand }">
-    <div class="header__logo">LOGO</div>
+    <nuxt-link tag="div" to="/" class="header__logo">LOGO</nuxt-link>
     <div
       class="header__menu hidden-lg-only"
       :style="{ 'background-image': `url(${require('@/assets/icons/menu.svg')})` }"
@@ -33,7 +33,8 @@ export default {
           subMenuList: [
             {
               title: '開課公告',
-              action: 'internal-link'
+              action: 'internal-link',
+              link: '/training'
             },
             {
               title: '檢定公告',
@@ -75,7 +76,8 @@ export default {
             },
             {
               title: '影片',
-              action: 'internal-link'
+              action: 'internal-link',
+              link: '/training'
             },
             {
               title: '題庫',
@@ -100,7 +102,8 @@ export default {
             },
             {
               title: '檢定通過名單',
-              action: 'internal-link'
+              action: 'internal-link',
+              link: '/training'
             }
           ]
         },
@@ -147,6 +150,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
   }
   &__menu {
     width: 40px;

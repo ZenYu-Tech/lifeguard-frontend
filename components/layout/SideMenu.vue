@@ -13,7 +13,12 @@
         <h5 class="link-section__title">{{ menu.title }}</h5>
         <template v-if="menu.subMenuList.length > 0">
           <ul class="link-section__link-group">
-            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">{{ subMenu.title }}</li>
+            <template v-for="subMenu in menu.subMenuList">
+              <nuxt-link v-if="subMenu.action === 'internal-link'" :key="subMenu.title" tag="li" :to="subMenu.link">
+                {{ subMenu.title }}
+              </nuxt-link>
+              <li v-else :key="subMenu.title">{{ subMenu.title }}</li>
+            </template>
           </ul>
         </template>
       </div>
