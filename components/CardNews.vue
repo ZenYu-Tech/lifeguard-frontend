@@ -1,10 +1,10 @@
 <template>
-  <article class="news">
-    <div class="news__header">
-      <h6 class="news__title">{{ news.title }}</h6>
-      <time class="news__time">{{ dateFormator(news.createdAt) }}</time>
+  <article class="card-news">
+    <div class="card-news__header">
+      <h6 class="card-news__title">{{ news.title }}</h6>
+      <time class="card-news__time">{{ dateFormator(news.createdAt) }}</time>
     </div>
-    <p class="news__content">{{ news.content }}</p>
+    <p class="card-news__content">{{ news.content }}</p>
   </article>
 </template>
 
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.news {
+.card-news {
   width: 80%;
   &__header {
     display: grid;
