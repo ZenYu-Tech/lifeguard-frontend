@@ -10,17 +10,22 @@
     </div>
     <ul v-if="!haveNoSubMenu && isExpand" class="nav-menu__dropdown">
       <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
-        <span>{{ subMenu.title }}</span>
-        <i
-          v-if="subMenu.action === 'download'"
-          class="icon-svg"
-          :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"
-        ></i>
-        <i
-          v-else-if="subMenu.action === 'external-link'"
-          class="icon-svg"
-          :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"
-        ></i>
+        <template v-if="subMenu.action === 'internal-link'">
+          <nuxt-link tag="span" :to="subMenu.link">{{ subMenu.title }}</nuxt-link>
+        </template>
+        <template v-else>
+          <span>{{ subMenu.title }}</span>
+          <i
+            v-if="subMenu.action === 'download'"
+            class="icon-svg"
+            :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"
+          ></i>
+          <i
+            v-else-if="subMenu.action === 'external-link'"
+            class="icon-svg"
+            :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"
+          ></i>
+        </template>
       </li>
     </ul>
   </div>
@@ -93,6 +98,7 @@ export default {
     border-radius: 0px 0px 5px 5px;
     backdrop-filter: blur(4px);
     > li {
+      cursor: pointer;
       padding: 8px 18px;
       display: flex;
       align-items: center;

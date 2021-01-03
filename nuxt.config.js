@@ -24,7 +24,8 @@ export default {
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '@/plugins/apis/axios',
-    '@/plugins/element-ui'
+    '@/plugins/element-ui',
+    '@/plugins/detect-device.client.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -44,4 +45,7 @@ export default {
   build: {
     transpile: [/^element-ui/],
   },
+  router: {
+    middleware: ['banner']
+  }
 }
