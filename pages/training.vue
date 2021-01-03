@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     loadMoreVideo() {
-      this.videoDisplayAmount = Math.min(this.getVideos.length, this.videoDisplayAmount + 4)
+      this.videoDisplayAmount = Math.min(this.getVideos.length, this.videoDisplayAmount + this.increaseUnit)
     }
   }
 }
