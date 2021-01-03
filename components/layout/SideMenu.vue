@@ -10,8 +10,8 @@
     </div>
     <div class="side-menu__link-section">
       <div v-for="menu in menuList" :key="menu.title" class="link-section">
-        <h5 class="link-section__title">{{ menu.title }}</h5>
         <template v-if="menu.subMenuList.length > 0">
+          <h5 class="link-section__title">{{ menu.title }}</h5>
           <ul class="link-section__link-group">
             <template v-for="subMenu in menu.subMenuList">
               <nuxt-link v-if="subMenu.action === 'internal-link'" :key="subMenu.title" tag="li" :to="subMenu.link">
@@ -20,6 +20,12 @@
               <li v-else :key="subMenu.title">{{ subMenu.title }}</li>
             </template>
           </ul>
+        </template>
+        <template v-else>
+          <nuxt-link v-if="menu.action === 'internal-link'" tag="h5" :to="menu.link" class="link-section__title">
+            {{ menu.title }}
+          </nuxt-link>
+          <h5 v-else class="link-section__title">{{ menu.title }}</h5>
         </template>
       </div>
     </div>
@@ -73,6 +79,7 @@ export default {
   &__link-section {
     display: grid;
     row-gap: 17px;
+    grid-auto-rows: min-content;
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;

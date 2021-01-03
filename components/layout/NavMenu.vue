@@ -1,12 +1,14 @@
 <template>
   <div class="nav-menu" :class="{ expand: isExpand }">
     <div class="nav-menu__item">
-      <span>{{ menu.title }}</span>
-      <i
-        v-if="!haveNoSubMenu"
-        class="icon-svg"
-        :style="{ 'mask-image': `url(${require('@/assets/icons/chevron-up.svg')})` }"
-      ></i>
+      <template v-if="haveNoSubMenu">
+        <nuxt-link v-if="menu.action === 'internal-link'" tag="span" :to="menu.link">{{ menu.title }}</nuxt-link>
+        <span v-else>{{ menu.title }}</span>
+      </template>
+      <template v-else>
+        <span>{{ menu.title }}</span>
+        <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/chevron-up.svg')})` }"></i>
+      </template>
     </div>
     <ul v-if="!haveNoSubMenu && isExpand" class="nav-menu__dropdown">
       <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
