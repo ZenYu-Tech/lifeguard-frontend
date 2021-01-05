@@ -18,6 +18,7 @@ module.exports = {
   // add your custom rules here
   rules: {
     'no-console': process.env.NODE_ENV !== 'production' ? 0 : 2,
-    'space-before-function-paren': 'off'
+    'space-before-function-paren': 'off',
+    'vue/no-v-html': 'off'
   }
 }
