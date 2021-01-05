@@ -3,7 +3,7 @@
  */
 
 export default function ({ $axios }, inject) {
-  $axios.setBaseURL('http://localhost:3001')
+  $axios.setBaseURL('https://lifeguard2020.herokuapp.com/')
 
   $axios.onRequest(config => {
     console.log('Making request to ' + config.url)
