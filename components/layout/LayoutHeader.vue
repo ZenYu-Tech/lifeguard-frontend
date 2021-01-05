@@ -34,15 +34,19 @@ export default {
             {
               title: '開課公告',
               action: 'internal-link',
-              link: '/training'
+              link: '/news'
             },
             {
               title: '檢定公告',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_01V1.aspx?MENU_CD=M10&ITEM_CD=T01&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=107&SUB_PRG_CD=100'
             },
             {
               title: '徵才資訊',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_01V1.aspx?MENU_CD=M10&ITEM_CD=T02&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=107&SUB_PRG_CD=101'
             }
           ]
         },
@@ -81,7 +85,9 @@ export default {
             },
             {
               title: '題庫',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS08/TIS0801M_01V1.aspx?MENU_CD=M10&ITEM_CD=T07&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&SUB_PRG_CD=105'
             }
           ]
         },
@@ -90,15 +96,21 @@ export default {
           subMenuList: [
             {
               title: '相關法規',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_01V1.aspx?MENU_CD=M10&ITEM_CD=T01&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=107&SUB_PRG_CD=100'
             },
             {
               title: '相關表格',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS08/TIS0801M_01V1.aspx?MENU_CD=M10&ITEM_CD=T11&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=152&SUB_PRG_CD=183'
             },
             {
               title: '檢定報名Q&A',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_02V1.aspx?MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&PKNO=1093'
             },
             {
               title: '檢定通過名單',
@@ -118,7 +130,8 @@ export default {
           subMenuList: [
             {
               title: 'i 運動平台',
-              action: 'external-link'
+              action: 'external-link',
+              link: 'https://isports.sa.gov.tw/Index.aspx'
             }
           ]
         }
