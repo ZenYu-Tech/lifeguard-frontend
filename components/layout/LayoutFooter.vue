@@ -5,7 +5,15 @@
         <h5 class="link-section__title">{{ menu.title }}</h5>
         <template v-if="menu.subMenuList.length > 0">
           <ul class="link-section__link-group">
-            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">{{ subMenu.title }}</li>
+            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
+              <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">
+                {{ subMenu.title }}
+              </nuxt-link>
+              <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
+                {{ subMenu.title }}
+              </a>
+              <a v-else>{{ subMenu.title }}</a>
+            </li>
           </ul>
         </template>
       </div>
@@ -194,11 +202,12 @@ $color-content: rgba(255, 255, 255, 0.4);
     grid-auto-flow: row;
     row-gap: 9px;
     justify-items: center;
-    > li {
+    > li > a {
       color: $color-content;
       font-size: 18px;
       line-height: 18px;
       cursor: pointer;
+      text-decoration: none;
       &:hover {
         color: $color-title;
       }
