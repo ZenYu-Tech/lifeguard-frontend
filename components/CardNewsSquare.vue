@@ -1,9 +1,7 @@
 <template>
   <article class="card-news">
     <h6 class="card-news__title">{{ news.title }}</h6>
-    <p class="card-news__content">
-      {{ news.content }}
-    </p>
+    <p v-html="news.content" class="card-news__content"></p>
     <time class="card-news__time">{{ dateFormator(news.createdAt) }}</time>
   </article>
 </template>

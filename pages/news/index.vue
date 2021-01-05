@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper">
     <section class="news">
-      <h3 class="news__title">最新消息</h3>
+      <h3 class="news__title">開課公告</h3>
       <client-only>
         <div class="news__wrapper">
           <card-news-square
