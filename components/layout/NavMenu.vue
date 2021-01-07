@@ -12,22 +12,15 @@
     </div>
     <ul v-if="!haveNoSubMenu && isExpand" class="nav-menu__dropdown">
       <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
-        <template v-if="subMenu.action === 'internal-link'">
-          <nuxt-link tag="span" :to="subMenu.link">{{ subMenu.title }}</nuxt-link>
-        </template>
-        <template v-else>
-          <span>{{ subMenu.title }}</span>
-          <i
-            v-if="subMenu.action === 'download'"
-            class="icon-svg"
-            :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"
-          ></i>
-          <i
-            v-else-if="subMenu.action === 'external-link'"
-            class="icon-svg"
-            :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"
-          ></i>
-        </template>
+        <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">{{ subMenu.title }}</nuxt-link>
+        <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
+          {{ subMenu.title }}
+          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
+        </a>
+        <a v-else>
+          {{ subMenu.title }}
+          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
+        </a>
       </li>
     </ul>
   </div>
@@ -70,6 +63,18 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
+    span {
+      font-size: 20px;
+      line-height: 29px;
+      margin-right: 3px;
+      text-decoration: none;
+      color: black;
+    }
+    i.icon-svg {
+      background-color: black;
+      transform: rotate(180deg);
+      transition: all 0.3s;
+    }
     &:hover {
       span {
         color: map-get($colors, primary);
@@ -78,15 +83,10 @@ export default {
         background-color: map-get($colors, primary) !important;
       }
     }
-    span {
-      font-size: 20px;
-      line-height: 29px;
-      margin-right: 3px;
-    }
-    i.icon-svg {
-      background-color: black;
-      transform: rotate(180deg);
-      transition: all 0.3s;
+    .expand > & {
+      i {
+        transform: rotate(0deg) !important;
+      }
     }
   }
 
@@ -99,11 +99,12 @@ export default {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0px 0px 5px 5px;
     backdrop-filter: blur(4px);
-    > li {
-      cursor: pointer;
-      padding: 8px 18px;
+    > li > a {
       display: flex;
       align-items: center;
+      padding: 8px 18px;
+      text-decoration: none;
+      color: black;
       i.icon-svg {
         width: 18px;
         height: 18px;
@@ -115,14 +116,6 @@ export default {
         i.icon-svg {
           background-color: map-get($map: $colors, $key: primary) !important;
         }
-      }
-    }
-  }
-
-  &.expand {
-    .nav-menu__item {
-      i {
-        transform: rotate(0deg);
       }
     }
   }

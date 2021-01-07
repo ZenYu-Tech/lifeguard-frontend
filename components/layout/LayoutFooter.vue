@@ -5,7 +5,15 @@
         <h5 class="link-section__title">{{ menu.title }}</h5>
         <template v-if="menu.subMenuList.length > 0">
           <ul class="link-section__link-group">
-            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">{{ subMenu.title }}</li>
+            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
+              <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">
+                {{ subMenu.title }}
+              </nuxt-link>
+              <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
+                {{ subMenu.title }}
+              </a>
+              <a v-else>{{ subMenu.title }}</a>
+            </li>
           </ul>
         </template>
       </div>
@@ -56,16 +64,20 @@ export default {
               action: 'download'
             },
             {
-              title: '訓練影片',
-              action: 'download'
+              title: '檢定科目影片',
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS06/TIS0602M_01V1.aspx?MENU_CD=M10&ITEM_CD=T08&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&SUB_PRG_CD=189'
             },
             {
               title: '考試題庫',
-              action: 'internal-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS08/TIS0801M_01V1.aspx?MENU_CD=M10&ITEM_CD=T07&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&SUB_PRG_CD=105'
             },
             {
               title: '訓練實施計畫',
-              action: 'external-link'
+              action: 'download'
             }
           ]
         },
@@ -74,19 +86,26 @@ export default {
           subMenuList: [
             {
               title: '相關法規',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_01V1.aspx?MENU_CD=M10&ITEM_CD=T01&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=107&SUB_PRG_CD=100'
             },
             {
               title: '相關表格',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS08/TIS0801M_01V1.aspx?MENU_CD=M10&ITEM_CD=T11&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=152&SUB_PRG_CD=183'
             },
             {
               title: '檢定報名Q&A',
-              action: 'external-link'
+              action: 'external-link',
+              link:
+                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_02V1.aspx?MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&PKNO=1093'
             },
             {
               title: '檢定通過名單',
-              action: 'internal-link'
+              action: 'internal-link',
+              link: '/certification'
             }
           ]
         }
@@ -183,10 +202,12 @@ $color-content: rgba(255, 255, 255, 0.4);
     grid-auto-flow: row;
     row-gap: 9px;
     justify-items: center;
-    > li {
+    > li > a {
       color: $color-content;
       font-size: 18px;
       line-height: 18px;
+      cursor: pointer;
+      text-decoration: none;
       &:hover {
         color: $color-title;
       }

@@ -4,7 +4,7 @@
       <h6 class="card-news__title">{{ news.title }}</h6>
       <time class="card-news__time">{{ dateFormator(news.createdAt) }}</time>
     </div>
-    <p class="card-news__content">{{ news.content }}</p>
+    <p class="card-news__content" v-html="news.content"></p>
   </article>
 </template>
 

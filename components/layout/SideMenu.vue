@@ -13,12 +13,15 @@
         <template v-if="menu.subMenuList.length > 0">
           <h5 class="link-section__title">{{ menu.title }}</h5>
           <ul class="link-section__link-group">
-            <template v-for="subMenu in menu.subMenuList">
-              <nuxt-link v-if="subMenu.action === 'internal-link'" :key="subMenu.title" tag="li" :to="subMenu.link">
+            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
+              <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">
                 {{ subMenu.title }}
               </nuxt-link>
-              <li v-else :key="subMenu.title">{{ subMenu.title }}</li>
-            </template>
+              <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
+                {{ subMenu.title }}
+              </a>
+              <a v-else>{{ subMenu.title }}</a>
+            </li>
           </ul>
         </template>
         <template v-else>
@@ -100,14 +103,16 @@ export default {
     grid-auto-rows: 38px;
     grid-auto-flow: row;
     row-gap: 9px;
-    > li {
+    > li > a {
+      background: rgba(49, 93, 165, 0.9);
       display: flex;
       align-items: center;
-      padding: 4px 11px;
-      color: white;
       font-size: 20px;
-      background: rgba(49, 93, 165, 0.9);
       height: 100%;
+      padding: 4px 11px;
+      width: 100%;
+      text-decoration: none;
+      color: white;
     }
   }
 }

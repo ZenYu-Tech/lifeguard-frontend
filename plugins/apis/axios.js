@@ -2,8 +2,8 @@
  * To see $axios api interface (Source Code: https://github.com/nuxt-community/axios-module/blob/master/lib/plugin.js)
  */
 
-export default function ({ $axios }, inject) {
-  $axios.setBaseURL('http://localhost:3001')
+export default function ({ $axios, $config }, inject) {
+  $axios.setBaseURL($config.baseURL)
 
   $axios.onRequest(config => {
     console.log('Making request to ' + config.url)

@@ -47,5 +47,9 @@ export default {
   },
   router: {
     middleware: ['banner']
-  }
+  },
+  publicRuntimeConfig: {
+    baseURL: process.env.BASE_URL || 'https://lifeguard2020.herokuapp.com/'
+  },
+  privateRuntimeConfig: {}
 }
