@@ -36,15 +36,15 @@ export default {
         this.$message.error('請輸入密碼')
         return
       }
-        
+
       // const data = await this.$store.dispatch('user/login', this.user)
 
       // if (data.error) {
       //   this.$message(data.error)
       // } else {
-        this.$router.push('/admin/articles')
+      this.$router.push('/admin/articles')
       // }
-    },
+    }
   }
 }
 </script>
