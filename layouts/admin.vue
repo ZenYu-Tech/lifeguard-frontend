@@ -3,4 +3,3 @@
     <LayoutAdmin />
   </div>
 </template>
-
