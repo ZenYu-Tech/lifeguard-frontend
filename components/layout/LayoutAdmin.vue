@@ -45,11 +45,11 @@ export default {
       this.$router.push(path)
     },
     getBreadcrumb() {
-      let matched = this.$route.matched.filter(item => item.name)
+      const matched = this.$route.matched.filter(item => item.name)
       this.breadcrumbList = this.findCorrespondingChinese(matched[0].name)
     },
     findCorrespondingChinese(word) {
-      let mainWord = word.split('-')[1]
+      const mainWord = word.split('-')[1]
       let result
       switch (mainWord) {
         case 'articles':
