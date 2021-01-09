@@ -26,7 +26,7 @@ export default {
     }
   },
   methods: {
-    async submitForm() {
+    submitForm() {
       if (this.user.userName === '') {
         this.$message.error('請輸入帳號')
         return
