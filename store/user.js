@@ -10,12 +10,11 @@ const state = () => ({
   /**
    * @type {Object<User>}
    */
-  user: 
-    {
-      userId: 1,
-      userAccout: '使用者1號',
-      createdAt: new Date()
-    }
+  user: {
+    userId: 1,
+    userAccout: '使用者1號',
+    createdAt: new Date()
+  }
 })
 
 const getters = {

@@ -1,5 +1,5 @@
 export default axios => ({
-  login() {
+  login(input) {
     return axios(`manage/login`, {
       method: 'POST',
       data: input
