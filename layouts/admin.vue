@@ -1,7 +1,6 @@
 <template>
   <div>
-    <LayoutAdmin>
-      <Nuxt />
-    </LayoutAdmin>
+    <LayoutAdmin />
   </div>
 </template>
+
