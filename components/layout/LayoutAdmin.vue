@@ -25,9 +25,9 @@ export default {
   data() {
     return {
       menuItem: [
-        { id: 1, name: '文章管理', path: 'article' },
-        { id: 2, name: '檔案管理', path: 'file' },
-        { id: 3, name: '影片管理', path: 'vedio' }
+        { id: 1, name: '文章管理', path: 'articles' },
+        { id: 2, name: '檔案管理', path: 'files' },
+        { id: 3, name: '影片管理', path: 'vedios' }
       ],
       breadcrumbList: []
     }
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     handleRouteChange(path) {
-      this.$router.push(path)
+      this.$router.push(`/admin/${path}`)
     },
     getBreadcrumb() {
       const matched = this.$route.matched.filter(item => item.name)
@@ -50,15 +50,34 @@ export default {
     },
     findCorrespondingChinese(word) {
       const mainWord = word.split('-')[1]
-      let result
+      const secondWord = word.split('-')[2]
+
+      let result = []
       switch (mainWord) {
         case 'articles':
-          result = ['文章管理', '列表']
+          result.push('文章管理')
           break
-        case 'article':
-          result = ['文章管理', '編輯']
+        case 'vedios':
+          result.push('影片管理')
+          break
+        case 'files':
+          result.push('檔案管理')
           break
       }
+
+      if (!!secondWord) {
+        switch (secondWord) {
+          case 'create':
+            result.push('新增')
+            break
+          case 'edit':
+            result.push('編輯')
+            break
+        }
+      } else {
+        result.push('列表')
+      }
+
       return result
     }
   }

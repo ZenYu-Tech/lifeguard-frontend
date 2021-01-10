@@ -6,7 +6,7 @@
       <el-table-column prop="created_time" label="建立時間" width="120"> </el-table-column>
       <el-table-column align="right" width="120">
         <template slot="header">
-          <el-button type="primary" size="small">新增</el-button>
+          <el-button type="primary" size="small" @click="handleCreate">新增</el-button>
         </template>
         <template slot-scope="{ row }">
           <el-button @click="handleRead(row)" type="text" size="small">查看</el-button>
@@ -14,22 +14,55 @@
         </template>
       </el-table-column>
     </el-table>
+    <article-preview
+      v-if="dialogVisible"
+      :dialog-visible="dialogVisible"
+      :article-content="targetArticle"
+    ></article-preview>
   </div>
 </template>
 <script>
 const newsData = [
-  { title: '109年第一梯次檢定通過名單出爐！', category: '通知中心', created_time: '2020-01-01' },
-  { title: '109年第一梯次檢定通過名單出爐！', category: '活動花絮', created_time: '2020-01-01' },
-  { title: '109年第一梯次檢定通過名單出爐！', category: '通知中心', created_time: '2020-01-01' },
-  { title: '109年第一梯次檢定通過名單出爐！', category: '活動花絮', created_time: '2020-01-01' }
+  {
+    id: 1,
+    title: '109年第一梯次檢定通過名單出爐！',
+    content: '<h1>Hello World</h1>',
+    category: '通知中心',
+    created_time: '2020-01-01'
+  },
+  {
+    id: 2,
+    title: '109年第一梯次檢定通過名單出爐！',
+    content: '<h1>Hello World</h1>',
+    category: '活動花絮',
+    created_time: '2020-01-01'
+  },
+  {
+    id: 3,
+    title: '109年第一梯次檢定通過名單出爐！',
+    content: '<h1>Hello World</h1>',
+    category: '通知中心',
+    created_time: '2020-01-01'
+  },
+  {
+    id: 4,
+    title: '109年第一梯次檢定通過名單出爐！',
+    content: '<h1>Hello World</h1>',
+    category: '活動花絮',
+    created_time: '2020-01-01'
+  }
 ]
+import articlePreview from '@/components/admin/articles/articlePreview'
 
 export default {
   name: 'article',
   layout: 'admin',
+  components: { articlePreview },
   data() {
     return {
-      tableData: []
+      tableData: [],
+      dialogVisible: false,
+      targetArticle: null
     }
   },
   created() {
@@ -37,12 +70,15 @@ export default {
   },
   methods: {
     handleRead(rowData) {
-      console.log('rowData', rowData)
+      this.targetArticle = rowData
+      this.dialogVisible = true
     },
     handleEdit(rowData) {
-      console.log('rowData', rowData)
+      this.$router.push(`/admin/articles/edit/${rowData.id}`)
+    },
+    handleCreate() {
+      this.$router.push('/admin/articles/create')
     }
   }
 }
 </script>
-<style lang="scss" scoped></style>
