@@ -11,10 +11,10 @@
       <div v-else class="video-preview__placeholder">影片預覽</div>
     </el-row>
 
-    <el-form :model="videoContent" :rules="rules" ref="ruleForm" label-width="0">
+    <el-form :model="videoContent" ref="ruleForm" :rules="rules" label-width="0">
       <el-row>
         <el-form-item prop="title">
-          <el-input placeholder="請輸入影片標題" v-model="videoContent.title" :disabled="!isEditable">
+          <el-input v-model="videoContent.title" placeholder="請輸入影片標題" :disabled="!isEditable">
             <template slot="prepend">標題</template>
           </el-input>
         </el-form-item>
@@ -23,10 +23,10 @@
       <el-row>
         <el-form-item prop="url">
           <el-input
+            v-model="videoContent.url"
             type="textarea"
             autosize
             placeholder="請貼上 YouTube 影片內嵌 iframe"
-            v-model="videoContent.url"
             :disabled="!isEditable"
           >
           </el-input>
@@ -42,20 +42,17 @@
 </template>
 <script>
 export default {
-  name: 'video-form',
+  name: 'VideoForm',
   props: {
-    rules: { type: Object },
-    dialogVisible: { type: Boolean },
-    videoContent: { type: Object },
-    dialogState: { type: String }
+    rules: { type: Object, required: true },
+    dialogVisible: { type: Boolean, required: true },
+    videoContent: { type: Object, required: true },
+    dialogState: { type: String, required: true }
   },
   data() {
     return {
       isEditable: false
     }
-  },
-  created() {
-    this.judgeEditState()
   },
   watch: {
     dialogVisible(currentState) {
@@ -63,6 +60,9 @@ export default {
         this.$emit('reset-dialog')
       }
     }
+  },
+  created() {
+    this.judgeEditState()
   },
   methods: {
     handleEdit() {
