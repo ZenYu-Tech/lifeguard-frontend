@@ -8,8 +8,8 @@
           <el-button type="primary" size="small" @click="handleCreate">新增</el-button>
         </template>
         <template slot-scope="{ row }">
-          <el-button @click="handleRead(row)" type="text" size="small">查看</el-button>
-          <el-button @click="handleDelete(row)" type="text" size="small">刪除</el-button>
+          <el-button type="text" size="small" @click="handleRead(row)">查看</el-button>
+          <el-button type="text" size="small" @click="handleDelete(row)">刪除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -25,6 +25,8 @@
   </div>
 </template>
 <script>
+import VideoForm from '@/components/admin/videos/VideoForm'
+
 const newsData = [
   {
     id: 1,
@@ -55,12 +57,11 @@ const newsData = [
     created_time: '2020-01-01'
   }
 ]
-import videoForm from '@/components/admin/videos/videoForm'
 
 export default {
-  name: 'videos',
+  name: 'Videos',
   layout: 'admin',
-  components: { videoForm },
+  components: { VideoForm },
   data() {
     return {
       tableData: [],

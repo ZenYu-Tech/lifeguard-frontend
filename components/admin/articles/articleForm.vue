@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="10">
-        <el-input placeholder="請輸入" v-model="articleContent.title">
+        <el-input v-model="articleContent.title" placeholder="請輸入">
           <template slot="prepend">文章標題</template>
         </el-input>
       </el-col>
@@ -20,9 +20,9 @@
         <div class="image-wall">
           <label for="img" class="article-create__img"
             >＋
-            <input type="file" name="img" id="img" @change="handleUpload($event)" multiple />
+            <input type="file" id="img" name="img" multiple @change="handleUpload($event)" />
           </label>
-          <div class="preview" v-for="(image, index) in imageArray" :key="image.size" @click="handleDeleteImage(index)">
+          <div v-for="(image, index) in imageArray" :key="image.size" class="preview" @click="handleDeleteImage(index)">
             <img :ref="'image' + parseInt(index)" />
           </div>
         </div>
@@ -49,10 +49,14 @@ if (process.client) {
 }
 
 export default {
-  props: {
-    articleContent: { type: Object }
-  },
+  name: 'ArticleForm',
   components: { VueEditor },
+  props: {
+    articleContent: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       options: [

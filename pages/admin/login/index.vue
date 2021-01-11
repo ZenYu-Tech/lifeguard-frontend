@@ -2,10 +2,10 @@
   <div class="admin-login" :style="{ 'background-image': `url(${require('@/assets/images/login.jpg')})` }">
     <div class="login-form">
       <div class="login-form__title">後台管理系統</div>
-      <el-input class="login-form__input" v-model="user.userName">
+      <el-input v-model="user.userName" class="login-form__input">
         <template slot="prepend">帳號</template>
       </el-input>
-      <el-input class="login-form__input" v-model="user.password">
+      <el-input v-model="user.password" class="login-form__input">
         <template slot="prepend">密碼</template>
       </el-input>
       <div>
@@ -16,6 +16,7 @@
 </template>
 <script>
 export default {
+  name: 'Login',
   layout: 'login',
   data() {
     return {
