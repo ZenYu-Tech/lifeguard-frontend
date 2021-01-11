@@ -27,7 +27,7 @@ export default {
       menuItem: [
         { id: 1, name: '文章管理', path: 'articles' },
         { id: 2, name: '檔案管理', path: 'files' },
-        { id: 3, name: '影片管理', path: 'vedios' }
+        { id: 3, name: '影片管理', path: 'videos' }
       ],
       breadcrumbList: []
     }
@@ -57,7 +57,7 @@ export default {
         case 'articles':
           result.push('文章管理')
           break
-        case 'vedios':
+        case 'videos':
           result.push('影片管理')
           break
         case 'files':
