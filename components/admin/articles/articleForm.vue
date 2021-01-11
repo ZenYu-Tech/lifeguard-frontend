@@ -76,27 +76,23 @@ export default {
     }
   },
   methods: {
-    async handleUpload(e) {
-      try {
-        let selectedFiles = e.target.files
-        for (let i = 0; i < selectedFiles.length; i++) {
-          this.imageArray.push(selectedFiles[i])
-        }
+    handleUpload(e) {
+      const selectedFiles = e.target.files
+      for (let i = 0; i < selectedFiles.length; i++) {
+        this.imageArray.push(selectedFiles[i])
+      }
 
-        for (let i = 0; i < this.imageArray.length; i++) {
-          let reader = new FileReader()
-          reader.addEventListener(
-            'load',
-            function () {
-              this.$refs['image' + parseInt(i)][0].src = reader.result
-            }.bind(this),
-            false
-          )
+      for (let i = 0; i < this.imageArray.length; i++) {
+        const reader = new FileReader()
+        reader.addEventListener(
+          'load',
+          function () {
+            this.$refs['image' + parseInt(i)][0].src = reader.result
+          }.bind(this),
+          false
+        )
 
-          reader.readAsDataURL(this.imageArray[i])
-        }
-      } catch (err) {
-        console.log('handleUpload', err)
+        reader.readAsDataURL(this.imageArray[i])
       }
     }
   },

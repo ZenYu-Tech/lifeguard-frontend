@@ -22,6 +22,8 @@
   </div>
 </template>
 <script>
+import articlePreview from '@/components/admin/articles/articlePreview'
+
 const newsData = [
   {
     id: 1,
@@ -52,7 +54,6 @@ const newsData = [
     created_time: '2020-01-01'
   }
 ]
-import articlePreview from '@/components/admin/articles/articlePreview'
 
 export default {
   name: 'article',

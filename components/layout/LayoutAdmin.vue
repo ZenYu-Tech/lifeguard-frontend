@@ -52,7 +52,7 @@ export default {
       const mainWord = word.split('-')[1]
       const secondWord = word.split('-')[2]
 
-      let result = []
+      const result = []
       switch (mainWord) {
         case 'articles':
           result.push('文章管理')
@@ -65,7 +65,7 @@ export default {
           break
       }
 
-      if (!!secondWord) {
+      if (secondWord) {
         switch (secondWord) {
           case 'create':
             result.push('新增')
