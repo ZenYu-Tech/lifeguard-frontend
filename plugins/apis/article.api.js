@@ -4,8 +4,8 @@ export default axios => ({
       method: 'GET'
     })
   },
-  fetchArticles(category) {
-    return axios(`/article/${category}`, {
+  fetchArticles(category, count = 10, page = 1) {
+    return axios(`/article/${category}/?count=${count}&page=${page}`, {
       method: 'GET'
     })
   }

@@ -1,24 +1,21 @@
 /**
  * @typeof Article
  * @type {object}
- * @property {number} id
+ * @property {string} articleId
  * @property {string} category
  * @property {string} title
  * @property {string} content
  * @property {number} sort
- * @property {boolean} show
  * @property {date} createdAt
- * @property {Array<ArticleImage>} articleImages
+ * @property {base64} mainImage
  */
 
 /**
- * @typeof ArticleImage
+ * @typeof Image
  * @type {object}
- * @property {number} id
- * @property {number} articleId
- * @property {string} url
- * @property {boolean} mainImage
- * @property {boolean} show
+ * @property {string} imageId
+ * @property {boolean} main
+ * @property {base64} image
  */
 
 const state = () => ({
@@ -50,10 +47,17 @@ const state = () => ({
       createdAt: new Date()
     }
   ],
-  /**
-   * @type {Article}
-   */
-  article: {}
+  article: {
+    articleId: '1',
+    title: 'title',
+    content: '<html>Hello world 31</html>',
+    category: 'news',
+    createdAt: '2021-01-16T06:37:58.000Z',
+    /**
+     * @type {Array<Image>}
+     */
+    images: []
+  }
 })
 
 const getters = {
@@ -63,7 +67,7 @@ const getters = {
   },
   getArticle: state => state.article,
   getArticleById: state => id => {
-    return state.articles.find(article => article.id === id)
+    return state.articles.find(article => article.articleId === id)
   }
 }
 
@@ -80,15 +84,15 @@ const actions = {
   async fetchArticle({ commit }, { category, id }) {
     try {
       const { data } = await this.$articleApi.fetchArticle(category, id)
-      commit('SET_article', data)
+      commit('SET_article', data.result)
     } catch (error) {
       console.error(error)
     }
   },
-  async fetchArticles({ commit }, { category }) {
+  async fetchArticles({ commit }, { category, count = 10, page = 1 }) {
     try {
-      const { data } = await this.$articleApi.fetchArticles(category)
-      commit('SET_articles', data)
+      const { data } = await this.$articleApi.fetchArticles(category, count, page)
+      commit('SET_articles', data.result.articles)
     } catch (error) {
       console.error(error)
     }
