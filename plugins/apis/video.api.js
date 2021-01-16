@@ -1,6 +1,6 @@
 export default axios => ({
   fetchVideos() {
-    return axios(`/videos`, {
+    return axios(`/video`, {
       method: 'GET'
     })
   }
