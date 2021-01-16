@@ -38,7 +38,9 @@ export default {
   },
   computed: {
     ...mapGetters('client', {
-      getArticlesByCategory: 'article/getArticlesByCategory',
+      getArticlesByCategory: 'article/getArticlesByCategory'
+    }),
+    ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
     noMoreNews() {

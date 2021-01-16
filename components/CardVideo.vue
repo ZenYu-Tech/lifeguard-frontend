@@ -1,13 +1,6 @@
 <template>
   <div>
-    <iframe
-      width="100%"
-      height="206"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen
-      :src="video.videoUrl"
-    ></iframe>
+    <div v-html="embedIframe"></div>
     <div>
       <h6 class="video__title">{{ video.title }}</h6>
       <time class="video__upload-time">上傳時間 {{ dateFormator(video.createdAt) }}</time>
@@ -24,9 +17,22 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      embedIframe: ''
+    }
+  },
+  created() {
+    this.resizeIframe(this.embedIframe)
+  },
   methods: {
     dateFormator(date) {
       return new Date(date).toISOString().slice(0, 10)
+    },
+    resizeIframe(iframe) {
+      this.embedIframe = this.video.embedIframe
+      this.embedIframe = this.embedIframe.replace(/width="[0-9]*"/m, 'width="100%"')
+      this.embedIframe = this.embedIframe.replace(/height="[0-9]*"/m, 'height="216px"')
     }
   }
 }
