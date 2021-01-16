@@ -9,7 +9,7 @@
           class="pass-list__file"
           @click="downloadFile({ fileId: file.fileId, title: file.title })"
         >
-          <span>{{ file.title }}ddsdsdsdsdsds</span>
+          <span>{{ file.title }}</span>
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
         </div>
       </div>

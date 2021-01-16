@@ -4,6 +4,7 @@
  * @property {string} fileId
  * @property {string} category
  * @property {string} title
+ * @property {number} sort
  */
 const state = () => ({
   /**
@@ -29,7 +30,7 @@ const actions = {
   async fetchFiles({ commit }, { category }) {
     try {
       const { data } = await this.$fileApi.fetchFiles(category)
-      commit('SET_Files', data)
+      commit('SET_Files', data.result.files)
     } catch (error) {
       console.error(error)
     }
@@ -37,10 +38,11 @@ const actions = {
   async downloadFile(context, { fileId, title }) {
     try {
       const { data } = await this.$fileApi.downloadFile(fileId)
+      const file = data.result.file
       let extension = title.split('.')
       extension = extension[extension.length - 1]
 
-      const url = `data:application/${extension};base64,${data}`
+      const url = `data:application/${extension};base64,${file}`
       const a = document.createElement('a')
       a.href = url
       a.download = title
