@@ -39,8 +39,8 @@ export default {
     haveBanner: true
   },
   async asyncData({ store }) {
-    await store.dispatch('article/fetchArticles', { category: 'news' })
-    await store.dispatch('file/fetchFiles', { category: 'certification' })
+    await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/file/fetchFiles', { category: 'certification' })
   },
   data() {
     return {
@@ -48,9 +48,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters('client', {
       getArticlesByCategory: 'article/getArticlesByCategory',
-      getFilesByCategory: 'file/getFilesByCategory',
+      getFilesByCategory: 'file/getFilesByCategory'
+    }),
+    ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     })
   },

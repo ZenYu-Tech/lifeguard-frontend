@@ -29,7 +29,7 @@ export default {
     haveBanner: false
   },
   async asyncData({ store }) {
-    await store.dispatch('article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'news' })
   },
   data() {
     return {
@@ -37,7 +37,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters('client', {
       getArticlesByCategory: 'article/getArticlesByCategory',
       getCurrentDevice: 'helper/getCurrentDevice'
     }),

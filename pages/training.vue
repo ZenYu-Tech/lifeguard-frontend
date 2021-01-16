@@ -16,7 +16,8 @@ export default {
     haveBanner: true
   },
   async asyncData({ store }) {
-    await store.dispatch('article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/video/fetchVideos')
   },
   data() {
     return {
@@ -24,9 +25,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters('client', {
       getArticlesByCategory: 'article/getArticlesByCategory',
-      getVideos: 'video/getVideos',
+      getVideos: 'video/getVideos'
+    }),
+    ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
     noMoreVideo() {

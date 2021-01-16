@@ -22,31 +22,7 @@ const state = () => ({
   /**
    * @type {Array<Article>}
    */
-  articles: [
-    {
-      articleId: '1',
-      title: '資管系 12/10  專題演講：Visualized Data Analysis',
-      content: `電子商務與商業分析數位學習碩專班（網路同步上課
-      適合全球在職行動辦公人士。電子商務與商業分析數位學習碩專班（網路同步上課） 適合全球在職行動辦公人士。`,
-      category: 'news',
-      createdAt: new Date()
-    },
-    {
-      articleId: '2',
-      title: '資管系 12/10  專題演講：Visualized Data Analysis',
-      content: '電子商務與商業分與商業分析數位學習碩專班（網路同步上課） 適合全球在職行動辦公人士。',
-      category: 'news',
-      createdAt: new Date()
-    },
-    {
-      articleId: '3',
-      title: '資管系 12/10  專題演講：Visualized Data Analysis',
-      content: `電子商務與商業分析數位學習碩專班（網路同步上課
-      適合全球在職行動辦公人士。電子商務與商業分析數位學習碩專班（網路同步上課） 適合全球在職行動辦公人士。`,
-      category: 'news',
-      createdAt: new Date()
-    }
-  ],
+  articles: [],
   article: {
     articleId: '1',
     title: 'title',
