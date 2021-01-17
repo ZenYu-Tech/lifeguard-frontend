@@ -11,7 +11,7 @@
       <div v-else class="video-preview__placeholder">影片預覽</div>
     </el-row>
 
-    <el-form :model="videoContent" ref="ruleForm" :rules="rules" label-width="0">
+    <el-form ref="ruleForm" :model="videoContent" :rules="rules" label-width="0">
       <el-row>
         <el-form-item prop="title">
           <el-input v-model="videoContent.title" placeholder="請輸入影片標題" :disabled="!isEditable">

@@ -20,7 +20,7 @@
         <div class="image-wall">
           <label for="img" class="article-create__img"
             >＋
-            <input type="file" id="img" name="img" multiple @change="handleUpload($event)" />
+            <input id="img" type="file" name="img" multiple @change="handleUpload($event)" />
           </label>
           <div v-for="(image, index) in imageArray" :key="image.size" class="preview" @click="handleDeleteImage(index)">
             <img :ref="'image' + parseInt(index)" />

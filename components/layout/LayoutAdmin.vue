@@ -25,9 +25,9 @@ export default {
   data() {
     return {
       menuItem: [
-        { id: 1, name: '文章管理', path: 'articles' },
-        { id: 2, name: '檔案管理', path: 'files' },
-        { id: 3, name: '影片管理', path: 'videos' }
+        { id: '1', name: '文章管理', path: 'articles' },
+        { id: '2', name: '檔案管理', path: 'files' },
+        { id: '3', name: '影片管理', path: 'videos' }
       ],
       breadcrumbList: []
     }
