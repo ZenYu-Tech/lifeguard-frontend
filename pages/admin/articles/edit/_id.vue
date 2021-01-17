@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-import articleForm from '@/components/admin/articles/articleForm'
+import ArticleForm from '@/components/admin/articles/ArticleForm'
 
 const article = {
   id: 10,
@@ -15,9 +15,9 @@ const article = {
 }
 
 export default {
-  name: 'article-edit',
+  name: 'ArticleEdit',
   layout: 'admin',
-  components: { articleForm },
+  components: { ArticleForm },
   data() {
     return {
       articleContent: {

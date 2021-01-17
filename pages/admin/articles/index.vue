@@ -9,8 +9,8 @@
           <el-button type="primary" size="small" @click="handleCreate">新增</el-button>
         </template>
         <template slot-scope="{ row }">
-          <el-button @click="handleRead(row)" type="text" size="small">查看</el-button>
-          <el-button @click="handleEdit(row)" type="text" size="small">編輯</el-button>
+          <el-button type="text" size="small" @click="handleRead(row)">查看</el-button>
+          <el-button type="text" size="small" @click="handleEdit(row)">編輯</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -22,7 +22,7 @@
   </div>
 </template>
 <script>
-import articlePreview from '@/components/admin/articles/articlePreview'
+import ArticlePreview from '@/components/admin/articles/ArticlePreview'
 
 const newsData = [
   {
@@ -56,9 +56,9 @@ const newsData = [
 ]
 
 export default {
-  name: 'article',
+  name: 'Articles',
   layout: 'admin',
-  components: { articlePreview },
+  components: { ArticlePreview },
   data() {
     return {
       tableData: [],

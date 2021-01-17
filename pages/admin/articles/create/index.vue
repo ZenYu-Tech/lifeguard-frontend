@@ -4,12 +4,12 @@
   </div>
 </template>
 <script>
-import articleForm from '@/components/admin/articles/articleForm'
+import ArticleForm from '@/components/admin/articles/ArticleForm'
 
 export default {
-  name: 'article-create',
+  name: 'ArticleCreate',
   layout: 'admin',
-  components: { articleForm },
+  components: { ArticleForm },
   data() {
     return {
       articleContent: {

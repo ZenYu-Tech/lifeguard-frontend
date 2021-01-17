@@ -24,9 +24,10 @@
 </template>
 <script>
 export default {
+  name: 'ArticlePreview',
   props: {
-    dialogVisible: { type: Boolean },
-    articleContent: { type: Object }
+    dialogVisible: { type: Boolean, required: true },
+    articleContent: { type: Object, required: true }
   },
   methods: {
     handleEdit() {
