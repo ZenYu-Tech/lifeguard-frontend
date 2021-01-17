@@ -15,8 +15,8 @@
                 <label :for="item.label" class="el-button el-button--primary el-button--small"
                   >選擇檔案
                   <input
-                    type="file"
                     :id="item.label"
+                    type="file"
                     :accept="item.accept"
                     style="display: none"
                     @change="handleUpload($event, item.label)"
@@ -42,7 +42,7 @@
           </el-input>
           <label for="file" class="el-button el-button--primary"
             >選擇檔案
-            <input type="file" id="file" accept=".pdf" style="display: none" @change="handleUpload($event)" />
+            <input id="file" type="file" accept=".pdf" style="display: none" @change="handleUpload($event)" />
           </label>
 
           <div class="files-upload__placeholder">
@@ -99,6 +99,11 @@ export default {
       ]
     }
   },
+  computed: {
+    areaTitle() {
+      return this.filesNav.filter(nav => nav.id === this.activeNav)[0].name
+    }
+  },
   watch: {
     activeNav(currentNav) {
       this.allowMultiInput = false
@@ -121,17 +126,9 @@ export default {
   created() {
     this.tableData = certificationData
   },
-  computed: {
-    areaTitle() {
-      return this.filesNav.filter(nav => nav.id === this.activeNav)[0].name
-    }
-  },
   methods: {
     changeNav(navId) {
-      if (this.activeNav === navId) return
-      else {
-        this.activeNav = navId
-      }
+      if (this.activeNav !== navId) this.activeNav = navId
     },
     handleUpload(e, label) {
       const file = e.target.files[0]
@@ -140,8 +137,7 @@ export default {
       } else {
         this.multiInputGroup.forEach(input => {
           if (input.label === label) {
-            input.file = file
-            input.changed = true
+            input = Object.assign(input, { file: file, changed: true })
           }
         })
       }

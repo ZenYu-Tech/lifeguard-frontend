@@ -5,7 +5,7 @@
     <el-table-column prop="created_time" label="建立時間" width="100"> </el-table-column>
     <el-table-column align="right" width="50">
       <template slot-scope="{ row }">
-        <el-button @click="handleDelete(row)" type="text" size="small">刪除</el-button>
+        <el-button type="text" size="small" @click="handleDelete(row)">刪除</el-button>
       </template>
     </el-table-column>
   </el-table>
