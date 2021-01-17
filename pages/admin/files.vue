@@ -116,12 +116,12 @@ export default {
           this.showTable = true
           break
       }
-    },
-    fileData() {
-      if (this.fileData.title.length > 0) {
-        this.fileData.changed = true
-      }
     }
+    // fileData() {
+    //   if (this.fileData.title.length > 0) {
+    //     this.fileData.changed = true
+    //   }
+    // }
   },
   created() {
     this.tableData = certificationData
@@ -133,11 +133,11 @@ export default {
     handleUpload(e, label) {
       const file = e.target.files[0]
       if (!label) {
-        this.fileData = { title: file.name, file: file }
+        this.fileData = Object.assign(this.fileData, { title: file.name, file, changed: true })
       } else {
         this.multiInputGroup.forEach(input => {
           if (input.label === label) {
-            input = Object.assign(input, { file: file, changed: true })
+            input = Object.assign(input, { file, changed: true })
           }
         })
       }
