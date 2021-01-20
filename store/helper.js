@@ -20,6 +20,7 @@ const mutations = {
     state.haveBanner = bool
   },
   SET_currentDevice(state, device) {
+    console.log('Current Device:', device)
     state.currentDevice = device
   },
   SET_pagination(state, pagination) {
