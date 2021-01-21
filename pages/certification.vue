@@ -16,15 +16,13 @@
     </section>
     <section class="news">
       <h3 class="news__title">最新消息</h3>
-      <client-only>
-        <div class="news__wrapper">
-          <card-news-square
-            v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
-            :key="news.id"
-            :news="news"
-          ></card-news-square>
-        </div>
-      </client-only>
+      <div class="news__wrapper">
+        <card-news-square
+          v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
+          :key="news.id"
+          :news="news"
+        ></card-news-square>
+      </div>
     </section>
     <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
   </main>
@@ -57,7 +55,6 @@ export default {
     })
   },
   created() {
-    // only active at client side
     if (this.getCurrentDevice === 'tablet') {
       this.newsDisplayAmount = 4
     }

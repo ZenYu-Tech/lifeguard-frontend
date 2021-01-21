@@ -1,9 +1,7 @@
 <template>
   <main class="section-wrapper">
-    <client-only>
-      <section-training :videos="getVideos.slice(0, videoDisplayAmount)"></section-training>
-      <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
-    </client-only>
+    <section-training :videos="getVideos.slice(0, videoDisplayAmount)"></section-training>
+    <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
     <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
   </main>
 </template>
@@ -40,7 +38,6 @@ export default {
     }
   },
   created() {
-    // only active at client side
     if (this.getCurrentDevice === 'mobile') {
       this.videoDisplayAmount = 4
     }

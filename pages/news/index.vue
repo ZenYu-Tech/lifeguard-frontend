@@ -2,15 +2,13 @@
   <main class="section-wrapper">
     <section class="news">
       <h3 class="news__title">開課公告</h3>
-      <client-only>
-        <div class="news__wrapper">
-          <card-news-square
-            v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
-            :key="news.id"
-            :news="news"
-          ></card-news-square>
-        </div>
-      </client-only>
+      <div class="news__wrapper">
+        <card-news-square
+          v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
+          :key="news.id"
+          :news="news"
+        ></card-news-square>
+      </div>
       <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的公告</button>
     </section>
     <section class="section__more">
