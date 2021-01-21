@@ -5,8 +5,9 @@
       <div class="news__wrapper">
         <card-news-square
           v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
-          :key="news.id"
+          :key="news.articleId"
           :news="news"
+          @click.native="go2DetailPage(news.articleId)"
         ></card-news-square>
       </div>
       <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的公告</button>
@@ -65,6 +66,9 @@ export default {
     loadMoreNews() {
       const maxLenght = this.getArticlesByCategory('news').length
       this.newsDisplayAmount = Math.min(maxLenght, this.newsDisplayAmount + this.increaseUnit)
+    },
+    go2DetailPage(id) {
+      this.$router.push(`/news/${id}`)
     }
   }
 }

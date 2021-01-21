@@ -44,6 +44,9 @@ const getters = {
   getArticle: state => state.article,
   getArticleById: state => id => {
     return state.articles.find(article => article.articleId === id)
+  },
+  getArticleIndex: state => id => {
+    return state.articles.findIndex(article => article.articleId === id)
   }
 }
 
@@ -57,9 +60,9 @@ const mutations = {
 }
 
 const actions = {
-  async fetchArticle({ commit }, { category, id }) {
+  async fetchArticle({ commit }, { category, articleId }) {
     try {
-      const { data } = await this.$articleApi.fetchArticle(category, id)
+      const { data } = await this.$articleApi.fetchArticle(category, articleId)
       commit('SET_article', data.result)
     } catch (error) {
       console.error(error)
