@@ -3,7 +3,7 @@
     <section class="article">
       <div class="article__header">
         <h4>{{ article.title }}</h4>
-        <time>{{ getCreatedAt }}</time>
+        <time>{{ $formatDate(article.createdAt, true) }}</time>
       </div>
       <div class="article__content">
         <div v-html="article.content"></div>
@@ -40,10 +40,7 @@ export default {
     ...mapGetters('client', {
       article: 'article/getArticle',
       getVideos: 'video/getVideos'
-    }),
-    getCreatedAt() {
-      return new Date(this.article.createdAt).toISOString().slice(0, 16).replace('T', ' ')
-    }
+    })
   }
 }
 </script>
