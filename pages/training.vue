@@ -2,7 +2,7 @@
   <main class="section-wrapper">
     <section-training :videos="getVideos.slice(0, videoDisplayAmount)"></section-training>
     <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
-    <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
+    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
   </main>
 </template>
 

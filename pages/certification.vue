@@ -24,7 +24,7 @@
         ></card-news-square>
       </div>
     </section>
-    <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
+    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
   </main>
 </template>
 

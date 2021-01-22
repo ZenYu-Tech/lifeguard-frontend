@@ -123,7 +123,7 @@ export default {
           title: '活動花絮',
           subMenuList: [],
           action: 'internal-link',
-          link: '/highlight'
+          link: '/experience'
         },
         {
           title: '相關網站',

@@ -1,10 +1,10 @@
 <template>
-  <main class="section-wrapper">This is highlight detail page</main>
+  <main class="section-wrapper">This is experience detail page</main>
 </template>
 
 <script>
 export default {
-  name: 'HighlightDetail',
+  name: 'ExperienceDetail',
   meta: {
     haveBanner: false
   }
