@@ -9,8 +9,8 @@
         <div v-html="article.content"></div>
       </div>
       <div class="article__footer">
-        <button class="hidden-lg-only" @click="$router.go(-1)">返回</button>
-        <button>下一則</button>
+        <button class="hidden-lg-only" @click="$router.push('/news')">返回</button>
+        <button v-if="!noMoreArticle" @click="next">下一則</button>
       </div>
     </section>
     <section-training class="hidden-md-and-down" :videos="getVideos.slice(0, 2)"></section-training>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'NewsDetail',
@@ -39,8 +39,40 @@ export default {
   computed: {
     ...mapGetters('client', {
       article: 'article/getArticle',
+      getArticlesByCategory: 'article/getArticlesByCategory',
+      getPagination: 'article/getPagination',
       getVideos: 'video/getVideos'
-    })
+    }),
+    articles() {
+      return this.getArticlesByCategory('news')
+    },
+    currentIndex() {
+      return this.articles.findIndex(article => article.articleId === this.articleId)
+    },
+    articleLength() {
+      return this.articles.length
+    },
+    noMoreArticle() {
+      const { page, totalPage } = this.getPagination
+      return page === totalPage && this.currentIndex === this.articleLength - 1
+    }
+  },
+  methods: {
+    ...mapActions('client', {
+      fetchArticles: 'article/fetchArticles'
+    }),
+    next() {
+      if (this.currentIndex + 3 > this.articleLength - 1) {
+        const { page, totalPage } = this.getPagination
+        if (page !== totalPage) {
+          this.fetchArticles({ category: 'news', count: 10, page: page + 1 })
+        }
+      }
+
+      if (!this.noMoreArticle) {
+        this.$router.push(`/news/${this.articles[this.currentIndex + 1].articleId}`)
+      }
+    }
   }
 }
 </script>
