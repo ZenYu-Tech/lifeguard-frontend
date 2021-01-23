@@ -33,6 +33,12 @@ const state = () => ({
      * @type {Array<Image>}
      */
     images: []
+  },
+  pagination: {
+    page: 1,
+    count: 10,
+    totalCount: 4,
+    totalPage: 1
   }
 })
 
@@ -44,22 +50,31 @@ const getters = {
   getArticle: state => state.article,
   getArticleById: state => id => {
     return state.articles.find(article => article.articleId === id)
-  }
+  },
+  getPagination: state => state.pagination
 }
 
 const mutations = {
   SET_article(state, article) {
     state.article = article
   },
-  SET_articles(state, articles) {
+  Init_articles(state, articles) {
     state.articles = articles
+  },
+  Add_articles(state, articles) {
+    state.articles.push(...articles)
+  },
+  SET_pagination(state, pagination) {
+    Object.keys(pagination).forEach(key => {
+      state.pagination[key] = Number(pagination[key])
+    })
   }
 }
 
 const actions = {
-  async fetchArticle({ commit }, { category, id }) {
+  async fetchArticle({ commit }, { category, articleId }) {
     try {
-      const { data } = await this.$articleApi.fetchArticle(category, id)
+      const { data } = await this.$articleApi.fetchArticle(category, articleId)
       commit('SET_article', data.result)
     } catch (error) {
       console.error(error)
@@ -68,7 +83,12 @@ const actions = {
   async fetchArticles({ commit }, { category, count = 10, page = 1 }) {
     try {
       const { data } = await this.$articleApi.fetchArticles(category, count, page)
-      commit('SET_articles', data.result.articles)
+      commit('SET_pagination', data.result.pagination)
+      if (page === 1) {
+        commit('Init_articles', data.result.articles)
+      } else {
+        commit('Add_articles', data.result.articles)
+      }
     } catch (error) {
       console.error(error)
     }

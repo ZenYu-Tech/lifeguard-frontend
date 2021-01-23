@@ -25,7 +25,8 @@ export default {
   plugins: [
     '@/plugins/apis/axios',
     '@/plugins/element-ui',
-    '@/plugins/detect-device.client.js'
+    '@/plugins/detect-device.client.js',
+    '@/plugins/date-formator.js'
   ],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
@@ -39,7 +40,9 @@ export default {
   ],
 
   // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: ['@nuxtjs/axios'],
+  modules: [
+    '@nuxtjs/axios'
+  ],
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {

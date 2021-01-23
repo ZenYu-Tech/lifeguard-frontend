@@ -3,7 +3,7 @@
     <div v-html="embedIframe"></div>
     <div>
       <h6 class="video__title">{{ video.title }}</h6>
-      <time class="video__upload-time">上傳時間 {{ dateFormator(video.createdAt) }}</time>
+      <time class="video__upload-time">上傳時間 {{ $formatDate(video.createdAt) }}</time>
     </div>
   </div>
 </template>
@@ -26,9 +26,6 @@ export default {
     this.resizeIframe(this.embedIframe)
   },
   methods: {
-    dateFormator(date) {
-      return new Date(date).toISOString().slice(0, 10)
-    },
     resizeIframe(iframe) {
       this.embedIframe = this.video.embedIframe
       this.embedIframe = this.embedIframe.replace(/width="[0-9]*"/m, 'width="100%"')

@@ -5,8 +5,9 @@
       <div class="news__wrapper">
         <card-news-square
           v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
-          :key="news.id"
+          :key="news.articleId"
           :news="news"
+          @click.native="go2DetailPage(news.articleId)"
         ></card-news-square>
       </div>
       <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的公告</button>
@@ -19,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'News',
@@ -36,13 +37,17 @@ export default {
   },
   computed: {
     ...mapGetters('client', {
-      getArticlesByCategory: 'article/getArticlesByCategory'
+      getArticlesByCategory: 'article/getArticlesByCategory',
+      getPagination: 'article/getPagination'
     }),
     ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
+    newsLength() {
+      return this.getArticlesByCategory('news').length
+    },
     noMoreNews() {
-      return this.newsDisplayAmount === this.getArticlesByCategory('news').length
+      return this.newsDisplayAmount === this.newsLength
     },
     increaseUnit() {
       switch (this.getCurrentDevice) {
@@ -62,9 +67,22 @@ export default {
     this.newsDisplayAmount = this.increaseUnit
   },
   methods: {
-    loadMoreNews() {
-      const maxLenght = this.getArticlesByCategory('news').length
-      this.newsDisplayAmount = Math.min(maxLenght, this.newsDisplayAmount + this.increaseUnit)
+    ...mapActions('client', {
+      fetchArticles: 'article/fetchArticles'
+    }),
+    async loadMoreNews() {
+      if (this.newsDisplayAmount + this.increaseUnit >= this.newsLength) {
+        const { page, totalPage } = this.getPagination
+        if (page !== totalPage) {
+          await this.fetchArticles({ category: 'news', count: 10, page: page + 1 })
+        }
+      }
+      if (!this.noMoreNews) {
+        this.newsDisplayAmount = Math.min(this.newsLength, this.newsDisplayAmount + this.increaseUnit)
+      }
+    },
+    go2DetailPage(id) {
+      this.$router.push(`/news/${id}`)
     }
   }
 }

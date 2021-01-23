@@ -1,6 +1,6 @@
 export default axios => ({
-  fetchArticle(category, id) {
-    return axios(`/article/${category}/${id}`, {
+  fetchArticle(category, articleId) {
+    return axios(`/article/${category}/${articleId}`, {
       method: 'GET'
     })
   },

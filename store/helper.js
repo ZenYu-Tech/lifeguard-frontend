@@ -1,18 +1,11 @@
 const state = () => ({
   haveBanner: false,
-  currentDevice: 'mobile',
-  pagination: {
-    page: 1,
-    count: 10,
-    totalCount: 4,
-    totalPage: 1
-  }
+  currentDevice: 'mobile'
 })
 
 const getters = {
   getHaveBanner: state => state.haveBanner,
-  getCurrentDevice: state => state.currentDevice,
-  getPagination: state => state.pagination
+  getCurrentDevice: state => state.currentDevice
 }
 
 const mutations = {
@@ -22,9 +15,6 @@ const mutations = {
   SET_currentDevice(state, device) {
     console.log('Current Device:', device)
     state.currentDevice = device
-  },
-  SET_pagination(state, pagination) {
-    state.pagination = pagination
   }
 }
 

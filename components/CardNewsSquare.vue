@@ -2,7 +2,7 @@
   <article class="card-news">
     <h6 class="card-news__title">{{ news.title }}</h6>
     <p class="card-news__content" v-html="news.content"></p>
-    <time class="card-news__time">{{ dateFormator(news.createdAt) }}</time>
+    <time class="card-news__time">{{ $formatDate(news.createdAt, true) }}</time>
   </article>
 </template>
 
@@ -13,11 +13,6 @@ export default {
     news: {
       type: Object,
       required: true
-    }
-  },
-  methods: {
-    dateFormator(date) {
-      return new Date(date).toISOString().slice(0, 16).replace('T', ' ')
     }
   }
 }

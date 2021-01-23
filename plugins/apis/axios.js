@@ -10,10 +10,7 @@ export default function ({ $axios, $config, store }, inject) {
   })
 
   $axios.onResponse(response => {
-    const data = response.data
-    if (data.result?.pagination) {
-      store.commit('helper/SET_pagination', data.result.pagination)
-    }
+    console.log(response.data.message)
   })
 
   $axios.onResponseError(error => {
