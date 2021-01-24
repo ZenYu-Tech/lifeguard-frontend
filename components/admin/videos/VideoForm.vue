@@ -7,7 +7,7 @@
     width="50%"
   >
     <el-row>
-      <div v-if="!!videoContent.url" class="video-preview" v-html="videoContent.url"></div>
+      <div v-if="!!videoContent.embedIframe" class="video-preview" v-html="videoContent.embedIframe"></div>
       <div v-else class="video-preview__placeholder">影片預覽</div>
     </el-row>
 
@@ -21,9 +21,9 @@
       </el-row>
 
       <el-row>
-        <el-form-item prop="url">
+        <el-form-item prop="embedIframe">
           <el-input
-            v-model="videoContent.url"
+            v-model="videoContent.embedIframe"
             type="textarea"
             autosize
             placeholder="請貼上 YouTube 影片內嵌 iframe"
@@ -41,6 +41,8 @@
   </el-dialog>
 </template>
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'VideoForm',
   props: {
@@ -65,6 +67,10 @@ export default {
     this.judgeEditState()
   },
   methods: {
+    ...mapActions({
+      createVideo: 'admin/video/createVideo',
+      editVideo: 'admin/video/editVideo'
+    }),
     handleEdit() {
       this.$emit('change-state', '編輯')
       this.isEditable = true
@@ -87,11 +93,14 @@ export default {
             cancelButtonText: '返回',
             type: 'warning'
           }).then(() => {
-            // sent request ..
-            this.$message({
-              type: 'success',
-              message: '上傳成功'
-            })
+            if (!this.videoContent.videoId) {
+              const { title, embedIframe } = this.videoContent
+              this.createVideo({ title, embedIframe })
+            } else {
+              const { videoId, title, embedIframe } = this.videoContent
+              this.editVideo({ videoId, title, embedIframe })
+            }
+            this.handleClose()
           })
         } else return false
       })
