@@ -10,7 +10,7 @@
       </el-table-column>
       <el-table-column prop="createdAt" label="建立時間" width="120">
         <template slot-scope="{ row }">
-          {{ row.createdAt.slice(0, 10) }}
+          {{ $formatDate(row.createdAt, true) }}
         </template>
       </el-table-column>
       <el-table-column align="right" width="120">

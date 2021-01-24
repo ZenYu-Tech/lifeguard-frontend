@@ -1,6 +1,6 @@
 <template>
   <div class="admin-container">
-    <article-form :article-content="getArticle"></article-form>
+    <article-form :article-content="getArticle" @submitForm="submitForm"></article-form>
   </div>
 </template>
 <script>
