@@ -1,6 +1,6 @@
 <template>
   <div class="admin-container">
-    <article-form :article-content="articleContent" v-on:submitForm="submitForm"></article-form>
+    <article-form :article-content="articleContent" @submitForm="submitForm"></article-form>
   </div>
 </template>
 <script>

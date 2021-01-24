@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-container" v-loading="loading">
+  <div v-loading="loading" class="admin-container">
     <el-table :data="getArticles" stripe style="width: 100%">
       <el-table-column prop="title" label="文章標題"> </el-table-column>
       <el-table-column prop="category" label="類別" width="120">
@@ -27,7 +27,7 @@
       v-if="dialogVisible"
       :dialog-visible="dialogVisible"
       :article-content="getArticle"
-      v-on:closeDialog="closeDialog"
+      @closeDialog="closeDialog"
     ></article-preview>
   </div>
 </template>
