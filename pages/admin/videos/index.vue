@@ -4,7 +4,7 @@
       <el-table-column prop="title" label="影片標題"> </el-table-column>
       <el-table-column prop="createdAt" label="建立時間" width="120">
         <template slot-scope="{ row }">
-          {{ row.createdAt.slice(0, 10) }}
+          {{ $formatDate(row.createdAt, true) }}
         </template>
       </el-table-column>
       <el-table-column align="right" width="120">
@@ -22,7 +22,6 @@
       :dialog-visible="dialogVisible"
       :video-content="targetVideo"
       :dialog-state="dialogState"
-      :rules="formRules"
       @change-state="changeState"
       @reset-dialog="resetDialog"
     ></video-form>
@@ -46,10 +45,7 @@ export default {
         title: '',
         embedIframe: ''
       },
-      formRules: {
-        title: { required: true, message: '請輸入影片標題', trigger: 'blur' },
-        embedIframe: { required: true, message: '請貼上影片 iframe', trigger: 'blur' }
-      },
+
       dialogState: ''
     }
   },
