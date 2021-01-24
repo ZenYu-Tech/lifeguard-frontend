@@ -1,10 +1,15 @@
 <template>
   <main class="section-wrapper">
-    <section class="highlight">
-      <h3 class="highlight__title">活動花絮</h3>
-      <div class="highlight__wrapper">
-        <template v-for="article in getArticlesByCategory('news').slice(0, 4)">
-          <nuxt-link :key="article.articleId" tag="div" :to="`/highlight/${article.articleId}`" class="highlight__item">
+    <section class="experience">
+      <h3 class="experience__title">活動花絮</h3>
+      <div class="experience__wrapper">
+        <template v-for="article in getArticlesByCategory('experience')">
+          <nuxt-link
+            :key="article.articleId"
+            tag="div"
+            :to="`/experience/${article.articleId}`"
+            class="experience__item"
+          >
             <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
           </nuxt-link>
         </template>
@@ -17,12 +22,12 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Highlight',
+  name: 'Experience',
   meta: {
     haveBanner: false
   },
   async asyncData({ store }) {
-    await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'experience' })
   },
   computed: {
     ...mapGetters('client', {
@@ -45,7 +50,7 @@ export default {
   }
 }
 
-.highlight {
+.experience {
   display: grid;
   row-gap: 35px;
   &__title {

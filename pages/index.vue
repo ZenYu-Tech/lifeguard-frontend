@@ -7,7 +7,7 @@
       </div>
     </section>
     <section-training :videos="getVideos.slice(0, 2)"></section-training>
-    <section-highlight :article-highlights="getArticlesByCategory('news').slice(0, 4)"></section-highlight>
+    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
   </main>
 </template>
 
@@ -49,7 +49,7 @@ export default {
     grid-template-rows: 676px auto;
     grid-template-areas:
       'news training'
-      'highlight highlight';
+      'experience experience';
     column-gap: 80px;
     row-gap: 90px;
     > section:nth-child(1) {
@@ -59,7 +59,7 @@ export default {
       grid-area: training;
     }
     > section:nth-child(3) {
-      grid-area: highlight;
+      grid-area: experience;
     }
   }
 }

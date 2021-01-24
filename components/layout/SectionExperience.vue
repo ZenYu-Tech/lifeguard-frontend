@@ -1,12 +1,17 @@
 <template>
-  <section class="highlight">
-    <h3 class="highlight__title">活動花絮</h3>
+  <section class="experience">
+    <h3 class="experience__title">活動花絮</h3>
     <slick-carousel :width="'86vw'" :height="231" :options="slickOptions">
-      <div v-for="article in articleHighlights" :key="article.id" class="highlight__item" :style="{ height: '231px' }">
+      <div
+        v-for="article in articleExperiences"
+        :key="article.id"
+        class="experience__item"
+        :style="{ height: '231px' }"
+      >
         <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
       </div>
     </slick-carousel>
-    <button class="highlight__more">
+    <button class="experience__more">
       看更多成果照片
       <i></i>
     </button>
@@ -17,7 +22,7 @@
 export default {
   name: 'SectionHightlight',
   props: {
-    articleHighlights: {
+    articleExperiences: {
       type: Array,
       required: true
     }
@@ -55,7 +60,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.highlight {
+.experience {
   display: grid;
   grid-template-columns: 1fr;
   justify-items: center;
