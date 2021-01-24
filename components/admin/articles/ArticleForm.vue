@@ -22,8 +22,13 @@
             >＋
             <input id="img" type="file" name="img" multiple @change="handleUpload($event)" />
           </label>
-          <div v-for="(image, index) in imageArray" :key="image.size" class="preview" @click="handleDeleteImage(index)">
-            <img :ref="'image' + parseInt(index)" />
+          <div
+            v-for="item in articleContent.images"
+            :key="item.imageId"
+            class="preview"
+            @click="handleDeleteImage(item.imageId)"
+          >
+            <img :src="item.image" :data-id="item.imageId" />
           </div>
         </div>
       </el-card>
@@ -32,10 +37,10 @@
       <div class="article-create__button">
         <div>
           <el-button @click="goBack">取消</el-button>
-          <el-button type="primary" @click="previewArticle()">預覽</el-button>
+          <el-button type="primary" @click="previewArticle">預覽</el-button>
         </div>
         <div>
-          <el-button type="success" @click="submitForm()">確認上傳</el-button>
+          <el-button type="success" @click="submitForm">確認上傳</el-button>
         </div>
       </div>
     </el-row>
@@ -68,8 +73,7 @@ export default {
           value: 'experience',
           label: '活動花絮'
         }
-      ],
-      imageArray: []
+      ]
     }
   },
   watch: {
@@ -98,16 +102,16 @@ export default {
 
         reader.readAsDataURL(this.imageArray[i])
       }
+    },
+    previewArticle() {
+      console.log('previewArticle')
+    },
+    submitForm() {
+      this.$emit('submitForm', this.articleContent)
+    },
+    goBack() {
+      this.$router.back()
     }
-  },
-  goBack() {
-    console.log('goBack')
-  },
-  previewArticle() {
-    console.log('previewArticle')
-  },
-  submitForm() {
-    console.log('submitForm')
   }
 }
 </script>

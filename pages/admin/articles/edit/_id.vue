@@ -1,36 +1,30 @@
 <template>
   <div class="admin-container">
-    <article-form :article-content="articleContent"></article-form>
+    <article-form :article-content="getArticle"></article-form>
   </div>
 </template>
 <script>
 import ArticleForm from '@/components/admin/articles/ArticleForm'
-
-const article = {
-  id: 10,
-  title: '這是一篇測試文章',
-  content:
-    '<p class="ql-align-center">dmormf</p><pre class="ql-syntax ql-align-center" spellcheck="false">fmlmerl;f\n</pre><ul data-checked="false"><li class="ql-align-center">dmrfm;r</li></ul>',
-  category: 'news'
-}
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'ArticleEdit',
   layout: 'admin',
   components: { ArticleForm },
-  data() {
-    return {
-      articleContent: {
-        id: '',
-        title: '',
-        content: '',
-        category: '',
-        image: []
-      }
-    }
+  computed: {
+    ...mapGetters('admin', {
+      getArticle: 'article/getArticle'
+    })
   },
-  created() {
-    this.articleContent = article
+
+  methods: {
+    ...mapActions({
+      editArticle: 'admin/article/editArticle'
+    }),
+    async submitForm(formData) {
+      const { category, title, content, mainImageIndex, images } = formData
+      await this.editArticle({ category, title, content, mainImageIndex, images })
+    }
   }
 }
 </script>
