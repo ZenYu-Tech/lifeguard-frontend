@@ -8,7 +8,7 @@
       <div v-html="article.content"></div>
     </div>
     <div class="article__footer">
-      <button class="hidden-lg-only" @click="$router.push('/news')">返回</button>
+      <button class="hidden-lg-only" @click="$router.push(`/${category}`)">返回</button>
       <button v-if="!noMoreArticle" @click="next">下一則</button>
     </div>
   </section>

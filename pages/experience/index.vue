@@ -3,7 +3,7 @@
     <section class="experience">
       <h3 class="experience__title">活動花絮</h3>
       <div class="experience__wrapper">
-        <template v-for="article in getArticlesByCategory('news').slice(0, 4)">
+        <template v-for="article in getArticlesByCategory('experience')">
           <nuxt-link
             :key="article.articleId"
             tag="div"
@@ -27,7 +27,7 @@ export default {
     haveBanner: false
   },
   async asyncData({ store }) {
-    await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'experience' })
   },
   computed: {
     ...mapGetters('client', {
