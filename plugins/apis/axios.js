@@ -2,11 +2,12 @@
  * To see $axios api interface (Source Code: https://github.com/nuxt-community/axios-module/blob/master/lib/plugin.js)
  */
 
-export default function ({ $axios, $config, store }, inject) {
+export default function ({ $axios, $config, redirect, store }, inject) {
   $axios.setBaseURL($config.baseURL)
 
-  $axios.onRequest(config => {
-    console.log('Making request to ' + config.url)
+  $axios.onRequest(request => {
+    request.headers.Authorization = `Bearer ${store.getters['admin/user/getToken']}`
+    console.log('Making request to ' + request.url)
   })
 
   $axios.onResponse(response => {
@@ -14,6 +15,11 @@ export default function ({ $axios, $config, store }, inject) {
   })
 
   $axios.onResponseError(error => {
+    const status = error.response.status
+
+    if (status === 401) {
+      return redirect('/admin/login')
+    }
     Promise.reject(error)
   })
 
