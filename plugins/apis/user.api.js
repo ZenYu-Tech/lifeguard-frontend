@@ -1,13 +1,8 @@
 export default axios => ({
-  login(input) {
-    return axios(`manage/login`, {
+  login(params) {
+    return axios(`/manage/user/signin`, {
       method: 'POST',
-      data: input
-    })
-  },
-  logout() {
-    return axios(`manage/logout`, {
-      method: 'POST'
+      data: params
     })
   }
 })

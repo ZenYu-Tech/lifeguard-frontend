@@ -2,10 +2,10 @@
   <div class="admin-login" :style="{ 'background-image': `url(${require('@/assets/images/login.jpg')})` }">
     <div class="login-form">
       <div class="login-form__title">後台管理系統</div>
-      <el-input v-model="user.userName" class="login-form__input">
+      <el-input v-model="account" class="login-form__input">
         <template slot="prepend">帳號</template>
       </el-input>
-      <el-input v-model="user.password" class="login-form__input">
+      <el-input v-model="password" show-password clearable class="login-form__input">
         <template slot="prepend">密碼</template>
       </el-input>
       <div>
@@ -15,36 +15,44 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+
 export default {
   name: 'Login',
   layout: 'login',
   data() {
     return {
-      user: {
-        userName: '',
-        password: ''
-      }
+      account: 'lifeguard2020',
+      password: 'nsysulifeguard'
     }
   },
   methods: {
-    submitForm() {
-      if (this.user.userName === '') {
-        this.$message.error('請輸入帳號')
-        return
+    ...mapActions('admin', {
+      login: 'user/login'
+    }),
+    async submitForm() {
+      if (this.account === '') {
+        return this.$message({
+          showClose: true,
+          message: '請輸入帳號',
+          type: 'error'
+        })
       }
 
-      if (this.user.password === '') {
-        this.$message.error('請輸入密碼')
-        return
+      if (this.password === '') {
+        return this.$message({
+          showClose: true,
+          message: '請輸入密碼',
+          type: 'error'
+        })
       }
 
-      // const data = await this.$store.dispatch('user/login', this.user)
-
-      // if (data.error) {
-      //   this.$message(data.error)
-      // } else {
-      this.$router.push('/admin/articles')
-      // }
+      try {
+        await this.login({ account: this.account, password: this.password })
+        this.$router.push('/admin/articles')
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }

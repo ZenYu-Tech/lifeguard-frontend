@@ -59,6 +59,9 @@ export default {
   name: 'Articles',
   layout: 'admin',
   components: { ArticlePreview },
+  async asyncData({ store }) {
+    await store.dispatch('admin/article/fetchArticles', { count: 10, page: 1 })
+  },
   data() {
     return {
       tableData: [],
