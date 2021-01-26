@@ -13,7 +13,7 @@
         <template v-if="menu.subMenuList.length > 0">
           <h5 class="link-section__title">{{ menu.title }}</h5>
           <ul class="link-section__link-group">
-            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
+            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title" @click="$emit('collapse')">
               <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">
                 {{ subMenu.title }}
               </nuxt-link>
@@ -25,7 +25,13 @@
           </ul>
         </template>
         <template v-else>
-          <nuxt-link v-if="menu.action === 'internal-link'" tag="h5" :to="menu.link" class="link-section__title">
+          <nuxt-link
+            v-if="menu.action === 'internal-link'"
+            tag="h5"
+            :to="menu.link"
+            class="link-section__title"
+            @click.native="$emit('collapse')"
+          >
             {{ menu.title }}
           </nuxt-link>
           <h5 v-else class="link-section__title">{{ menu.title }}</h5>
