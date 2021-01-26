@@ -7,6 +7,7 @@
         :key="article.id"
         class="experience__item"
         :style="{ height: '231px' }"
+        :data-title="article.title"
       >
         <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
       </div>
@@ -95,10 +96,30 @@ export default {
     padding: 0px 10px;
     outline: none;
     cursor: pointer;
+    position: relative;
     &:hover {
       opacity: 0.7;
       @media (min-width: 1200px) {
-        transform: scale(1.1);
+        opacity: 1;
+        &::after {
+          content: attr(data-title);
+          position: absolute;
+          top: 0px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: calc(100% - 20px);
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          margin: 0 auto;
+          font-weight: bold;
+          display: flex;
+          color: #ffffff;
+          justify-content: flex-start;
+          align-items: flex-end;
+          font-size: 28px;
+          line-height: 28px;
+          padding: 14px;
+        }
       }
     }
     > img {
