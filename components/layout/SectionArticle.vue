@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'SectionArticle',
@@ -31,37 +31,17 @@ export default {
   },
   computed: {
     ...mapGetters('client', {
-      getArticlesByCategory: 'article/getArticlesByCategory',
       getPagination: 'article/getPagination'
     }),
-    articles() {
-      return this.getArticlesByCategory(this.category)
-    },
-    currentIndex() {
-      return this.articles.findIndex(article => article.articleId === this.article.articleId)
-    },
-    articleLength() {
-      return this.articles.length
-    },
     noMoreArticle() {
-      const { page, totalPage } = this.getPagination
-      return page === totalPage && this.currentIndex === this.articleLength - 1
+      return this.getPagination.next === null
     }
   },
   methods: {
-    ...mapActions('client', {
-      fetchArticles: 'article/fetchArticles'
-    }),
     next() {
-      if (this.currentIndex + 3 > this.articleLength - 1) {
-        const { page, totalPage } = this.getPagination
-        if (page !== totalPage) {
-          this.fetchArticles({ category: this.category, count: 10, page: page + 1 })
-        }
-      }
-
       if (!this.noMoreArticle) {
-        this.$router.push(`/${this.category}/${this.articles[this.currentIndex + 1].articleId}`)
+        const path = this.getPagination.next.replace(/http[s]*:\/\/.*?\//, '')
+        this.$router.push(`/${path}`)
       }
     }
   }
