@@ -19,7 +19,7 @@
       </template>
     </section>
     <section-article :article="article" :category="category"></section-article>
-    <section-training class="hidden-md-and-down" :videos="getVideos.slice(0, 2)"></section-training>
+    <section-training class="hidden-md-and-down" :display-amount="2"></section-training>
   </main>
 </template>
 
@@ -70,8 +70,7 @@ export default {
   },
   computed: {
     ...mapGetters('client', {
-      article: 'article/getArticle',
-      getVideos: 'video/getVideos'
+      article: 'article/getArticle'
     }),
     ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'

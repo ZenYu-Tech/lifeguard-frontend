@@ -3,7 +3,7 @@
     <h3 class="experience__title">活動花絮</h3>
     <slick-carousel :width="'86vw'" :height="231" :options="slickOptions">
       <div
-        v-for="article in articleExperiences"
+        v-for="article in getExperienceArticles.slice(0, 4)"
         :key="article.id"
         class="experience__item"
         :style="{ height: '231px' }"
@@ -20,14 +20,9 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'SectionHightlight',
-  props: {
-    articleExperiences: {
-      type: Array,
-      required: true
-    }
-  },
   data() {
     return {
       slickOptions: {
@@ -56,6 +51,11 @@ export default {
         ]
       }
     }
+  },
+  computed: {
+    ...mapGetters('client', {
+      getExperienceArticles: 'article/getExperienceArticles'
+    })
   }
 }
 </script>

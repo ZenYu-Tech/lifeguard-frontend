@@ -1,8 +1,8 @@
 <template>
   <main class="section-wrapper">
-    <section-training :videos="getVideos.slice(0, videoDisplayAmount)"></section-training>
+    <section-training :display-amount="videoDisplayAmount"></section-training>
     <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
-    <section-experience :article-experiences="getArticlesByCategory('experience').slice(0, 4)"></section-experience>
+    <section-experience></section-experience>
   </main>
 </template>
 
@@ -24,7 +24,6 @@ export default {
   },
   computed: {
     ...mapGetters('client', {
-      getArticlesByCategory: 'article/getArticlesByCategory',
       getVideos: 'video/getVideos'
     }),
     ...mapGetters({
