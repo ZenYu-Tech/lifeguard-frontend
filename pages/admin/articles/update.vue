@@ -1,7 +1,8 @@
 <template>
   <div class="admin-container">
     <article-form
-      :article-content="getAction === 'create' ? articleForm : getClonedArticle"
+      :article-content="getAction === 'create' ? articleForm : clonedArticle"
+      v-loading="loading"
       @submitForm="submitForm"
     ></article-form>
   </div>
@@ -23,8 +24,12 @@ export default {
         images: [],
         mainImageIndex: 0
       },
-      clonedArticle: {}
+      clonedArticle: {},
+      loading: false
     }
+  },
+  created() {
+    if (this.$route.query.action === 'edit') this.getClonedArticle()
   },
   computed: {
     ...mapGetters('admin', {
@@ -32,17 +37,6 @@ export default {
     }),
     getAction() {
       return this.$route.query.action
-    },
-    getClonedArticle() {
-      const imagesArray = this.getArticle.images.map(item => {
-        return { ...item, base64File: item?.image }
-      })
-
-      this.clonedArticle = JSON.parse(JSON.stringify(this.getArticle))
-
-      this.clonedArticle.images = imagesArray
-
-      return this.clonedArticle
     }
   },
   methods: {
@@ -50,15 +44,22 @@ export default {
       createArticle: 'admin/article/createArticle',
       editArticle: 'admin/article/editArticle'
     }),
+    getClonedArticle() {
+      const imagesArray = this.getArticle.images.map(item => {
+        return { ...item, base64File: item?.image }
+      })
+
+      this.clonedArticle = JSON.parse(JSON.stringify(this.getArticle))
+      this.clonedArticle.images = imagesArray
+    },
     async submitForm(formData) {
+      this.loading = true
       const { articleId, category, title, content, mainImageIndex, images } = formData
       let res
 
-      let formatImageArray = images.map(item => {
+      const formatImageArray = images.map(item => {
         return item.image
       })
-
-      console.log('formatImageArray', formatImageArray)
 
       if (this.$route.query.action === 'create') {
         res = await this.createArticle({ category, title, content, mainImageIndex, formatImageArray })
@@ -66,8 +67,8 @@ export default {
         res = await this.editArticle({ articleId, category, title, content, mainImageIndex, formatImageArray })
       }
 
-      if (!res) return
-      else this.$router.back()
+      if (res?.status === 200) this.$router.back()
+      this.loading = false
     }
   }
 }

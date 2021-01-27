@@ -27,8 +27,8 @@
       v-if="dialogVisible"
       :dialog-visible="dialogVisible"
       :article-content="getArticle"
-      @closeDialog="closeDialog"
       v-loading="loading"
+      @closeDialog="closeDialog"
     ></article-preview>
   </div>
 </template>
