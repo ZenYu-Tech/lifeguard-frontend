@@ -1,6 +1,6 @@
 <template>
   <div class="admin-container">
-    <el-table :data="tableData" stripe style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" height="75vh">
       <el-table-column prop="title" label="文章標題"> </el-table-column>
       <el-table-column prop="category" label="類別" width="120"> </el-table-column>
       <el-table-column prop="created_time" label="建立時間" width="120"> </el-table-column>
@@ -14,6 +14,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="text-align: center; margin-top: 20px">
+      <pagination :page="page" :count="count" :total="123"></pagination>
+    </div>
     <article-preview
       v-if="dialogVisible"
       :dialog-visible="dialogVisible"
@@ -23,6 +26,7 @@
 </template>
 <script>
 import ArticlePreview from '@/components/admin/articles/ArticlePreview'
+import Pagination from '@/components/admin/Pagination'
 
 const newsData = [
   {
@@ -58,7 +62,7 @@ const newsData = [
 export default {
   name: 'Articles',
   layout: 'admin',
-  components: { ArticlePreview },
+  components: { ArticlePreview, Pagination },
   async asyncData({ store }) {
     await store.dispatch('admin/article/fetchArticles', { count: 10, page: 1 })
   },
@@ -66,7 +70,9 @@ export default {
     return {
       tableData: [],
       dialogVisible: false,
-      targetArticle: null
+      targetArticle: null,
+      count: 10,
+      page: 1
     }
   },
   created() {

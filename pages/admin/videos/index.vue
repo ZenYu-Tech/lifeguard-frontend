@@ -1,6 +1,6 @@
 <template>
   <div class="admin-container">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="tableData" style="width: 100%" height="75vh">
       <el-table-column prop="title" label="影片標題"> </el-table-column>
       <el-table-column prop="created_time" label="建立時間" width="120"> </el-table-column>
       <el-table-column align="right" width="120">
@@ -13,6 +13,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="text-align: center; margin-top: 20px">
+      <pagination :page="page" :count="count" :total="123"></pagination>
+    </div>
     <video-form
       v-if="dialogVisible"
       :dialog-visible="dialogVisible"
@@ -26,6 +29,7 @@
 </template>
 <script>
 import VideoForm from '@/components/admin/videos/VideoForm'
+import Pagination from '@/components/admin/Pagination'
 
 const newsData = [
   {
@@ -61,7 +65,7 @@ const newsData = [
 export default {
   name: 'Videos',
   layout: 'admin',
-  components: { VideoForm },
+  components: { VideoForm, Pagination },
   data() {
     return {
       tableData: [],
@@ -75,7 +79,9 @@ export default {
         title: { required: true, message: '請輸入影片標題', trigger: 'blur' },
         url: { required: true, message: '請貼上影片 iframe', trigger: 'blur' }
       },
-      dialogState: ''
+      dialogState: '',
+      count: 10,
+      page: 1
     }
   },
   created() {
