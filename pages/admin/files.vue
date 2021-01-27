@@ -159,7 +159,7 @@ export default {
     }),
     findMatchFile() {
       this.multiInputGroup = this.getFilesByCategory(this.activeNav).map(file => {
-        let type = file.url.split('.')[1]
+        const type = file.url.split('.')[1]
         return { ...file, accept: `.${type}`, label: type.toUpperCase(), changed: false }
       })
     },
