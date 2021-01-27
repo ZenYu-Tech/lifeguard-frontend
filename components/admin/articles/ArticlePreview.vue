@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     handleEdit() {
-      this.$router.push(`/admin/articles/edit/${this.articleContent.articleId}`)
+      this.$router.push(`/admin/articles/update?action=edit`)
     },
     closeDialog() {
       this.$emit('closeDialog', false)

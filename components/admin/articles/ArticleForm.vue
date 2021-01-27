@@ -23,12 +23,12 @@
             <input id="img" type="file" name="img" multiple @change="handleUpload($event)" />
           </label>
           <div
-            v-for="item in articleContent.images"
-            :key="item.imageId"
+            v-for="(item, index) in articleContent.images"
+            :key="index"
             class="preview"
-            @click="handleDeleteImage(item.imageId)"
+            @click="handleDeleteImage(item)"
           >
-            <img :src="item.image" :data-id="item.imageId" />
+            <img :src="`data:image/png;base64, ${item.base64File}`" :alt="`圖片${index + 1}`" />
           </div>
         </div>
       </el-card>
@@ -79,7 +79,7 @@ export default {
   watch: {
     'articleContent.category'(newVal) {
       if (newVal !== 'experience') {
-        this.imageArray = []
+        this.images = []
       }
     }
   },
@@ -87,21 +87,25 @@ export default {
     handleUpload(e) {
       const selectedFiles = e.target.files
       for (let i = 0; i < selectedFiles.length; i++) {
-        this.imageArray.push(selectedFiles[i])
+        this.articleContent.images.push({ image: selectedFiles[i], base64File: '' })
       }
 
-      for (let i = 0; i < this.imageArray.length; i++) {
-        const reader = new FileReader()
-        reader.addEventListener(
-          'load',
-          function () {
-            this.$refs['image' + parseInt(i)][0].src = reader.result
-          }.bind(this),
-          false
-        )
-
-        reader.readAsDataURL(this.imageArray[i])
-      }
+      this.articleContent.images.forEach(item => {
+        if (typeof item.image !== 'string') {
+          const reader = new FileReader()
+          let imgResult = ''
+          reader.readAsDataURL(item.image)
+          reader.onload = () => {
+            imgResult = reader.result
+          }
+          reader.onerror = error => {
+            console.log('Error: ', error)
+          }
+          reader.onloadend = () => {
+            item.base64File = imgResult.split(',')[1]
+          }
+        }
+      })
     },
     previewArticle() {
       console.log('previewArticle')
