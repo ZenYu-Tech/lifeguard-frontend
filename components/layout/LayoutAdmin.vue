@@ -12,7 +12,7 @@
     </div>
     <div class="admin-layout__sidebar">
       <div class="sidebar-logo">後台管理系統</div>
-      <el-menu default-active="1" active-text-color="#0082FE">
+      <el-menu :default-active="currentRoute" active-text-color="#0082FE">
         <el-menu-item v-for="item in menuItem" :key="item.id" :index="item.id" @click="handleRouteChange(item.path)">
           <span>{{ item.name }}</span>
         </el-menu-item>
@@ -39,6 +39,11 @@ export default {
   },
   created() {
     this.getBreadcrumb()
+  },
+  computed: {
+    currentRoute() {
+      return this.menuItem.filter(item => this.$route.path.includes(item.path))[0].id
+    }
   },
   methods: {
     handleRouteChange(path) {
