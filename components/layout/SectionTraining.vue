@@ -2,19 +2,25 @@
   <section class="training">
     <h3 class="training__title">訓練影片</h3>
     <div class="training__wrapper">
-      <card-video v-for="video in videos" :key="video.id" :video="video"></card-video>
+      <card-video v-for="video in getVideos.slice(0, displayAmount)" :key="video.id" :video="video"></card-video>
     </div>
   </section>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'SectionTraining',
   props: {
-    videos: {
-      type: Array,
+    displayAmount: {
+      type: Number,
       required: true
     }
+  },
+  computed: {
+    ...mapGetters('client', {
+      getVideos: 'video/getVideos'
+    })
   }
 }
 </script>

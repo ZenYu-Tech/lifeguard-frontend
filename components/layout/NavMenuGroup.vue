@@ -6,7 +6,8 @@
       :menu="menu"
       :index="index"
       :active-index="activeIndex"
-      @click.native="activeIndex = index"
+      @mouseover.native="activeIndex = index"
+      @click.native="activeIndex = -1"
     />
   </div>
 </template>
@@ -31,12 +32,12 @@ export default {
         const targetElement = e.target.closest('.nav-menu-group')
         if (targetElement !== this.$refs.navMenuGroup) {
           this.activeIndex = -1
-          document.onclick = null
+          document.onmouseover = null
         }
       }
 
       if (this.activeIndex !== -1) {
-        document.onclick = captureClickOutsdie.bind(this)
+        document.onmouseover = captureClickOutsdie.bind(this)
       }
     }
   }
@@ -49,5 +50,7 @@ export default {
   grid-auto-flow: column;
   grid-template-rows: 1fr;
   column-gap: 40px;
+  height: 100%;
+  align-items: flex-start;
 }
 </style>

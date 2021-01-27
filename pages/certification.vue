@@ -24,7 +24,7 @@
         ></card-news-square>
       </div>
     </section>
-    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
+    <section-experience></section-experience>
   </main>
 </template>
 
@@ -38,6 +38,7 @@ export default {
   },
   async asyncData({ store }) {
     await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'experience' })
     await store.dispatch('client/file/fetchFiles', { category: 'certification' })
   },
   data() {

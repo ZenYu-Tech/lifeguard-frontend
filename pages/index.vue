@@ -6,8 +6,8 @@
         <card-news v-for="news in getArticlesByCategory('news').slice(0, 4)" :key="news.id" :news="news"></card-news>
       </div>
     </section>
-    <section-training :videos="getVideos.slice(0, 2)"></section-training>
-    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
+    <section-training :display-amount="2"></section-training>
+    <section-experience></section-experience>
   </main>
 </template>
 
@@ -21,12 +21,12 @@ export default {
   },
   async asyncData({ store }) {
     await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'experience' })
     await store.dispatch('client/video/fetchVideos')
   },
   computed: {
     ...mapGetters('client', {
-      getArticlesByCategory: 'article/getArticlesByCategory',
-      getVideos: 'video/getVideos'
+      getArticlesByCategory: 'article/getArticlesByCategory'
     })
   }
 }
