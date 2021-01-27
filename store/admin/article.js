@@ -28,6 +28,7 @@ const state = () => ({
     articleId: -1,
     title: '',
     content: '',
+    category: '',
     /**
      * @type {Array<Image>}
      */
