@@ -1,8 +1,12 @@
 <template>
   <div class="admin-container">
-    <el-table :data="tableData" style="width: 100%">
+    <el-table :data="getVideos" style="width: 100%">
       <el-table-column prop="title" label="影片標題"> </el-table-column>
-      <el-table-column prop="created_time" label="建立時間" width="120"> </el-table-column>
+      <el-table-column prop="createdAt" label="建立時間" width="150">
+        <template slot-scope="{ row }">
+          {{ $formatDate(row.createdAt, true) }}
+        </template>
+      </el-table-column>
       <el-table-column align="right" width="120">
         <template slot="header">
           <el-button type="primary" size="small" @click="handleCreate">新增</el-button>
@@ -18,7 +22,6 @@
       :dialog-visible="dialogVisible"
       :video-content="targetVideo"
       :dialog-state="dialogState"
-      :rules="formRules"
       @change-state="changeState"
       @reset-dialog="resetDialog"
     ></video-form>
@@ -26,65 +29,37 @@
 </template>
 <script>
 import VideoForm from '@/components/admin/videos/VideoForm'
-
-const newsData = [
-  {
-    id: 1,
-    title: '泳池救生員檢定流程SOP',
-    url:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/FmrGz8qSyrk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    created_time: '2020-01-01'
-  },
-  {
-    id: 2,
-    title: '泳池救生員檢定流程SOP',
-    url:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/FmrGz8qSyrk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    created_time: '2020-01-01'
-  },
-  {
-    id: 3,
-    title: '泳池救生員檢定流程SOP',
-    url:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/FmrGz8qSyrk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    created_time: '2020-01-01'
-  },
-  {
-    id: 4,
-    title: '泳池救生員檢定流程SOP',
-    url:
-      '<iframe width="560" height="315" src="https://www.youtube.com/embed/FmrGz8qSyrk" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
-    created_time: '2020-01-01'
-  }
-]
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Videos',
   layout: 'admin',
   components: { VideoForm },
+  async asyncData({ store }) {
+    await store.dispatch('admin/video/fetchVideos', { count: 100, page: 1 })
+  },
   data() {
     return {
-      tableData: [],
       dialogVisible: false,
       targetVideo: {
         id: 0,
         title: '',
-        url: ''
-      },
-      formRules: {
-        title: { required: true, message: '請輸入影片標題', trigger: 'blur' },
-        url: { required: true, message: '請貼上影片 iframe', trigger: 'blur' }
+        embedIframe: ''
       },
       dialogState: ''
     }
   },
-  created() {
-    this.tableData = newsData
+  computed: {
+    ...mapGetters('admin', {
+      getVideos: 'video/getVideos'
+    })
   },
-
   methods: {
+    ...mapActions({
+      deleteVideo: 'admin/video/deleteVideo'
+    }),
     handleRead(rowData) {
-      this.targetVideo = rowData
+      this.targetVideo = this.getClonedVideo(rowData)
       this.dialogVisible = true
       this.dialogState = '查看'
     },
@@ -98,11 +73,7 @@ export default {
         cancelButtonText: '返回',
         type: 'warning'
       }).then(() => {
-        // sent request ..
-        this.$message({
-          type: 'success',
-          message: '刪除成功'
-        })
+        this.deleteVideo({ videoId: rowData.videoId })
       })
     },
     changeState(state) {
@@ -113,8 +84,11 @@ export default {
       this.targetVideo = {
         id: 0,
         title: '',
-        url: ''
+        embedIframe: ''
       }
+    },
+    getClonedVideo(rowData) {
+      return JSON.parse(JSON.stringify(rowData))
     }
   }
 }

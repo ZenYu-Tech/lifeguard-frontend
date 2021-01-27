@@ -6,22 +6,22 @@ export default axios => ({
   },
   admin: {
     fetchVideos(count, page) {
-      return axios(`/manage/video/?count=${count}&page=${page}`, {
+      return axios(`/manage/video?count=${count}&page=${page}`, {
         method: 'GET'
       })
     },
-    createVideo(title, embedIframe) {
+    createVideo(params) {
       return axios(`/manage/video`, {
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
         method: 'POST',
-        data: { title, embedIframe }
+        data: params
       })
     },
-    editVideo(videoId, title, embedIframe) {
+    editVideo(videoId, params) {
       return axios(`/manage/video/${videoId}`, {
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
         method: 'PUT',
-        data: { title, embedIframe }
+        data: params
       })
     },
     deleteVideo(videoId) {

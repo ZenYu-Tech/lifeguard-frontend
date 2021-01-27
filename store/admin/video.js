@@ -37,14 +37,24 @@ const actions = {
   },
   async createVideo(context, { title, embedIframe }) {
     try {
-      await this.$videoApi.admin.createVideo(title, embedIframe)
+      const params = new URLSearchParams()
+      params.append('title', title)
+      params.append('embedIframe', embedIframe)
+
+      const { data } = await this.$videoApi.admin.createVideo(params)
+      return data
     } catch (error) {
       console.error(error)
     }
   },
   async editVideo(context, { videoId, title, embedIframe }) {
     try {
-      await this.$videoApi.admin.editVideo(videoId, title, embedIframe)
+      const params = new URLSearchParams()
+      params.append('title', title)
+      params.append('embedIframe', embedIframe)
+
+      const { data } = await this.$videoApi.admin.editVideo(videoId, params)
+      return data
     } catch (error) {
       console.error(error)
     }
