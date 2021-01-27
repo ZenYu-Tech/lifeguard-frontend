@@ -25,9 +25,9 @@ const state = () => ({
    */
   articles: [],
   article: {
-    articleId: '1',
-    title: 'title',
-    content: '<html>Hello world 31</html>',
+    articleId: -1,
+    title: '',
+    content: '',
     /**
      * @type {Array<Image>}
      */
@@ -79,7 +79,7 @@ const actions = {
       formData.append('content', content)
       formData.append('mainImageIndex', mainImageIndex)
       formData.append('images', images)
-      await this.$articleApi.admin.createArticle(category, formData)
+      return await this.$articleApi.admin.createArticle(category, formData)
     } catch (error) {
       console.error(error)
     }
@@ -91,7 +91,7 @@ const actions = {
       formData.append('content', content)
       formData.append('mainImageIndex', mainImageIndex)
       formData.append('images', images)
-      await this.$articleApi.admin.editArticle(category, articleId, formData)
+      return await this.$articleApi.admin.editArticle(category, articleId, formData)
     } catch (error) {
       console.error(error)
     }

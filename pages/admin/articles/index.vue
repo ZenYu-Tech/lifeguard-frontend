@@ -8,7 +8,7 @@
           <span v-else>成果花絮</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createdAt" label="建立時間" width="120">
+      <el-table-column prop="createdAt" label="建立時間" width="150">
         <template slot-scope="{ row }">
           {{ $formatDate(row.createdAt, true) }}
         </template>
@@ -28,6 +28,7 @@
       :dialog-visible="dialogVisible"
       :article-content="getArticle"
       @closeDialog="closeDialog"
+      v-loading="loading"
     ></article-preview>
   </div>
 </template>
@@ -40,7 +41,7 @@ export default {
   layout: 'admin',
   components: { ArticlePreview },
   async asyncData({ store }) {
-    await store.dispatch('admin/article/fetchArticles', { count: 10, page: 1 })
+    await store.dispatch('admin/article/fetchArticles', { count: 100, page: 1 })
   },
   data() {
     return {
@@ -59,15 +60,21 @@ export default {
       fetchArticle: 'admin/article/fetchArticle'
     }),
     handleRead(rowData) {
-      this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
-      this.dialogVisible = true
+      this.loading = true
+      this.fetchArticle({ category: rowData.category, articleId: rowData.articleId }).then(() => {
+        this.loading = false
+        this.dialogVisible = true
+      })
     },
     handleEdit(rowData) {
-      this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
-      this.$router.push(`/admin/articles/edit/${rowData.articleId}`)
+      this.loading = true
+      this.fetchArticle({ category: rowData.category, articleId: rowData.articleId }).then(() => {
+        this.loading = false
+        this.$router.push('/admin/articles/update?action=edit')
+      })
     },
     handleCreate() {
-      this.$router.push('/admin/articles/create')
+      this.$router.push('/admin/articles/update?action=create')
     },
     closeDialog(value) {
       this.dialogVisible = value
