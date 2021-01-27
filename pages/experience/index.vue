@@ -9,6 +9,7 @@
             tag="div"
             :to="`/experience/${article.articleId}`"
             class="experience__item"
+            :data-title="article.title"
           >
             <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
           </nuxt-link>
@@ -83,6 +84,33 @@ export default {
   &__item {
     width: 100%;
     height: 100%;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.7;
+      @media (min-width: 1200px) {
+        opacity: 1;
+        &::after {
+          content: attr(data-title);
+          position: absolute;
+          top: 0px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          margin: 0 auto;
+          font-weight: bold;
+          display: flex;
+          color: #ffffff;
+          justify-content: flex-start;
+          align-items: flex-end;
+          font-size: 28px;
+          line-height: 28px;
+          padding: 14px;
+        }
+      }
+    }
     > img {
       display: block;
       width: 100%;
