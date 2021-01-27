@@ -23,6 +23,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="text-align: center; margin-top: 20px">
+      <pagination :page="page" :count="count" :total="123"></pagination>
+    </div>
     <article-preview
       v-if="dialogVisible"
       v-loading="loading"
@@ -33,20 +36,21 @@
   </div>
 </template>
 <script>
-import ArticlePreview from '@/components/admin/articles/ArticlePreview'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Articles',
   layout: 'admin',
-  components: { ArticlePreview },
   async asyncData({ store }) {
     await store.dispatch('admin/article/fetchArticles', { count: 100, page: 1 })
   },
   data() {
     return {
       dialogVisible: false,
-      loading: false
+      loading: false,
+      targetArticle: null,
+      count: 10,
+      page: 1
     }
   },
   computed: {

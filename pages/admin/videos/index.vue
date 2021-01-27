@@ -17,6 +17,9 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="text-align: center; margin-top: 20px">
+      <pagination :page="page" :count="count" :total="123"></pagination>
+    </div>
     <video-form
       v-if="dialogVisible"
       :dialog-visible="dialogVisible"
@@ -29,13 +32,11 @@
   </div>
 </template>
 <script>
-import VideoForm from '@/components/admin/videos/VideoForm'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Videos',
   layout: 'admin',
-  components: { VideoForm },
   async asyncData({ store }) {
     await store.dispatch('admin/video/fetchVideos', { count: 10, page: 1 })
   },
@@ -47,7 +48,9 @@ export default {
         embedIframe: ''
       },
       dialogState: '',
-      loading: false
+      loading: false,
+      count: 10,
+      page: 1
     }
   },
   computed: {
