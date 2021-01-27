@@ -22,7 +22,11 @@ const state = () => ({
   /**
    * @type {Array<Article>}
    */
-  articles: [],
+  newsArticles: [],
+  /**
+   * @type {Array<Article>}
+   */
+  experienceArticles: [],
   article: {
     articleId: '1',
     title: 'title',
@@ -43,14 +47,10 @@ const state = () => ({
 })
 
 const getters = {
-  getArticles: state => state.articles,
-  getArticlesByCategory: state => category => {
-    return state.articles.filter(article => article.category === category)
-  },
+  getNewsArticles: state => state.newsArticles,
+  getExperienceArticles: state => state.experienceArticles,
+  getArticlesByCategory: state => category => state[`${category}Articles`],
   getArticle: state => state.article,
-  getArticleById: state => id => {
-    return state.articles.find(article => article.articleId === id)
-  },
   getPagination: state => state.pagination
 }
 
@@ -58,11 +58,11 @@ const mutations = {
   SET_article(state, article) {
     state.article = article
   },
-  Init_articles(state, articles) {
-    state.articles = articles
+  Init_articles(state, { category, articles }) {
+    state[`${category}Articles`] = articles
   },
-  Add_articles(state, articles) {
-    state.articles.push(...articles)
+  Add_articles(state, { category, articles }) {
+    state[`${category}Articles`].push(...articles)
   },
   SET_pagination(state, pagination) {
     Object.keys(pagination).forEach(key => {
@@ -83,11 +83,13 @@ const actions = {
   async fetchArticles({ commit }, { category, count = 10, page = 1 }) {
     try {
       const { data } = await this.$articleApi.fetchArticles(category, count, page)
-      commit('SET_pagination', data.result.pagination)
+      const { pagination, articles } = data?.result
+
+      commit('SET_pagination', pagination)
       if (page === 1) {
-        commit('Init_articles', data.result.articles)
+        commit('Init_articles', { category, articles })
       } else {
-        commit('Add_articles', data.result.articles)
+        commit('Add_articles', { category, articles })
       }
     } catch (error) {
       console.error(error)

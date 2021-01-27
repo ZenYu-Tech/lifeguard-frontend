@@ -1,10 +1,8 @@
 <template>
   <div :style="style">
-    <client-only>
-      <vue-slick-carousel v-bind="options">
-        <slot></slot>
-      </vue-slick-carousel>
-    </client-only>
+    <vue-slick-carousel v-bind="options">
+      <slot></slot>
+    </vue-slick-carousel>
   </div>
 </template>
 

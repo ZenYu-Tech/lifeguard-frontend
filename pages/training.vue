@@ -2,7 +2,7 @@
   <main class="section-wrapper">
     <section-training :videos="getVideos.slice(0, videoDisplayAmount)"></section-training>
     <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
-    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
+    <section-experience :article-experiences="getArticlesByCategory('experience').slice(0, 4)"></section-experience>
   </main>
 </template>
 
@@ -14,7 +14,7 @@ export default {
     haveBanner: true
   },
   async asyncData({ store }) {
-    await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'experenice' })
     await store.dispatch('client/video/fetchVideos')
   },
   data() {

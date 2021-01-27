@@ -7,7 +7,7 @@
       </div>
     </section>
     <section-training :videos="getVideos.slice(0, 2)"></section-training>
-    <section-experience :article-experiences="getArticlesByCategory('news').slice(0, 4)"></section-experience>
+    <section-experience :article-experiences="getArticlesByCategory('experience').slice(0, 4)"></section-experience>
   </main>
 </template>
 
@@ -21,6 +21,7 @@ export default {
   },
   async asyncData({ store }) {
     await store.dispatch('client/article/fetchArticles', { category: 'news' })
+    await store.dispatch('client/article/fetchArticles', { category: 'experience' })
     await store.dispatch('client/video/fetchVideos')
   },
   computed: {
