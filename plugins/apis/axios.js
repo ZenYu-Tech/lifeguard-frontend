@@ -1,6 +1,7 @@
 /**
  * To see $axios api interface (Source Code: https://github.com/nuxt-community/axios-module/blob/master/lib/plugin.js)
  */
+import { Message } from 'element-ui'
 
 export default function ({ $axios, $config, redirect, store }, inject) {
   $axios.setBaseURL($config.baseURL)
@@ -11,7 +12,9 @@ export default function ({ $axios, $config, redirect, store }, inject) {
   })
 
   $axios.onResponse(response => {
-    console.log(response.data.message)
+    if (response.config.method !== 'get') {
+      Message.success(response.data.message)
+    }
   })
 
   $axios.onResponseError(error => {
@@ -19,6 +22,8 @@ export default function ({ $axios, $config, redirect, store }, inject) {
 
     if (status === 401) {
       return redirect('/admin/login')
+    } else {
+      Message.error('系統異常')
     }
     Promise.reject(error)
   })
@@ -39,3 +44,5 @@ export default function ({ $axios, $config, redirect, store }, inject) {
 const getFileName = path => {
   return path.substr(path.lastIndexOf('/') + 1).replace(/\.api.js$/, '')
 }
+
+// export default service

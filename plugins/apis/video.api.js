@@ -6,7 +6,7 @@ export default axios => ({
   },
   admin: {
     fetchVideos(count, page) {
-      return axios(`/manage/video/?count=${count}&page=${page}`, {
+      return axios(`/manage/video?count=${count}&page=${page}`, {
         method: 'GET'
       })
     },
