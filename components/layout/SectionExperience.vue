@@ -1,21 +1,22 @@
 <template>
   <section class="experience">
     <h3 class="experience__title">活動花絮</h3>
-    <slick-carousel :width="'86vw'" :height="231" :options="slickOptions">
-      <div
-        v-for="article in getExperienceArticles.slice(0, 4)"
-        :key="article.id"
-        class="experience__item"
-        :style="{ height: '231px' }"
-        :data-title="article.title"
-      >
-        <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
-      </div>
-    </slick-carousel>
-    <button class="experience__more">
-      看更多成果照片
-      <i></i>
-    </button>
+    <template v-if="getExperienceArticles.length > 0">
+      <slick-carousel :width="'86vw'" :height="231" :options="slickOptions">
+        <div
+          v-for="article in getExperienceArticles.slice(0, 4)"
+          :key="article.id"
+          class="experience__item"
+          :style="{ height: '231px' }"
+          :data-title="article.title"
+          @click="$router.push(`/experience/${article.articleId}`)"
+        >
+          <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
+        </div>
+      </slick-carousel>
+      <nuxt-link tag="button" to="/experience" class="experience__more">看更多成果照片</nuxt-link>
+    </template>
+    <div v-else class="no-data">目前沒有資料喔！</div>
   </section>
 </template>
 
@@ -130,6 +131,7 @@ export default {
     }
   }
   &__more {
+    cursor: pointer;
     justify-self: end;
     margin-top: 20px;
     border: none;

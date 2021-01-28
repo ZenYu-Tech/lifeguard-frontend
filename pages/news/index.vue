@@ -2,19 +2,22 @@
   <main class="section-wrapper">
     <section class="news">
       <h3 class="news__title">開課公告</h3>
-      <div class="news__wrapper">
-        <card-news-square
-          v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
-          :key="news.articleId"
-          :news="news"
-          @click.native="go2DetailPage(news.articleId)"
-        ></card-news-square>
-      </div>
-      <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的公告</button>
+      <template v-if="newsLength !== 0">
+        <div class="news__wrapper">
+          <card-news-square
+            v-for="(news, index) in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
+            :key="`${index}-${news.articleId}`"
+            :news="news"
+            @click.native="go2DetailPage(news.articleId)"
+          ></card-news-square>
+        </div>
+        <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的公告</button>
+      </template>
+      <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
     <section class="section__more">
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been</p>
-      <button>看更多成果照片</button>
+      <nuxt-link tag="button" to="/experience">看更多成果照片</nuxt-link>
     </section>
   </main>
 </template>
@@ -47,7 +50,7 @@ export default {
       return this.getArticlesByCategory('news').length
     },
     noMoreNews() {
-      return this.newsDisplayAmount === this.newsLength
+      return this.newsDisplayAmount === this.newsLength || this.newsLength === 0
     },
     increaseUnit() {
       switch (this.getCurrentDevice) {
@@ -130,6 +133,7 @@ export default {
     }
   }
   &__more {
+    cursor: pointer;
     justify-self: center;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid #ffffff;
@@ -183,6 +187,7 @@ export default {
     width: 74%;
   }
   button {
+    cursor: pointer;
     margin-top: 40px;
     background: rgba(0, 0, 0, 0.9);
     border: 1px solid #ffffff;

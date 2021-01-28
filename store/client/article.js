@@ -42,7 +42,9 @@ const state = () => ({
     page: 1,
     count: 10,
     totalCount: 4,
-    totalPage: 1
+    totalPage: 1,
+    next: '',
+    previous: ''
   }
 })
 
@@ -66,6 +68,10 @@ const mutations = {
   },
   SET_pagination(state, pagination) {
     Object.keys(pagination).forEach(key => {
+      if (key === 'next' || key === 'previous') {
+        state.pagination[key] = pagination[key]
+        return
+      }
       state.pagination[key] = Number(pagination[key])
     })
   }
@@ -75,7 +81,10 @@ const actions = {
   async fetchArticle({ commit }, { category, articleId }) {
     try {
       const { data } = await this.$articleApi.fetchArticle(category, articleId)
-      commit('SET_article', data.result)
+      const { pagination, article } = data?.result
+
+      commit('SET_article', article)
+      commit('SET_pagination', pagination)
     } catch (error) {
       console.error(error)
     }

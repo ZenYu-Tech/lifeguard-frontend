@@ -1,5 +1,5 @@
 <template>
-  <article class="card-news">
+  <article class="card-news" @click="$router.push(`/news/${news.articleId}`)">
     <div class="card-news__header">
       <h6 class="card-news__title">{{ news.title }}</h6>
       <time class="card-news__time">{{ $formatDate(news.createdAt) }}</time>
@@ -23,6 +23,7 @@ export default {
 <style lang="scss" scoped>
 .card-news {
   width: 80%;
+  cursor: pointer;
   &__header {
     display: grid;
     grid-template-columns: 14px 1fr 83px;

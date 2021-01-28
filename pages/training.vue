@@ -30,7 +30,7 @@ export default {
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
     noMoreVideo() {
-      return this.videoDisplayAmount === this.getVideos.length
+      return this.videoDisplayAmount === this.getVideos.length || this.getVideos.length === 0
     },
     increaseUnit() {
       return this.getCurrentDevice === 'desktop' ? 3 : 4
@@ -57,6 +57,7 @@ export default {
   row-gap: 30px;
 
   > span:nth-child(2) {
+    cursor: pointer;
     justify-self: center;
     font-size: 16px;
     line-height: 16px;
