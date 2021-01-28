@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-container">
+  <div v-loading="loading" class="admin-container">
     <el-table :data="getVideos" style="width: 100%">
       <el-table-column prop="title" label="影片標題"> </el-table-column>
       <el-table-column prop="createdAt" label="建立時間" width="120">
@@ -24,6 +24,7 @@
       :dialog-state="dialogState"
       @change-state="changeState"
       @reset-dialog="resetDialog"
+      @submitForm="submitForm"
     ></video-form>
   </div>
 </template>
@@ -36,7 +37,7 @@ export default {
   layout: 'admin',
   components: { VideoForm },
   async asyncData({ store }) {
-    await store.dispatch('admin/video/fetchVideos', { count: '', page: '' })
+    await store.dispatch('admin/video/fetchVideos', { count: 10, page: 1 })
   },
   data() {
     return {
@@ -45,8 +46,8 @@ export default {
         title: '',
         embedIframe: ''
       },
-
-      dialogState: ''
+      dialogState: '',
+      loading: false
     }
   },
   computed: {
@@ -56,10 +57,13 @@ export default {
   },
   methods: {
     ...mapActions({
-      deleteVideo: 'admin/video/deleteVideo'
+      fetchVideos: 'admin/video/fetchVideos',
+      createVideo: 'admin/video/createVideo',
+      deleteVideo: 'admin/video/deleteVideo',
+      editVideo: 'admin/video/editVideo'
     }),
     handleRead(rowData) {
-      this.targetVideo = rowData
+      this.targetVideo = JSON.parse(JSON.stringify(rowData))
       this.dialogVisible = true
       this.dialogState = '查看'
     },
@@ -67,14 +71,21 @@ export default {
       this.dialogVisible = true
       this.dialogState = '新增'
     },
-    handleDelete(rowData) {
-      this.$confirm(`確定要刪除「${rowData.title}」這部影片嗎？`, '確認刪除', {
-        confirmButtonText: '確認',
-        cancelButtonText: '返回',
-        type: 'warning'
-      }).then(() => {
+    async handleDelete(rowData) {
+      try {
+        const result = await this.$confirm(`確定要刪除「${rowData.title}」這部影片嗎？`, '確認刪除', {
+          confirmButtonText: '確認',
+          cancelButtonText: '返回',
+          type: 'warning'
+        })
+
+        if (result === 'cancel') {
+          return
+        }
         this.deleteVideo({ videoId: rowData.videoId })
-      })
+      } catch (error) {
+        console.log(error)
+      }
     },
     changeState(state) {
       this.dialogState = state
@@ -84,6 +95,21 @@ export default {
       this.targetVideo = {
         title: '',
         embedIframe: ''
+      }
+    },
+    async submitForm(formData) {
+      try {
+        this.loading = true
+        if (!formData.videoId) {
+          await this.createVideo(formData)
+        } else {
+          await this.editVideo(formData)
+        }
+        this.resetDialog()
+        await this.fetchVideos({ count: 10, page: 1 })
+        this.loading = false
+      } catch (error) {
+        console.log(error)
       }
     }
   }

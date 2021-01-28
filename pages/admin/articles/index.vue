@@ -59,19 +59,17 @@ export default {
     ...mapActions({
       fetchArticle: 'admin/article/fetchArticle'
     }),
-    handleRead(rowData) {
+    async handleRead(rowData) {
       this.loading = true
-      this.fetchArticle({ category: rowData.category, articleId: rowData.articleId }).then(() => {
-        this.loading = false
-        this.dialogVisible = true
-      })
+      await this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
+      this.loading = false
+      this.dialogVisible = true
     },
-    handleEdit(rowData) {
+    async handleEdit(rowData) {
       this.loading = true
-      this.fetchArticle({ category: rowData.category, articleId: rowData.articleId }).then(() => {
-        this.loading = false
-        this.$router.push('/admin/articles/update?action=edit')
-      })
+      await this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
+      this.loading = false
+      this.$router.push('/admin/articles/update?action=edit')
     },
     handleCreate() {
       this.$router.push('/admin/articles/update?action=create')

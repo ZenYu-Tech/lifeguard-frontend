@@ -73,26 +73,30 @@ const actions = {
       console.error(error)
     }
   },
-  async createArticle(context, { category, title, content, mainImageIndex, images }) {
+  async createArticle(context, { category, title, content, mainImageIndex, newAddImages }) {
     try {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('content', content)
-      formData.append('mainImageIndex', mainImageIndex)
-      formData.append('images', images)
-      return await this.$articleApi.admin.createArticle(category, formData)
+      if (category === 'experience') {
+        formData.append('mainImageIndex', mainImageIndex)
+        newAddImages.forEach(image => formData.append('images', image))
+      }
+      await this.$articleApi.admin.createArticle(category, formData)
     } catch (error) {
       console.error(error)
     }
   },
-  async editArticle(context, { category, articleId, title, content, mainImageIndex, images }) {
+  async editArticle(context, { category, articleId, title, content, mainImageIndex, newAddImages }) {
     try {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('content', content)
-      formData.append('mainImageIndex', mainImageIndex)
-      formData.append('images', images)
-      return await this.$articleApi.admin.editArticle(category, articleId, formData)
+      if (category === 'experience') {
+        formData.append('mainImageIndex', mainImageIndex)
+        newAddImages.forEach(image => formData.append('images', image))
+      }
+      await this.$articleApi.admin.editArticle(category, articleId, formData)
     } catch (error) {
       console.error(error)
     }

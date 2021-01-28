@@ -10,7 +10,6 @@
       <div v-if="!!videoContent.embedIframe" class="video-preview" v-html="videoContent.embedIframe"></div>
       <div v-else class="video-preview__placeholder">影片預覽</div>
     </el-row>
-
     <el-form ref="ruleForm" :model="videoContent" :rules="formRules" label-width="0">
       <el-row>
         <el-form-item prop="title">
@@ -41,8 +40,6 @@
   </el-dialog>
 </template>
 <script>
-import { mapActions } from 'vuex'
-
 export default {
   name: 'VideoForm',
   props: {
@@ -63,18 +60,7 @@ export default {
       return this.dialogState !== '查看'
     }
   },
-  watch: {
-    dialogVisible(currentState) {
-      if (!currentState) {
-        this.$emit('reset-dialog')
-      }
-    }
-  },
   methods: {
-    ...mapActions({
-      createVideo: 'admin/video/createVideo',
-      editVideo: 'admin/video/editVideo'
-    }),
     handleEdit() {
       this.$emit('change-state', '編輯')
     },
@@ -88,16 +74,11 @@ export default {
           type: 'warning'
         })
 
-        if (result === 'cancel') return
-
-        if (!this.videoContent.videoId) {
-          const { title, embedIframe } = this.videoContent
-          this.createVideo({ title, embedIframe })
-        } else {
-          const { videoId, title, embedIframe } = this.videoContent
-          this.editVideo({ videoId, title, embedIframe })
+        if (result === 'cancel') {
+          return
         }
-        this.handleClose()
+
+        this.$emit('submitForm', this.videoContent)
       } catch (error) {
         console.log('error')
       }

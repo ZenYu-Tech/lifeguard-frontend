@@ -1,10 +1,6 @@
 <template>
   <div class="admin-container">
-    <article-form
-      v-loading="loading"
-      :article-content="getAction === 'create' ? articleForm : clonedArticle"
-      @submitForm="submitForm"
-    ></article-form>
+    <article-form v-loading="loading" :article-content="articleForm" @submitForm="submitForm"></article-form>
   </div>
 </template>
 <script>
@@ -22,9 +18,9 @@ export default {
         content: '',
         category: '',
         images: [],
-        mainImageIndex: 0
+        mainImageIndex: 0,
+        newAddImages: []
       },
-      clonedArticle: {},
       loading: false
     }
   },
@@ -37,38 +33,30 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.action === 'edit') this.getClonedArticle()
+    if (this.getAction === 'edit') {
+      this.articleForm = Object.assign(this.articleForm, JSON.parse(JSON.stringify(this.getArticle)))
+    }
   },
   methods: {
     ...mapActions({
       createArticle: 'admin/article/createArticle',
       editArticle: 'admin/article/editArticle'
     }),
-    getClonedArticle() {
-      const imagesArray = this.getArticle.images.map(item => {
-        return { ...item, base64File: item?.image }
-      })
-
-      this.clonedArticle = JSON.parse(JSON.stringify(this.getArticle))
-      this.clonedArticle.images = imagesArray
-    },
     async submitForm(formData) {
       this.loading = true
-      const { articleId, category, title, content, mainImageIndex, images } = formData
-      let res
-
-      const formatImageArray = images.map(item => {
-        return item.image
-      })
-
-      if (this.$route.query.action === 'create') {
-        res = await this.createArticle({ category, title, content, mainImageIndex, formatImageArray })
-      } else {
-        res = await this.editArticle({ articleId, category, title, content, mainImageIndex, formatImageArray })
+      try {
+        await console.log(formData)
+        if (this.getAction === 'edit') {
+          await this.editArticle(formData)
+        } else {
+          await this.createArticle(formData)
+        }
+      } catch (error) {
+        console.log(error)
+      } finally {
+        this.loading = false
+        this.$router.back()
       }
-
-      if (res?.status === 200) this.$router.back()
-      this.loading = false
     }
   }
 }
