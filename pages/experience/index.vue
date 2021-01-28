@@ -2,19 +2,19 @@
   <main class="section-wrapper">
     <section class="experience">
       <h3 class="experience__title">活動花絮</h3>
-      <div class="experience__wrapper">
-        <template v-for="article in getArticlesByCategory('experience')">
-          <nuxt-link
-            :key="article.articleId"
-            tag="div"
-            :to="`/experience/${article.articleId}`"
-            class="experience__item"
-            :data-title="article.title"
-          >
-            <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
-          </nuxt-link>
-        </template>
+      <div v-if="getArticlesByCategory('experience').length > 0" class="experience__wrapper">
+        <nuxt-link
+          v-for="article in getArticlesByCategory('experience')"
+          :key="article.articleId"
+          tag="div"
+          :to="`/experience/${article.articleId}`"
+          class="experience__item"
+          :data-title="article.title"
+        >
+          <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
+        </nuxt-link>
       </div>
+      <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
   </main>
 </template>

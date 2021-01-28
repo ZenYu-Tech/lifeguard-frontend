@@ -2,7 +2,7 @@
   <main class="section-wrapper">
     <section class="pass-list">
       <h3 class="pass-list__title">檢定通過名單</h3>
-      <div class="pass-list__file-wrapper">
+      <div v-if="getFilesByCategory('certification').length > 0" class="pass-list__file-wrapper">
         <div
           v-for="file in getFilesByCategory('certification').slice(0, 10)"
           :key="file.fileId"
@@ -13,16 +13,18 @@
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
         </div>
       </div>
+      <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
     <section class="news">
       <h3 class="news__title">最新消息</h3>
-      <div class="news__wrapper">
+      <div v-if="getArticlesByCategory('news').length > 0" class="news__wrapper">
         <card-news-square
           v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
           :key="news.id"
           :news="news"
         ></card-news-square>
       </div>
+      <div v-else class="no-data">目前沒有資料喔</div>
     </section>
     <section-experience></section-experience>
   </main>

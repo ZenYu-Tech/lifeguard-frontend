@@ -1,9 +1,10 @@
 <template>
   <section class="training">
     <h3 class="training__title">訓練影片</h3>
-    <div class="training__wrapper">
+    <div v-if="getVideos.length > 0" class="training__wrapper">
       <card-video v-for="video in getVideos.slice(0, displayAmount)" :key="video.id" :video="video"></card-video>
     </div>
+    <div v-else class="no-data">目前沒有資料喔！</div>
   </section>
 </template>
 

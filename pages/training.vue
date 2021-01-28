@@ -30,7 +30,7 @@ export default {
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
     noMoreVideo() {
-      return this.videoDisplayAmount === this.getVideos.length
+      return this.videoDisplayAmount === this.getVideos.length || this.getVideos.length === 0
     },
     increaseUnit() {
       return this.getCurrentDevice === 'desktop' ? 3 : 4
