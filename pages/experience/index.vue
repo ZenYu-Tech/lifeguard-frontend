@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Experience',
@@ -28,12 +28,52 @@ export default {
     haveBanner: false
   },
   async asyncData({ store }) {
-    await store.dispatch('client/article/fetchArticles', { category: 'experience' })
+    const category = 'experience'
+    const count = 12
+    await store.dispatch('client/article/fetchArticles', { category, count })
+    return { category, count }
+  },
+  data() {
+    return {
+      category: '',
+      count: 0
+    }
   },
   computed: {
     ...mapGetters('client', {
-      getArticlesByCategory: 'article/getArticlesByCategory'
+      getArticlesByCategory: 'article/getArticlesByCategory',
+      getPagination: 'article/getPagination'
     })
+  },
+  mounted() {
+    window.onscroll = this.infiniteScroll
+    this.$once('hook:beforeDestroy', () => {
+      window.onscroll = null
+    })
+    // Call the function first to avoid origin window being too height to never trigger scroll event
+    this.infiniteScroll()
+  },
+  methods: {
+    ...mapActions('client', {
+      fetchArticles: 'article/fetchArticles'
+    }),
+    async infiniteScroll() {
+      const footerHeight = document.querySelector('.footer').clientHeight
+      const totalHeight = document.documentElement.scrollHeight
+      const windowHeight = window.innerHeight
+      const scrollTop = document.documentElement.scrollTop
+
+      if (totalHeight - footerHeight <= windowHeight + scrollTop) {
+        const { page, totalPage } = this.getPagination
+        if (page === totalPage) {
+          return
+        }
+        if (page !== totalPage) {
+          await this.fetchArticles({ category: this.category, count: this.count, page: page + 1 })
+        }
+        this.infiniteScroll()
+      }
+    }
   }
 }
 </script>
