@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="查看" :visible.sync="dialogVisible" width="70%">
+  <el-dialog title="查看" :visible.sync="dialogVisible" width="70%" :show-close="false">
     <el-row :gutter="20"
       ><el-col :span="12">
         <el-input v-model="articleContent.title" :disabled="true">
@@ -17,7 +17,7 @@
       <div v-html="articleContent.content"></div>
     </el-row>
     <span slot="footer" class="dialog-footer">
-      <el-button @click="dialogVisible = false">關閉</el-button>
+      <el-button @click="closeDialog">關閉</el-button>
       <el-button type="primary" @click="handleEdit">編輯</el-button>
     </span>
   </el-dialog>
@@ -31,7 +31,10 @@ export default {
   },
   methods: {
     handleEdit() {
-      this.$router.push(`/admin/articles/edit/${this.articleContent.id}`)
+      this.$router.push(`/admin/articles/update?action=edit`)
+    },
+    closeDialog() {
+      this.$emit('closeDialog', false)
     }
   }
 }

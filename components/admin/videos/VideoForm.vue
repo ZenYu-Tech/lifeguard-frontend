@@ -7,11 +7,10 @@
     width="50%"
   >
     <el-row>
-      <div v-if="!!videoContent.url" class="video-preview" v-html="videoContent.url"></div>
+      <div v-if="!!videoContent.embedIframe" class="video-preview" v-html="videoContent.embedIframe"></div>
       <div v-else class="video-preview__placeholder">影片預覽</div>
     </el-row>
-
-    <el-form ref="ruleForm" :model="videoContent" :rules="rules" label-width="0">
+    <el-form ref="ruleForm" :model="videoContent" :rules="formRules" label-width="0">
       <el-row>
         <el-form-item prop="title">
           <el-input v-model="videoContent.title" placeholder="請輸入影片標題" :disabled="!isEditable">
@@ -21,9 +20,9 @@
       </el-row>
 
       <el-row>
-        <el-form-item prop="url">
+        <el-form-item prop="embedIframe">
           <el-input
-            v-model="videoContent.url"
+            v-model="videoContent.embedIframe"
             type="textarea"
             autosize
             placeholder="請貼上 YouTube 影片內嵌 iframe"
@@ -44,57 +43,45 @@
 export default {
   name: 'VideoForm',
   props: {
-    rules: { type: Object, required: true },
     dialogVisible: { type: Boolean, required: true },
     videoContent: { type: Object, required: true },
     dialogState: { type: String, required: true }
   },
   data() {
     return {
-      isEditable: false
-    }
-  },
-  watch: {
-    dialogVisible(currentState) {
-      if (!currentState) {
-        this.$emit('reset-dialog')
+      formRules: {
+        title: { required: true, message: '請輸入影片標題', trigger: 'blur' },
+        embedIframe: { required: true, message: '請貼上影片 iframe', trigger: 'blur' }
       }
     }
   },
-  created() {
-    this.judgeEditState()
+  computed: {
+    isEditable() {
+      return this.dialogState !== '查看'
+    }
   },
   methods: {
     handleEdit() {
       this.$emit('change-state', '編輯')
-      this.isEditable = true
     },
-    judgeEditState() {
-      switch (this.dialogState) {
-        case '查看':
-          this.isEditable = false
-          break
-        case '新增':
-          this.isEditable = true
-          break
+    async handleSubmit(formName) {
+      try {
+        await this.$refs[formName].validate()
+
+        const result = await this.$confirm('確定要上傳影片嗎？', '確認上傳', {
+          confirmButtonText: '確認',
+          cancelButtonText: '返回',
+          type: 'warning'
+        })
+
+        if (result === 'cancel') {
+          return
+        }
+
+        this.$emit('submitForm', this.videoContent)
+      } catch (error) {
+        console.log('error')
       }
-    },
-    handleSubmit(formName) {
-      this.$refs[formName].validate(valid => {
-        if (valid) {
-          this.$confirm('確定要上傳影片嗎？', '確認上傳', {
-            confirmButtonText: '確認',
-            cancelButtonText: '返回',
-            type: 'warning'
-          }).then(() => {
-            // sent request ..
-            this.$message({
-              type: 'success',
-              message: '上傳成功'
-            })
-          })
-        } else return false
-      })
     },
     handleClose() {
       this.$emit('reset-dialog')

@@ -18,24 +18,27 @@
     <el-row v-if="articleContent.category === 'experience'">
       <el-card shadow="never">
         <div class="image-wall">
-          <label for="img" class="article-create__img"
-            >＋
+          <label for="img" class="image-wall__new">
+            ＋
             <input id="img" type="file" name="img" multiple @change="handleUpload($event)" />
           </label>
-          <div v-for="(image, index) in imageArray" :key="image.size" class="preview" @click="handleDeleteImage(index)">
-            <img :ref="'image' + parseInt(index)" />
+          <div v-for="(item, index) in articleContent.images" :key="`origin-${index}`" class="image-wall__preview">
+            <img :src="`data:image/png;base64, ${item.image}`" :alt="`圖片${index + 1}`" />
+          </div>
+          <div v-for="(image, index) in newAddPreviewImages" :key="`new-${index}`" class="image-wall__preview">
+            <img :src="image" :alt="`圖片${index + 1}`" />
           </div>
         </div>
       </el-card>
     </el-row>
     <el-row>
-      <div class="article-create__button">
+      <div class="image-wall__button">
         <div>
           <el-button @click="goBack">取消</el-button>
-          <el-button type="primary" @click="previewArticle()">預覽</el-button>
+          <el-button type="primary" @click="previewArticle">預覽</el-button>
         </div>
         <div>
-          <el-button type="success" @click="submitForm()">確認上傳</el-button>
+          <el-button type="success" @click="submitForm">確認上傳</el-button>
         </div>
       </div>
     </el-row>
@@ -69,45 +72,37 @@ export default {
           label: '活動花絮'
         }
       ],
-      imageArray: []
-    }
-  },
-  watch: {
-    'articleContent.category'(newVal) {
-      if (newVal !== 'experience') {
-        this.imageArray = []
-      }
+      newAddPreviewImages: []
     }
   },
   methods: {
     handleUpload(e) {
       const selectedFiles = e.target.files
+
       for (let i = 0; i < selectedFiles.length; i++) {
-        this.imageArray.push(selectedFiles[i])
-      }
+        const file = selectedFiles[i]
+        this.articleContent.newAddImages.push(file)
 
-      for (let i = 0; i < this.imageArray.length; i++) {
         const reader = new FileReader()
-        reader.addEventListener(
-          'load',
-          function () {
-            this.$refs['image' + parseInt(i)][0].src = reader.result
-          }.bind(this),
-          false
-        )
-
-        reader.readAsDataURL(this.imageArray[i])
+        reader.onload = e => {
+          const base64 = e.target.result
+          this.newAddPreviewImages.push(base64)
+        }
+        reader.onerror = error => {
+          console.log('Error: ', error)
+        }
+        reader.readAsDataURL(file)
       }
+    },
+    previewArticle() {
+      console.log('previewArticle')
+    },
+    submitForm() {
+      this.$emit('submitForm', this.articleContent)
+    },
+    goBack() {
+      this.$router.back()
     }
-  },
-  goBack() {
-    console.log('goBack')
-  },
-  previewArticle() {
-    console.log('previewArticle')
-  },
-  submitForm() {
-    console.log('submitForm')
   }
 }
 </script>
@@ -123,39 +118,8 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-}
 
-.preview {
-  position: relative;
-  width: 300px;
-  height: 200px;
-  margin-bottom: 20px;
-  cursor: pointer;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.preview:hover::after {
-  content: '點擊刪除';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  font-size: 20px;
-}
-
-.article-create {
-  &__img {
+  &__new {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -174,6 +138,33 @@ export default {
 
     &:hover {
       color: #419df7;
+    }
+  }
+  &__preview {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    &:hover::after {
+      content: '點擊刪除';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      font-size: 20px;
     }
   }
   &__button {

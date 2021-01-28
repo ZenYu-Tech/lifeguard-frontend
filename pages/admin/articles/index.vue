@@ -1,9 +1,18 @@
 <template>
-  <div class="admin-container">
-    <el-table :data="tableData" stripe style="width: 100%">
+  <div v-loading="loading" class="admin-container">
+    <el-table :data="getArticles" stripe style="width: 100%">
       <el-table-column prop="title" label="文章標題"> </el-table-column>
-      <el-table-column prop="category" label="類別" width="120"> </el-table-column>
-      <el-table-column prop="created_time" label="建立時間" width="120"> </el-table-column>
+      <el-table-column prop="category" label="類別" width="120">
+        <template slot-scope="{ row }">
+          <span v-if="row.category === 'news'">通知中心</span>
+          <span v-else>成果花絮</span>
+        </template>
+      </el-table-column>
+      <el-table-column prop="createdAt" label="建立時間" width="150">
+        <template slot-scope="{ row }">
+          {{ $formatDate(row.createdAt, true) }}
+        </template>
+      </el-table-column>
       <el-table-column align="right" width="120">
         <template slot="header">
           <el-button type="primary" size="small" @click="handleCreate">新增</el-button>
@@ -16,72 +25,57 @@
     </el-table>
     <article-preview
       v-if="dialogVisible"
+      v-loading="loading"
       :dialog-visible="dialogVisible"
-      :article-content="targetArticle"
+      :article-content="getArticle"
+      @closeDialog="closeDialog"
     ></article-preview>
   </div>
 </template>
 <script>
 import ArticlePreview from '@/components/admin/articles/ArticlePreview'
-
-const newsData = [
-  {
-    id: 1,
-    title: '109年第一梯次檢定通過名單出爐！',
-    content: '<h1>Hello World</h1>',
-    category: '通知中心',
-    created_time: '2020-01-01'
-  },
-  {
-    id: 2,
-    title: '109年第一梯次檢定通過名單出爐！',
-    content: '<h1>Hello World</h1>',
-    category: '活動花絮',
-    created_time: '2020-01-01'
-  },
-  {
-    id: 3,
-    title: '109年第一梯次檢定通過名單出爐！',
-    content: '<h1>Hello World</h1>',
-    category: '通知中心',
-    created_time: '2020-01-01'
-  },
-  {
-    id: 4,
-    title: '109年第一梯次檢定通過名單出爐！',
-    content: '<h1>Hello World</h1>',
-    category: '活動花絮',
-    created_time: '2020-01-01'
-  }
-]
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Articles',
   layout: 'admin',
   components: { ArticlePreview },
   async asyncData({ store }) {
-    await store.dispatch('admin/article/fetchArticles', { count: 10, page: 1 })
+    await store.dispatch('admin/article/fetchArticles', { count: 100, page: 1 })
   },
   data() {
     return {
-      tableData: [],
       dialogVisible: false,
-      targetArticle: null
+      loading: false
     }
   },
-  created() {
-    this.tableData = newsData
+  computed: {
+    ...mapGetters('admin', {
+      getArticles: 'article/getArticles',
+      getArticle: 'article/getArticle'
+    })
   },
   methods: {
-    handleRead(rowData) {
-      this.targetArticle = rowData
+    ...mapActions({
+      fetchArticle: 'admin/article/fetchArticle'
+    }),
+    async handleRead(rowData) {
+      this.loading = true
+      await this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
+      this.loading = false
       this.dialogVisible = true
     },
-    handleEdit(rowData) {
-      this.$router.push(`/admin/articles/edit/${rowData.id}`)
+    async handleEdit(rowData) {
+      this.loading = true
+      await this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
+      this.loading = false
+      this.$router.push('/admin/articles/update?action=edit')
     },
     handleCreate() {
-      this.$router.push('/admin/articles/create')
+      this.$router.push('/admin/articles/update?action=create')
+    },
+    closeDialog(value) {
+      this.dialogVisible = value
     }
   }
 }
