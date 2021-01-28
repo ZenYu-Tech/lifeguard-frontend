@@ -5,8 +5,8 @@
       <template v-if="newsLength !== 0">
         <div class="news__wrapper">
           <card-news-square
-            v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
-            :key="news.articleId"
+            v-for="(news, index) in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
+            :key="`${index}-${news.articleId}`"
             :news="news"
             @click.native="go2DetailPage(news.articleId)"
           ></card-news-square>
@@ -17,7 +17,7 @@
     </section>
     <section class="section__more">
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been</p>
-      <button>看更多成果照片</button>
+      <nuxt-link tag="button" to="/experience">看更多成果照片</nuxt-link>
     </section>
   </main>
 </template>
@@ -133,6 +133,7 @@ export default {
     }
   }
   &__more {
+    cursor: pointer;
     justify-self: center;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid #ffffff;
@@ -186,6 +187,7 @@ export default {
     width: 74%;
   }
   button {
+    cursor: pointer;
     margin-top: 40px;
     background: rgba(0, 0, 0, 0.9);
     border: 1px solid #ffffff;

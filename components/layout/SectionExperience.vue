@@ -9,14 +9,12 @@
           class="experience__item"
           :style="{ height: '231px' }"
           :data-title="article.title"
+          @click="$router.push(`/experience/${article.articleId}`)"
         >
           <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
         </div>
       </slick-carousel>
-      <button class="experience__more">
-        看更多成果照片
-        <i></i>
-      </button>
+      <nuxt-link tag="button" to="/experience" class="experience__more">看更多成果照片</nuxt-link>
     </template>
     <div v-else class="no-data">目前沒有資料喔！</div>
   </section>
@@ -133,6 +131,7 @@ export default {
     }
   }
   &__more {
+    cursor: pointer;
     justify-self: end;
     margin-top: 20px;
     border: none;

@@ -57,6 +57,7 @@ export default {
   row-gap: 30px;
 
   > span:nth-child(2) {
+    cursor: pointer;
     justify-self: center;
     font-size: 16px;
     line-height: 16px;

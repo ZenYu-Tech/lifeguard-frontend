@@ -1,5 +1,5 @@
 <template>
-  <article class="card-news">
+  <article class="card-news" @click="$router.push(`/news/${news.articleId}`)">
     <h6 class="card-news__title">{{ news.title }}</h6>
     <p class="card-news__content" v-html="news.content"></p>
     <time class="card-news__time">{{ $formatDate(news.createdAt, true) }}</time>
@@ -20,6 +20,7 @@ export default {
 
 <style lang="scss" scoped>
 .card-news {
+  cursor: pointer;
   width: 100%;
   height: 100%;
   background: rgba(255, 255, 255, 0.9);

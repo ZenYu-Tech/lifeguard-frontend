@@ -100,6 +100,7 @@ export default {
     border-radius: 0px 0px 5px 5px;
     backdrop-filter: blur(4px);
     > li > a {
+      cursor: pointer;
       display: flex;
       align-items: center;
       padding: 8px 18px;
