@@ -25,7 +25,7 @@ export default {
   },
   methods: {
     changeNav(navId) {
-      this.$emit('change-nav', navId)
+      this.$emit('update:active-nav', navId)
     }
   }
 }

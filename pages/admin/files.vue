@@ -2,10 +2,10 @@
   <div class="admin-container">
     <el-row :gutter="30">
       <el-col :span="3">
-        <files-nav :files-nav="filesNav" :active-nav="activeNav" @change-nav="changeNav"></files-nav>
+        <files-nav :files-nav="filesNav" :active-nav.sync="activeNav"></files-nav>
       </el-col>
 
-      <el-col :span="7" class="files-upload">
+      <el-col :span="10" class="files-upload">
         <div class="files-upload__title">上傳{{ areaTitle }}</div>
         <template v-if="activeNav === 'registration'">
           <el-row v-for="item in multiInputGroup" :key="item.label" class="files-upload__item">
@@ -22,40 +22,44 @@
                     @change="handleUpload($event, item.label)"
                   />
                 </label>
-                <el-button type="success" size="small" :disabled="!item.changed" @click="handleSubmit"
+                <el-button type="success" size="small" :disabled="!item.changed" @click="handleSubmit(item)"
                   >確定上傳</el-button
+                >
+                <el-button
+                  v-if="item.changed"
+                  size="small"
+                  type="danger"
+                  icon="el-icon-refresh-left"
+                  @click="cancelUpdate(item)"
+                  >取消</el-button
                 >
               </div>
               <div class="files-upload__placeholder">
-                <div v-if="!item.file">尚未選擇任何檔案</div>
-                <div v-else>
-                  {{ item.file.name }}
-                </div>
+                <div v-if="!item.title">尚未選擇任何檔案</div>
+                <div v-else>{{ item.title }}</div>
               </div>
             </div>
           </el-row>
         </template>
 
         <template v-else>
-          <el-input v-model="fileData.title" placeholder="請輸入" style="margin-bottom: 20px">
+          <!-- <el-input v-model="fileData.title" placeholder="請輸入" style="margin-bottom: 20px">
             <template slot="prepend">檔名</template>
-          </el-input>
+          </el-input> -->
           <label for="file" class="el-button el-button--primary"
             >選擇檔案
             <input id="file" type="file" accept=".pdf" style="display: none" @change="handleUpload($event)" />
           </label>
+          <el-button type="success" :disabled="!fileData.changed" @click="handleSubmit(fileData)">確認上傳</el-button>
 
           <div class="files-upload__placeholder">
-            <div v-if="fileData.title.length < 1">尚未選擇任何檔案</div>
-            <div v-else>
-              {{ fileData.title }}
-            </div>
+            <div v-if="!fileData.title">尚未選擇任何檔案</div>
+            <div v-else>{{ fileData.title }}</div>
           </div>
-          <el-button type="success" :disabled="!fileData.changed" @click="handleSubmit">確認上傳</el-button>
         </template>
       </el-col>
 
-      <el-col v-if="showTable" :span="14">
+      <el-col v-if="activeNav === 'certification'" :span="11">
         <files-table :table-data="tableData"></files-table>
       </el-col>
     </el-row>
@@ -64,17 +68,15 @@
 <script>
 import FilesTable from '@/components/admin/files/FilesTable'
 import FilesNav from '@/components/admin/files/FilesNav'
-
-const certificationData = [
-  { title: '109年第一梯次檢定通過名單', url: '109年第一梯次檢定通過名單.pdf', created_time: '2021-03-24' },
-  { title: '109年第一梯次檢定通過名單', url: '109年第一梯次檢定通過名單.pdf', created_time: '2021-03-24' },
-  { title: '109年第一梯次檢定通過名單', url: '109年第一梯次檢定通過名單.pdf', created_time: '2021-03-24' }
-]
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Files',
   layout: 'admin',
   components: { FilesTable, FilesNav },
+  async asyncData({ store }) {
+    await store.dispatch('admin/file/fetchFiles', { category: 'registration', count: '', page: '' })
+  },
   data() {
     return {
       filesNav: [
@@ -85,65 +87,99 @@ export default {
       ],
       activeNav: 'registration',
       fileData: {
+        fileId: '',
+        category: '',
         title: '',
-        file: '',
+        accept: '.pdf',
+        label: '',
+        url: '',
         changed: false
       },
-      showTable: false,
-      allowMultiInput: false,
       tableData: [],
-      multiInputGroup: [
-        { label: 'PDF', accept: '.pdf', file: '', changed: false },
-        { label: 'DOC', accept: '.doc', file: '', changed: false },
-        { label: 'ODT', accept: '.odt', file: '', changed: false }
-      ]
+      multiInputGroup: []
     }
   },
   computed: {
     areaTitle() {
-      return this.filesNav.filter(nav => nav.id === this.activeNav)[0].name
-    }
+      return this.filesNav.find(nav => nav.id === this.activeNav).name
+    },
+    ...mapGetters('admin', {
+      getFilesByCategory: 'file/getFilesByCategory'
+    })
   },
   watch: {
-    activeNav(currentNav) {
-      this.allowMultiInput = false
-      this.showTable = false
-      switch (currentNav) {
-        case 'registration':
-          this.allowMultiInput = true
-          break
-        case 'certification':
-          this.showTable = true
-          break
+    activeNav: {
+      immediate: true,
+      handler(newValue) {
+        this.changeNav(newValue)
       }
     }
-    // fileData() {
-    //   if (this.fileData.title.length > 0) {
-    //     this.fileData.changed = true
-    //   }
-    // }
-  },
-  created() {
-    this.tableData = certificationData
   },
   methods: {
-    changeNav(navId) {
-      if (this.activeNav !== navId) this.activeNav = navId
+    ...mapActions({
+      fetchFiles: 'admin/file/fetchFiles',
+      createFile: 'admin/file/createFile',
+      editFile: 'admin/file/editFile',
+      deleteFile: 'admin/file/deleteFile'
+    }),
+    findMatchFile() {
+      this.multiInputGroup = this.getFilesByCategory(this.activeNav).map(file => {
+        const type = file.url.split('.')[1]
+        return { ...file, accept: `.${type}`, label: type.toUpperCase(), changed: false }
+      })
+    },
+    async changeNav(category) {
+      await this.fetchFiles({ category, count: 10, page: 1 })
+      this.resetFileData(category)
     },
     handleUpload(e, label) {
       const file = e.target.files[0]
       if (!label) {
-        this.fileData = Object.assign(this.fileData, { title: file.name, file, changed: true })
+        this.fileData = Object.assign(this.fileData, { title: file.name, fileObj: file, changed: true })
       } else {
         this.multiInputGroup.forEach(input => {
           if (input.label === label) {
-            input = Object.assign(input, { file, changed: true })
+            input = Object.assign(input, { title: file.name, fileObj: file, changed: true })
           }
         })
       }
     },
-    handleSubmit() {
-      // submit change
+    async handleSubmit(item) {
+      const { category, fileId, title } = item
+      if (item.fileId) {
+        await this.editFile({ category, fileId, title, file: item.fileObj })
+      } else {
+        await this.createFile({ category, title, file: item.fileObj })
+      }
+      this.changeNav(category)
+    },
+    cancelUpdate(item) {
+      item.changed = false
+      document.getElementById(item.label).value = null
+      this.changeNav(this.activeNav)
+    },
+    resetFileData(category) {
+      if (category === 'registration') {
+        return this.findMatchFile()
+      } else if (category === 'certification') {
+        this.tableData = this.getFilesByCategory(category)
+        return this.initFileData(category)
+      } else if (this.getFilesByCategory(category).length !== 0) {
+        this.fileData = JSON.parse(JSON.stringify(this.getFilesByCategory(category)[0]))
+      } else {
+        this.initFileData(category)
+      }
+    },
+    initFileData(category) {
+      this.fileData = Object.assign(this.fileData, {
+        fileId: '',
+        category,
+        title: '',
+        accept: '.pdf',
+        label: '',
+        url: '',
+        changed: false
+      })
     }
   }
 }
