@@ -1,8 +1,8 @@
 <template>
   <div class="admin-container">
     <article-form
-      :article-content="getAction === 'create' ? articleForm : clonedArticle"
       v-loading="loading"
+      :article-content="getAction === 'create' ? articleForm : clonedArticle"
       @submitForm="submitForm"
     ></article-form>
   </div>
@@ -28,9 +28,6 @@ export default {
       loading: false
     }
   },
-  created() {
-    if (this.$route.query.action === 'edit') this.getClonedArticle()
-  },
   computed: {
     ...mapGetters('admin', {
       getArticle: 'article/getArticle'
@@ -38,6 +35,9 @@ export default {
     getAction() {
       return this.$route.query.action
     }
+  },
+  created() {
+    if (this.$route.query.action === 'edit') this.getClonedArticle()
   },
   methods: {
     ...mapActions({

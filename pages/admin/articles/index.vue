@@ -25,9 +25,9 @@
     </el-table>
     <article-preview
       v-if="dialogVisible"
+      v-loading="loading"
       :dialog-visible="dialogVisible"
       :article-content="getArticle"
-      v-loading="loading"
       @closeDialog="closeDialog"
     ></article-preview>
   </div>
