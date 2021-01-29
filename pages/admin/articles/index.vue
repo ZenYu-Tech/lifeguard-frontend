@@ -24,7 +24,13 @@
       </el-table-column>
     </el-table>
     <div style="text-align: center; margin-top: 20px">
-      <pagination :page="page" :count="count" :total="123"></pagination>
+      <pagination
+        :page="getPagination.page"
+        :count="getPagination.count"
+        :total="getPagination.totalCount"
+        @jump="jump"
+        @change-size="changeSize"
+      ></pagination>
     </div>
     <article-preview
       v-if="dialogVisible"
@@ -42,26 +48,27 @@ export default {
   name: 'Articles',
   layout: 'admin',
   async asyncData({ store }) {
-    await store.dispatch('admin/article/fetchArticles', { count: 100, page: 1 })
+    const { count, page } = store.getters['admin/article/getPagination']
+    await store.dispatch('admin/article/fetchArticles', { count, page })
   },
   data() {
     return {
       dialogVisible: false,
       loading: false,
-      targetArticle: null,
-      count: 10,
-      page: 1
+      targetArticle: null
     }
   },
   computed: {
     ...mapGetters('admin', {
       getArticles: 'article/getArticles',
-      getArticle: 'article/getArticle'
+      getArticle: 'article/getArticle',
+      getPagination: 'article/getPagination'
     })
   },
   methods: {
-    ...mapActions({
-      fetchArticle: 'admin/article/fetchArticle'
+    ...mapActions('admin', {
+      fetchArticle: 'article/fetchArticle',
+      fetchArticles: 'article/fetchArticles'
     }),
     async handleRead(rowData) {
       this.loading = true
@@ -80,6 +87,16 @@ export default {
     },
     closeDialog(value) {
       this.dialogVisible = value
+    },
+    async jump(page) {
+      this.loading = true
+      await this.fetchArticles({ count: this.getPagination.count, page })
+      this.loading = false
+    },
+    async changeSize(count) {
+      this.loading = true
+      await this.fetchArticles({ count, page: this.getPagination.page })
+      this.loading = false
     }
   }
 }

@@ -36,6 +36,9 @@ export default {
 
 <style lang="scss" scoped>
 .sidebar {
+  position: fixed;
+  top: 0px;
+  left: 0px;
   background: #ffffff;
   width: 240px;
   height: 100%;

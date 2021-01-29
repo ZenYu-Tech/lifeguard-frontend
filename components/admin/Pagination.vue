@@ -2,12 +2,12 @@
   <el-pagination
     background
     layout="total, sizes, prev, pager, next"
-    :current-page.sync="page"
+    :current-page="page"
     :page-sizes="[10, 20, 50]"
     :page-size="count"
     :total="total"
-    @current-change="handleCurrentChange"
-    @size-change="handleSizeChange"
+    @current-change="$emit('jump', $event)"
+    @size-change="$emit('change-size', $event)"
   >
   </el-pagination>
 </template>
@@ -26,14 +26,6 @@ export default {
     total: {
       type: Number,
       required: true
-    }
-  },
-  methods: {
-    handleSizeChange(val) {
-      console.log(`${val} items per page`)
-    },
-    handleCurrentChange(val) {
-      console.log(`current page: ${val}`)
     }
   }
 }

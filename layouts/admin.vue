@@ -74,7 +74,7 @@ export default {
   width: 100%;
   height: 100vh;
   grid-template-columns: 240px auto;
-  grid-template-rows: 70px 1fr;
+  grid-template-rows: 70px auto;
   grid-template-areas:
     'sidebar header'
     'sidebar container';
@@ -101,6 +101,8 @@ export default {
     grid-area: container;
     margin-right: 40px;
     margin-bottom: 40px;
+    overflow-y: scroll;
+    overflow-x: visible;
     > div {
       padding: 20px 30px;
       background: #ffffff;
