@@ -13,16 +13,34 @@ const state = () => ({
   /**
    * @type {Array<Video>}
    */
-  videos: []
+  videos: [],
+  pagination: {
+    page: 1,
+    count: 10,
+    totalCount: 4,
+    totalPage: 1,
+    next: '',
+    previous: ''
+  }
 })
 
 const getters = {
-  getVideos: state => state.videos.slice().sort((a, b) => a.sort - b.sort)
+  getVideos: state => state.videos.slice().sort((a, b) => a.sort - b.sort),
+  getPagination: state => state.pagination
 }
 
 const mutations = {
   SET_videos(state, videos) {
     state.videos = videos
+  },
+  SET_pagination(state, pagination) {
+    Object.keys(pagination).forEach(key => {
+      if (key === 'next' || key === 'previous') {
+        state.pagination[key] = pagination[key]
+        return
+      }
+      state.pagination[key] = Number(pagination[key])
+    })
   }
 }
 
@@ -30,7 +48,10 @@ const actions = {
   async fetchVideos({ commit }, { count, page }) {
     try {
       const { data } = await this.$videoApi.admin.fetchVideos(count, page)
-      commit('SET_videos', data.result.videos)
+      const { pagination, videos } = data?.result
+
+      commit('SET_pagination', pagination)
+      commit('SET_videos', videos)
     } catch (error) {
       console.error(error)
     }
