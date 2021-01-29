@@ -11,19 +11,37 @@ const state = () => ({
   /**
    * @type {Array<File>}
    */
-  files: []
+  files: [],
+  pagination: {
+    page: 1,
+    count: 10,
+    totalCount: 4,
+    totalPage: 1,
+    next: '',
+    previous: ''
+  }
 })
 
 const getters = {
   getFiles: state => state.files,
   getFilesByCategory: state => category => {
     return state.files.filter(file => file.category === category)
-  }
+  },
+  getPagination: state => state.pagination
 }
 
 const mutations = {
   SET_Files(state, files) {
     state.files = files
+  },
+  SET_pagination(state, pagination) {
+    Object.keys(pagination).forEach(key => {
+      if (key === 'next' || key === 'previous') {
+        state.pagination[key] = pagination[key]
+        return
+      }
+      state.pagination[key] = Number(pagination[key])
+    })
   }
 }
 
@@ -31,7 +49,10 @@ const actions = {
   async fetchFiles({ commit }, { category, count, page }) {
     try {
       const { data } = await this.$fileApi.admin.fetchFiles(category, count, page)
-      commit('SET_Files', data.result.files)
+      const { pagination, files } = data?.result
+
+      commit('SET_pagination', pagination)
+      commit('SET_Files', files)
     } catch (error) {
       console.error(error)
     }

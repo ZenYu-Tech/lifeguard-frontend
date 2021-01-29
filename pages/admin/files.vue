@@ -61,19 +61,25 @@
 
       <el-col v-if="activeNav === 'certification'" :span="11">
         <files-table :table-data="tableData"></files-table>
+        <div style="text-align: center; margin-top: 20px">
+          <pagination
+            :page="getPagination.page"
+            :count="getPagination.count"
+            :total="getPagination.totalCount"
+            @jump="jump"
+            @change-size="changeSize"
+          ></pagination>
+        </div>
       </el-col>
     </el-row>
   </div>
 </template>
 <script>
-import FilesTable from '@/components/admin/files/FilesTable'
-import FilesNav from '@/components/admin/files/FilesNav'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Files',
   layout: 'admin',
-  components: { FilesTable, FilesNav },
   async asyncData({ store }) {
     await store.dispatch('admin/file/fetchFiles', { category: 'registration', count: '', page: '' })
   },
@@ -95,7 +101,6 @@ export default {
         url: '',
         changed: false
       },
-      tableData: [],
       multiInputGroup: []
     }
   },
@@ -104,8 +109,12 @@ export default {
       return this.filesNav.find(nav => nav.id === this.activeNav).name
     },
     ...mapGetters('admin', {
-      getFilesByCategory: 'file/getFilesByCategory'
-    })
+      getFilesByCategory: 'file/getFilesByCategory',
+      getPagination: 'file/getPagination'
+    }),
+    tableData() {
+      return this.getFilesByCategory('certification')
+    }
   },
   watch: {
     activeNav: {
@@ -119,8 +128,7 @@ export default {
     ...mapActions({
       fetchFiles: 'admin/file/fetchFiles',
       createFile: 'admin/file/createFile',
-      editFile: 'admin/file/editFile',
-      deleteFile: 'admin/file/deleteFile'
+      editFile: 'admin/file/editFile'
     }),
     findMatchFile() {
       this.multiInputGroup = this.getFilesByCategory(this.activeNav).map(file => {
@@ -162,7 +170,6 @@ export default {
       if (category === 'registration') {
         return this.findMatchFile()
       } else if (category === 'certification') {
-        this.tableData = this.getFilesByCategory(category)
         return this.initFileData(category)
       } else if (this.getFilesByCategory(category).length !== 0) {
         this.fileData = JSON.parse(JSON.stringify(this.getFilesByCategory(category)[0]))
@@ -180,6 +187,16 @@ export default {
         url: '',
         changed: false
       })
+    },
+    async jump(page) {
+      this.loading = true
+      await this.fetchFiles({ category: 'certification', count: this.getPagination.count, page })
+      this.loading = false
+    },
+    async changeSize(count) {
+      this.loading = true
+      await this.fetchFiles({ category: 'certification', count, page: this.getPagination.page })
+      this.loading = false
     }
   }
 }
