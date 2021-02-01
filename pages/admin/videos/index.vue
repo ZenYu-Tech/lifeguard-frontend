@@ -17,6 +17,15 @@
         </template>
       </el-table-column>
     </el-table>
+    <div style="text-align: center; margin-top: 20px">
+      <pagination
+        :page="getPagination.page"
+        :count="getPagination.count"
+        :total="getPagination.totalCount"
+        @jump="jump"
+        @change-size="changeSize"
+      ></pagination>
+    </div>
     <video-form
       v-if="dialogVisible"
       :dialog-visible="dialogVisible"
@@ -29,15 +38,14 @@
   </div>
 </template>
 <script>
-import VideoForm from '@/components/admin/videos/VideoForm'
 import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Videos',
   layout: 'admin',
-  components: { VideoForm },
   async asyncData({ store }) {
-    await store.dispatch('admin/video/fetchVideos', { count: 10, page: 1 })
+    const { count, page } = store.getters['admin/article/getPagination']
+    await store.dispatch('admin/video/fetchVideos', { count, page })
   },
   data() {
     return {
@@ -47,12 +55,15 @@ export default {
         embedIframe: ''
       },
       dialogState: '',
-      loading: false
+      loading: false,
+      count: 10,
+      page: 1
     }
   },
   computed: {
     ...mapGetters('admin', {
-      getVideos: 'video/getVideos'
+      getVideos: 'video/getVideos',
+      getPagination: 'video/getPagination'
     })
   },
   methods: {
@@ -106,11 +117,22 @@ export default {
           await this.editVideo(formData)
         }
         this.resetDialog()
-        await this.fetchVideos({ count: 10, page: 1 })
+        const { count, page } = this.getPagination
+        await this.fetchVideos({ count, page })
         this.loading = false
       } catch (error) {
         console.log(error)
       }
+    },
+    async jump(page) {
+      this.loading = true
+      await this.fetchVideos({ count: this.getPagination.count, page })
+      this.loading = false
+    },
+    async changeSize(count) {
+      this.loading = true
+      await this.fetchVideos({ count, page: this.getPagination.page })
+      this.loading = false
     }
   }
 }
