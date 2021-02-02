@@ -7,7 +7,7 @@
           v-for="file in getFilesByCategory('certification').slice(0, 10)"
           :key="file.fileId"
           class="pass-list__file"
-          @click="downloadFile({ fileId: file.fileId, title: file.title })"
+          @click="downloadFile({ fileId: file.fileId })"
         >
           <span>{{ file.title }}</span>
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
@@ -63,7 +63,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
+    ...mapActions('client', {
       downloadFile: 'file/downloadFile'
     })
   }
@@ -119,6 +119,15 @@ export default {
   &__file {
     display: flex;
     align-items: center;
+    cursor: pointer;
+    &:hover {
+      span {
+        color: map-get($map: $colors, $key: primary);
+      }
+      i {
+        background-color: map-get($map: $colors, $key: primary);
+      }
+    }
     span {
       font-size: 20px;
       line-height: 30px;

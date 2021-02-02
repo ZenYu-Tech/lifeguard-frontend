@@ -35,12 +35,10 @@ const actions = {
       console.error(error)
     }
   },
-  async downloadFile(context, { fileId, title }) {
+  async downloadFile(context, { fileId }) {
     try {
       const { data } = await this.$fileApi.downloadFile(fileId)
-      const file = data.result.file
-      let extension = title.split('.')
-      extension = extension[extension.length - 1]
+      const { extension, file, title } = data.result
 
       const url = `data:application/${extension};base64,${file}`
       const a = document.createElement('a')
