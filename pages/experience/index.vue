@@ -4,8 +4,8 @@
       <h3 class="experience__title">活動花絮</h3>
       <div v-if="getArticlesByCategory('experience').length > 0" class="experience__wrapper">
         <nuxt-link
-          v-for="article in getArticlesByCategory('experience')"
-          :key="article.articleId"
+          v-for="(article, index) in getArticlesByCategory('experience')"
+          :key="`${index}-${article.articleId}`"
           tag="div"
           :to="`/experience/${article.articleId}`"
           class="experience__item"
