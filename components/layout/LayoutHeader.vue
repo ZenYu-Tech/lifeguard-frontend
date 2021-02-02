@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'LayoutHeader',
   data() {
@@ -55,15 +56,15 @@ export default {
           subMenuList: [
             {
               title: '下載 PDF',
-              action: 'download'
+              action: 'download-registration'
             },
             {
-              title: '下載 ODC',
-              action: 'download'
+              title: '下載 DOC',
+              action: 'download-registration'
             },
             {
               title: '下載 OTC',
-              action: 'download'
+              action: 'download-registration'
             }
           ]
         },
@@ -72,11 +73,11 @@ export default {
           subMenuList: [
             {
               title: '訓練實施計畫',
-              action: 'download'
+              action: 'download-plan'
             },
             {
               title: '講義',
-              action: 'download'
+              action: 'download-training'
             },
             {
               title: '影片',
@@ -137,6 +138,14 @@ export default {
         }
       ]
     }
+  },
+  async created() {
+    await this.fetchFiles()
+  },
+  methods: {
+    ...mapActions('client', {
+      fetchFiles: 'file/fetchFiles'
+    })
   }
 }
 </script>

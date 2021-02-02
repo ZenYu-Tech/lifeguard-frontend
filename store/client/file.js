@@ -27,9 +27,9 @@ const mutations = {
 }
 
 const actions = {
-  async fetchFiles({ commit }, { category }) {
+  async fetchFiles({ commit }) {
     try {
-      const { data } = await this.$fileApi.fetchFiles(category)
+      const { data } = await this.$fileApi.fetchFiles()
       commit('SET_Files', data.result.files)
     } catch (error) {
       console.error(error)

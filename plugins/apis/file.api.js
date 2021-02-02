@@ -1,6 +1,6 @@
 export default axios => ({
-  fetchFiles(category) {
-    return axios(`/file/${category}`, {
+  fetchFiles() {
+    return axios(`/file`, {
       method: 'GET'
     })
   },

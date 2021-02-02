@@ -41,7 +41,7 @@ export default {
   async asyncData({ store }) {
     await store.dispatch('client/article/fetchArticles', { category: 'news' })
     await store.dispatch('client/article/fetchArticles', { category: 'experience' })
-    await store.dispatch('client/file/fetchFiles', { category: 'certification' })
+    await store.dispatch('client/file/fetchFiles')
   },
   data() {
     return {
