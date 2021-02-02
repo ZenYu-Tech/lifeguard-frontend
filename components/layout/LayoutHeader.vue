@@ -150,11 +150,11 @@ export default {
     }
   },
   async created() {
-    await this.fetchFiles()
+    await this.fetchHeaderFiles()
   },
   methods: {
     ...mapActions('client', {
-      fetchFiles: 'file/fetchFiles'
+      fetchHeaderFiles: 'file/fetchHeaderFiles'
     })
   }
 }

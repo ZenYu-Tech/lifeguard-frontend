@@ -1,6 +1,11 @@
 export default axios => ({
-  fetchFiles() {
-    return axios(`/file`, {
+  fetchCertificationFiles() {
+    return axios(`/file/certification`, {
+      method: 'GET'
+    })
+  },
+  fetchHeaderFiles() {
+    return axios(`/file/preload`, {
       method: 'GET'
     })
   },

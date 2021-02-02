@@ -58,7 +58,7 @@ export default {
   },
   computed: {
     ...mapGetters('client', {
-      getFilesByCategory: 'file/getFilesByCategory'
+      getHeaderFiles: 'file/getHeaderFiles'
     })
   },
   methods: {
@@ -67,15 +67,15 @@ export default {
     }),
     download(action, index) {
       const category = action.split('-')[1]
-      if (category === 'registration') {
-        const typeList = ['.pdf', '.doc', 'odt']
-        const files = this.getFilesByCategory(category)
-        const file = files.find(file => file.title.includes(typeList[index]))
-        this.downloadFile({ fileId: file.fileId })
-      } else {
-        const file = this.getFilesByCategory(category)[0]
-        this.downloadFile({ fileId: file.fileId })
-      }
+      const file = this.getHeaderFiles.find(file => {
+        if (category === 'registration') {
+          const extensionList = ['pdf', 'doc', 'odt']
+          return file.category === category && file.extension === extensionList[index]
+        } else {
+          return file.category === category
+        }
+      })
+      this.downloadFile({ fileId: file.fileId })
     }
   }
 }

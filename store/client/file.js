@@ -10,27 +10,40 @@ const state = () => ({
   /**
    * @type {Array<File>}
    */
-  files: []
+  headerFiles: [],
+  /**
+   * @type {Array<File>}
+   */
+  certificationFiles: []
 })
 
 const getters = {
-  getFiles: state => state.files,
-  getFilesByCategory: state => category => {
-    return state.files.filter(file => file.category === category)
-  }
+  getCertificationFiles: state => state.certificationFiles,
+  getHeaderFiles: state => state.headerFiles
 }
 
 const mutations = {
-  SET_Files(state, files) {
-    state.files = files
+  SET_headerFiles(state, files) {
+    state.headerFiles = files
+  },
+  SET_certificationFiles(state, files) {
+    state.certificationFiles = files
   }
 }
 
 const actions = {
-  async fetchFiles({ commit }) {
+  async fetchCertificationFiles({ commit }) {
     try {
-      const { data } = await this.$fileApi.fetchFiles()
-      commit('SET_Files', data.result.files)
+      const { data } = await this.$fileApi.fetchCertificationFiles()
+      commit('SET_certificationFiles', data.result.files)
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  async fetchHeaderFiles({ commit }) {
+    try {
+      const { data } = await this.$fileApi.fetchHeaderFiles()
+      commit('SET_headerFiles', data.result.files)
     } catch (error) {
       console.error(error)
     }

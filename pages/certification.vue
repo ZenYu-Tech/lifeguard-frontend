@@ -2,9 +2,9 @@
   <main class="section-wrapper">
     <section class="pass-list">
       <h3 class="pass-list__title">檢定通過名單</h3>
-      <div v-if="getFilesByCategory('certification').length > 0" class="pass-list__file-wrapper">
+      <div v-if="getCertificationFiles.length > 0" class="pass-list__file-wrapper">
         <div
-          v-for="file in getFilesByCategory('certification').slice(0, 10)"
+          v-for="file in getCertificationFiles.slice(0, 10)"
           :key="file.fileId"
           class="pass-list__file"
           @click="downloadFile({ fileId: file.fileId })"
@@ -41,7 +41,7 @@ export default {
   async asyncData({ store }) {
     await store.dispatch('client/article/fetchArticles', { category: 'news' })
     await store.dispatch('client/article/fetchArticles', { category: 'experience' })
-    await store.dispatch('client/file/fetchFiles')
+    await store.dispatch('client/file/fetchCertificationFiles')
   },
   data() {
     return {
@@ -51,7 +51,7 @@ export default {
   computed: {
     ...mapGetters('client', {
       getArticlesByCategory: 'article/getArticlesByCategory',
-      getFilesByCategory: 'file/getFilesByCategory'
+      getCertificationFiles: 'file/getCertificationFiles'
     }),
     ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
