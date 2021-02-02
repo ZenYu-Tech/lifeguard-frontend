@@ -16,6 +16,16 @@
       </transition>
     </div>
     <div class="header__menu hidden-md-and-down">
+      <div class="header__external-link">
+        <a href="https://siwan.nsysu.edu.tw/" target="_blank">
+          西灣學院
+          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
+        </a>
+        <a href="https://www.nsysu.edu.tw/ " target="_blank">
+          國立中山大學
+          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
+        </a>
+      </div>
       <NavMenuGroup :menu-list="menuList" />
     </div>
   </header>
@@ -176,6 +186,7 @@ export default {
     align-items: center;
     cursor: pointer;
   }
+
   &__menu {
     width: 40px;
     height: 40px;
@@ -202,7 +213,36 @@ export default {
     height: 90px;
     &__menu {
       width: auto;
-      align-self: flex-end;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      align-items: flex-end;
+    }
+    &__external-link {
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      column-gap: 15px;
+      margin-top: 3px;
+      > a {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        i.icon-svg {
+          width: 18px;
+          height: 18px;
+          margin-left: 4px;
+          background-color: black;
+        }
+        &:hover {
+          color: map-get($map: $colors, $key: primary);
+          i.icon-svg {
+            background-color: map-get($map: $colors, $key: primary) !important;
+          }
+        }
+      }
     }
   }
 }
