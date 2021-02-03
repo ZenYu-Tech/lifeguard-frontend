@@ -13,7 +13,10 @@
       </el-col>
     </el-row>
     <el-row>
-      <vue-editor v-model="articleContent.content" />
+      <vue-editor
+        v-model="articleContent.content"
+        :class="{ 'news-option': articleContent.category !== 'experience' }"
+      />
     </el-row>
     <el-row v-if="articleContent.category === 'experience'">
       <el-card shadow="never">
@@ -234,4 +237,9 @@ export default {
 //   align-items: center;
 //   color: #fff;
 // }
+</style>
+<style>
+.news-option .ql-toolbar .ql-formats .ql-image {
+  display: none;
+}
 </style>
