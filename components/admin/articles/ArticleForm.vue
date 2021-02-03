@@ -26,7 +26,7 @@
             v-for="(item, index) in articleContent.images"
             :key="`origin-${index}`"
             class="image-wall__preview"
-            @click="deleteImage(item)"
+            @click="deleteArticleImage(item)"
           >
             <img :src="`data:image/png;base64, ${item.image}`" :alt="`圖片${index + 1}`" />
           </div>
@@ -34,7 +34,7 @@
             v-for="(image, index) in newAddPreviewImages"
             :key="`new-${index}`"
             class="image-wall__preview"
-            @click="deleteImage(image)"
+            @click="deleteArticleImage(image)"
           >
             <img :src="image" :alt="`圖片${index + 1}`" />
           </div>
@@ -111,16 +111,16 @@ export default {
     previewArticle() {
       console.log('previewArticle')
     },
-    async deleteImage(target) {
+    async deleteArticleImage(target) {
       try {
         if (typeof target === 'object') {
-          const existIndex = this.articleContent.images.indexOf(target)
-          this.articleContent.images.splice(existIndex, 1)
-          this.deleteImage({
+          await this.deleteImage({
             category: this.articleContent.category,
             articleId: this.articleContent.articleId,
             imageId: target.imageId
           })
+          const existIndex = this.articleContent.images.indexOf(target)
+          this.articleContent.images.splice(existIndex, 1)
         } else {
           const previewIndex = this.newAddPreviewImages.indexOf(target)
           this.newAddPreviewImages.splice(previewIndex, 1)
