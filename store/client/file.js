@@ -10,37 +10,48 @@ const state = () => ({
   /**
    * @type {Array<File>}
    */
-  files: []
+  headerFiles: [],
+  /**
+   * @type {Array<File>}
+   */
+  certificationFiles: []
 })
 
 const getters = {
-  getFiles: state => state.files,
-  getFilesByCategory: state => category => {
-    return state.files.filter(file => file.category === category)
-  }
+  getCertificationFiles: state => state.certificationFiles,
+  getHeaderFiles: state => state.headerFiles
 }
 
 const mutations = {
-  SET_Files(state, files) {
-    state.files = files
+  SET_headerFiles(state, files) {
+    state.headerFiles = files
+  },
+  SET_certificationFiles(state, files) {
+    state.certificationFiles = files
   }
 }
 
 const actions = {
-  async fetchFiles({ commit }, { category }) {
+  async fetchCertificationFiles({ commit }) {
     try {
-      const { data } = await this.$fileApi.fetchFiles(category)
-      commit('SET_Files', data.result.files)
+      const { data } = await this.$fileApi.fetchCertificationFiles()
+      commit('SET_certificationFiles', data.result.files)
     } catch (error) {
       console.error(error)
     }
   },
-  async downloadFile(context, { fileId, title }) {
+  async fetchHeaderFiles({ commit }) {
+    try {
+      const { data } = await this.$fileApi.fetchHeaderFiles()
+      commit('SET_headerFiles', data.result.files)
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  async downloadFile(context, { fileId }) {
     try {
       const { data } = await this.$fileApi.downloadFile(fileId)
-      const file = data.result.file
-      let extension = title.split('.')
-      extension = extension[extension.length - 1]
+      const { extension, file, title } = data.result
 
       const url = `data:application/${extension};base64,${file}`
       const a = document.createElement('a')

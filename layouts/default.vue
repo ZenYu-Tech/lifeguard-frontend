@@ -6,7 +6,9 @@
       class="banner"
       :style="{ 'background-image': `url(${require('@/assets/images/banner.png')})` }"
     ></section>
-    <Nuxt />
+    <div class="main-container">
+      <Nuxt />
+    </div>
     <LayoutFooter />
   </div>
 </template>
@@ -30,5 +32,9 @@ export default {
   background-repeat: no-repeat;
   background-position: right;
   background-size: cover;
+}
+.main-container {
+  max-width: 1280px;
+  margin: 0 auto;
 }
 </style>

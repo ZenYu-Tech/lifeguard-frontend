@@ -1,8 +1,8 @@
 <template>
-  <section class="experience">
+  <section ref="section-experience" class="experience">
     <h3 class="experience__title">活動花絮</h3>
     <template v-if="getExperienceArticles.length > 0">
-      <slick-carousel :width="'86vw'" :height="231" :options="slickOptions">
+      <slick-carousel :width="carouselWidth" :height="231" :options="slickOptions">
         <div
           v-for="article in getExperienceArticles.slice(0, 4)"
           :key="article.id"
@@ -26,6 +26,7 @@ export default {
   name: 'SectionHightlight',
   data() {
     return {
+      carouselWidth: '',
       slickOptions: {
         dots: true,
         arrows: false,
@@ -57,6 +58,9 @@ export default {
     ...mapGetters('client', {
       getExperienceArticles: 'article/getExperienceArticles'
     })
+  },
+  mounted() {
+    this.carouselWidth = `${this.$refs['section-experience'].clientWidth}px`
   }
 }
 </script>

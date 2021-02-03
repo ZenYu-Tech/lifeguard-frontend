@@ -50,7 +50,6 @@ export default {
   grid-auto-flow: column;
   grid-template-rows: 1fr;
   column-gap: 40px;
-  height: 100%;
-  align-items: flex-start;
+  margin-top: 8px;
 }
 </style>

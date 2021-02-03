@@ -13,14 +13,14 @@
         <template v-if="menu.subMenuList.length > 0">
           <h5 class="link-section__title">{{ menu.title }}</h5>
           <ul class="link-section__link-group">
-            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title" @click="$emit('collapse')">
+            <li v-for="(subMenu, index) in menu.subMenuList" :key="subMenu.title" @click="$emit('collapse')">
               <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">
                 {{ subMenu.title }}
               </nuxt-link>
               <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
                 {{ subMenu.title }}
               </a>
-              <a v-else>{{ subMenu.title }}</a>
+              <a v-else @click="download(subMenu.action, index)">{{ subMenu.title }}</a>
             </li>
           </ul>
         </template>
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'SideMenu',
   props: {
@@ -52,6 +54,28 @@ export default {
     menuList: {
       type: Array,
       required: true
+    }
+  },
+  computed: {
+    ...mapGetters('client', {
+      getHeaderFiles: 'file/getHeaderFiles'
+    })
+  },
+  methods: {
+    ...mapActions('client', {
+      downloadFile: 'file/downloadFile'
+    }),
+    download(action, index) {
+      const category = action.split('-')[1]
+      const file = this.getHeaderFiles.find(file => {
+        if (category === 'registration') {
+          const extensionList = ['pdf', 'doc', 'odt']
+          return file.category === category && file.extension === extensionList[index]
+        } else {
+          return file.category === category
+        }
+      })
+      this.downloadFile({ fileId: file.fileId })
     }
   }
 }
@@ -119,6 +143,7 @@ export default {
       width: 100%;
       text-decoration: none;
       color: white;
+      cursor: pointer;
     }
   }
 }
