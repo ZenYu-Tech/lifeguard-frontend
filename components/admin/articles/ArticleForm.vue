@@ -131,7 +131,22 @@ export default {
       }
     },
     submitForm() {
+      if (!this.validateForm()) return
       this.$emit('submitForm', this.articleContent)
+    },
+    validateForm() {
+      if (this.articleContent.title.length < 1) {
+        this.$message.error('請輸入文章標題')
+      } else if (this.articleContent.category.length < 1) {
+        this.$message.error('請選擇文章類別')
+      } else if (this.articleContent.content.length < 1) {
+        this.$message.error('請輸入文章內容')
+      } else if (this.articleContent.images.length + this.articleContent.newAddImages.length < 1) {
+        this.$message.error('請至少選擇一張圖片！')
+      } else {
+        return true
+      }
+      return false
     },
     goBack() {
       this.$router.back()
