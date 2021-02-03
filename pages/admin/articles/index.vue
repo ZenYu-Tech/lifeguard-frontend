@@ -13,13 +13,14 @@
           {{ $formatDate(row.createdAt, true) }}
         </template>
       </el-table-column>
-      <el-table-column align="right" width="120">
+      <el-table-column align="right" width="180">
         <template slot="header">
           <el-button type="primary" size="small" @click="handleCreate">新增</el-button>
         </template>
         <template slot-scope="{ row }">
           <el-button type="text" size="small" @click="handleRead(row)">查看</el-button>
           <el-button type="text" size="small" @click="handleEdit(row)">編輯</el-button>
+          <el-button type="text" size="mini" @click="handleDelete(row)">刪除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,7 +69,8 @@ export default {
   methods: {
     ...mapActions('admin', {
       fetchArticle: 'article/fetchArticle',
-      fetchArticles: 'article/fetchArticles'
+      fetchArticles: 'article/fetchArticles',
+      deleteArticle: 'article/deleteArticle'
     }),
     async handleRead(rowData) {
       this.loading = true
@@ -81,6 +83,27 @@ export default {
       await this.fetchArticle({ category: rowData.category, articleId: rowData.articleId })
       this.loading = false
       this.$router.push('/admin/articles/update?action=edit')
+    },
+    async handleDelete(rowData) {
+      try {
+        const result = await this.$confirm(`確定要刪除「${rowData.title}」這篇文章嗎？`, '確認刪除', {
+          confirmButtonText: '確認',
+          cancelButtonText: '返回',
+          type: 'warning'
+        })
+
+        if (result === 'cancel') {
+          return
+        }
+
+        this.loading = true
+        await this.deleteArticle({ category: rowData.category, articleId: rowData.articleId })
+        const { count, page } = this.getPagination
+        await this.fetchArticles({ count, page })
+        this.loading = false
+      } catch (error) {
+        console.log(error)
+      }
     },
     handleCreate() {
       this.$router.push('/admin/articles/update?action=create')
