@@ -7,7 +7,7 @@
         </el-input>
       </el-col>
       <el-col :span="8">
-        <el-select v-model="articleContent.category" placeholder="選擇類別">
+        <el-select v-model="articleContent.category" placeholder="選擇類別" :disabled="!!articleContent.articleId">
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </el-col>
@@ -22,10 +22,20 @@
             ＋
             <input id="img" type="file" name="img" multiple @change="handleUpload($event)" />
           </label>
-          <div v-for="(item, index) in articleContent.images" :key="`origin-${index}`" class="image-wall__preview">
+          <div
+            v-for="(item, index) in articleContent.images"
+            :key="`origin-${index}`"
+            class="image-wall__preview"
+            @click="deleteArticleImage(item)"
+          >
             <img :src="`data:image/png;base64, ${item.image}`" :alt="`圖片${index + 1}`" />
           </div>
-          <div v-for="(image, index) in newAddPreviewImages" :key="`new-${index}`" class="image-wall__preview">
+          <div
+            v-for="(image, index) in newAddPreviewImages"
+            :key="`new-${index}`"
+            class="image-wall__preview"
+            @click="deleteArticleImage(image)"
+          >
             <img :src="image" :alt="`圖片${index + 1}`" />
           </div>
         </div>
@@ -35,7 +45,7 @@
       <div class="image-wall__button">
         <div>
           <el-button @click="goBack">取消</el-button>
-          <el-button type="primary" @click="previewArticle">預覽</el-button>
+          <!-- <el-button type="primary" @click="previewArticle">預覽</el-button> -->
         </div>
         <div>
           <el-button type="success" @click="submitForm">確認上傳</el-button>
@@ -45,6 +55,7 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
 let VueEditor
 
 if (process.client) {
@@ -76,6 +87,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions('admin', {
+      deleteImage: 'article/deleteImage'
+    }),
     handleUpload(e) {
       const selectedFiles = e.target.files
 
@@ -96,6 +110,25 @@ export default {
     },
     previewArticle() {
       console.log('previewArticle')
+    },
+    async deleteArticleImage(target) {
+      try {
+        if (typeof target === 'object') {
+          await this.deleteImage({
+            category: this.articleContent.category,
+            articleId: this.articleContent.articleId,
+            imageId: target.imageId
+          })
+          const existIndex = this.articleContent.images.indexOf(target)
+          this.articleContent.images.splice(existIndex, 1)
+        } else {
+          const previewIndex = this.newAddPreviewImages.indexOf(target)
+          this.newAddPreviewImages.splice(previewIndex, 1)
+          this.articleContent.newAddImages.splice(previewIndex, 1)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
     submitForm() {
       this.$emit('submitForm', this.articleContent)
@@ -172,4 +205,18 @@ export default {
     justify-content: space-between;
   }
 }
+
+// .main-image::before {
+//   content: '＊';
+//   width: 20px;
+//   height: 20px;
+//   background-color: #72889e;
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   color: #fff;
+// }
 </style>
