@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="10">
-        <el-input v-model="articleContent.title" placeholder="請輸入">
+        <el-input v-model="articleContent.title" placeholder="請輸入標題">
           <template slot="prepend">文章標題</template>
         </el-input>
       </el-col>
@@ -11,6 +11,11 @@
           <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option>
         </el-select>
       </el-col>
+    </el-row>
+    <el-row v-if="articleContent.category === 'news'">
+      <el-input v-model="articleContent.mainPoint" placeholder="請輸入 60 字內簡介">
+        <template slot="prepend">簡介</template>
+      </el-input>
     </el-row>
     <el-row>
       <vue-editor
@@ -48,17 +53,25 @@
       <div class="image-wall__button">
         <div>
           <el-button @click="goBack">取消</el-button>
-          <!-- <el-button type="primary" @click="previewArticle">預覽</el-button> -->
+          <el-button type="primary" @click="previewArticle">預覽</el-button>
         </div>
         <div>
           <el-button type="success" @click="submitForm">確認上傳</el-button>
         </div>
       </div>
     </el-row>
+    <inner-article-preview
+      v-if="dialogVisible"
+      :articleContent="articleContent"
+      :dialog-visible="dialogVisible"
+      :newAddPreviewImages="newAddPreviewImages"
+      @closeDialog="dialogVisible = false"
+    ></inner-article-preview>
   </div>
 </template>
 <script>
 import { mapActions } from 'vuex'
+import InnerArticlePreview from './InnerArticlePreview'
 let VueEditor
 
 if (process.client) {
@@ -67,7 +80,7 @@ if (process.client) {
 
 export default {
   name: 'ArticleForm',
-  components: { VueEditor },
+  components: { VueEditor, InnerArticlePreview },
   props: {
     articleContent: {
       type: Object,
@@ -86,7 +99,8 @@ export default {
           label: '活動花絮'
         }
       ],
-      newAddPreviewImages: []
+      newAddPreviewImages: [],
+      dialogVisible: false
     }
   },
   methods: {
@@ -112,7 +126,7 @@ export default {
       }
     },
     previewArticle() {
-      console.log('previewArticle')
+      this.dialogVisible = true
     },
     async deleteArticleImage(target) {
       try {
