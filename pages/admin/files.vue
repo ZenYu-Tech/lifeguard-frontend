@@ -60,7 +60,7 @@
       </el-col>
 
       <el-col v-if="activeNav === 'certification'" :span="11">
-        <files-table :table-data="tableData"></files-table>
+        <files-table :table-data="tableData" @handleDeleteFile="handleDeleteFile"></files-table>
         <div style="text-align: center; margin-top: 20px">
           <pagination
             :page="getPagination.page"
@@ -128,7 +128,8 @@ export default {
     ...mapActions({
       fetchFiles: 'admin/file/fetchFiles',
       createFile: 'admin/file/createFile',
-      editFile: 'admin/file/editFile'
+      editFile: 'admin/file/editFile',
+      deleteFile: 'admin/file/deleteFile'
     }),
     findMatchFile() {
       this.multiInputGroup = this.getFilesByCategory(this.activeNav).map(file => {
@@ -197,6 +198,24 @@ export default {
       this.loading = true
       await this.fetchFiles({ category: 'certification', count, page: this.getPagination.page })
       this.loading = false
+    },
+    async handleDeleteFile(target) {
+      try {
+        const result = await this.$confirm(`確定要刪除「${target.title}」這個檔案嗎？`, '確認刪除', {
+          confirmButtonText: '確認',
+          cancelButtonText: '返回',
+          type: 'warning'
+        })
+
+        if (result === 'cancel') {
+          return
+        }
+        await this.deleteFile({ category: target.category, fileId: target.fileId })
+        const { count, page } = this.getPagination
+        await this.fetchFiles({ category: 'certification', count, page })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 }
@@ -212,13 +231,11 @@ export default {
     margin-bottom: 16px;
   }
   &__label {
-    font-weight: bold;
     font-size: 20px;
     color: #4a4a4a;
     width: 60px;
   }
   &__title {
-    font-weight: bold;
     font-size: 20px;
     color: #4a4a4a;
     margin-bottom: 18px;

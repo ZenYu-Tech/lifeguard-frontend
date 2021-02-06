@@ -65,10 +65,10 @@ export default {
     cursor: pointer;
     span {
       font-size: 20px;
-      line-height: 29px;
       margin-right: 3px;
       text-decoration: none;
       color: black;
+      padding: 10px 0;
     }
     i.icon-svg {
       background-color: black;
@@ -92,9 +92,9 @@ export default {
 
   &__dropdown {
     width: max-content;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 1);
     position: absolute;
-    top: 100%;
+    top: 70%;
     margin-top: 11px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0px 0px 5px 5px;

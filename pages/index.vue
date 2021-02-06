@@ -47,7 +47,7 @@ export default {
     padding: 80px 100px;
     display: grid;
     grid-template-columns: 1fr 358px;
-    grid-template-rows: 676px auto;
+    grid-template-rows: 645px auto;
     grid-template-areas:
       'news training'
       'experience experience';
@@ -69,7 +69,7 @@ export default {
   background: #f2f5f9;
   border-radius: 5px;
   position: relative;
-  height: 676px;
+  height: 645px;
   padding: 40px 12px;
 
   &__title {
@@ -77,7 +77,6 @@ export default {
     left: 12px;
     top: 0px;
     transform: translateY(-50%);
-    font-weight: bold;
     font-size: 32px;
     line-height: 32px;
     color: #2f2f2f;
@@ -103,8 +102,7 @@ export default {
   @media (min-width: 768px) {
     padding: 40px 30px;
     &__title {
-      font-size: 40px;
-      line-height: 40px;
+      font-size: 36px;
     }
   }
   @media (min-width: 1200px) {

@@ -35,7 +35,6 @@ export default {
 
   &__title {
     justify-self: center;
-    font-weight: bold;
     font-size: 32px;
     line-height: 32px;
     color: #2f2f2f;
@@ -63,7 +62,7 @@ export default {
   @media (min-width: 768px) {
     &__title {
       justify-self: start;
-      font-size: 40px;
+      font-size: 36px;
       line-height: 40px;
       &:before {
         width: 50px;

@@ -112,7 +112,6 @@ export default {
   row-gap: 30px;
   &__title {
     justify-self: center;
-    font-weight: bold;
     font-size: 32px;
     line-height: 32px;
     color: rgba(47, 47, 47, 0.9);

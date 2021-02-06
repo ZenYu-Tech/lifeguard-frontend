@@ -75,7 +75,7 @@ export default {
 
   &__title {
     justify-self: center;
-    font-weight: bold;
+    // font-weight: bold;
     font-size: 32px;
     line-height: 32px;
     color: #2f2f2f;
@@ -116,14 +116,13 @@ export default {
           height: 100%;
           background: rgba(0, 0, 0, 0.5);
           margin: 0 auto;
-          font-weight: bold;
           display: flex;
           color: #ffffff;
           justify-content: flex-start;
           align-items: flex-end;
-          font-size: 28px;
-          line-height: 28px;
-          padding: 14px;
+          font-size: 24px;
+          line-height: 1.5;
+          padding: 4px 14px;
         }
       }
     }

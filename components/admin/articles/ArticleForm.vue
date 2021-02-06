@@ -62,9 +62,9 @@
     </el-row>
     <inner-article-preview
       v-if="dialogVisible"
-      :articleContent="articleContent"
+      :article-content="articleContent"
       :dialog-visible="dialogVisible"
-      :newAddPreviewImages="newAddPreviewImages"
+      :new-add-preview-images="newAddPreviewImages"
       @closeDialog="dialogVisible = false"
     ></inner-article-preview>
   </div>
@@ -127,6 +127,25 @@ export default {
     },
     previewArticle() {
       this.dialogVisible = true
+    },
+    async deleteArticleImage(target) {
+      try {
+        if (typeof target === 'object') {
+          await this.deleteImage({
+            category: this.articleContent.category,
+            articleId: this.articleContent.articleId,
+            imageId: target.imageId
+          })
+          const existIndex = this.articleContent.images.indexOf(target)
+          this.articleContent.images.splice(existIndex, 1)
+        } else {
+          const previewIndex = this.newAddPreviewImages.indexOf(target)
+          this.newAddPreviewImages.splice(previewIndex, 1)
+          this.articleContent.newAddImages.splice(previewIndex, 1)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
     async deleteArticleImage(target) {
       try {

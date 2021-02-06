@@ -62,7 +62,6 @@ export default {
     font-size: 16px;
     line-height: 16px;
     color: map-get($map: $colors, $key: primary);
-    font-weight: bold;
     margin-bottom: 20px;
   }
   @media (min-width: 768px) {

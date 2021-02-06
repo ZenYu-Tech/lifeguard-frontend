@@ -88,7 +88,7 @@ export default {
   top: 0px;
   right: 0px;
   height: 100vh;
-  width: 345px;
+  width: 315px;
   background: rgba(66, 132, 247, 0.8);
   backdrop-filter: blur(4px);
   padding: 14px 32px;
@@ -102,7 +102,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     h4 {
-      font-size: 20px;
+      font-size: 18px;
       color: white;
     }
     i.icon-svg {
@@ -122,9 +122,8 @@ export default {
 
 .link-section {
   &__title {
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 35px;
+    font-size: 20px;
+    margin-bottom: 5px;
     color: white;
   }
   &__link-group {
@@ -132,12 +131,12 @@ export default {
     grid-template-columns: 1fr;
     grid-auto-rows: 38px;
     grid-auto-flow: row;
-    row-gap: 9px;
+    row-gap: 12px;
     > li > a {
-      background: rgba(49, 93, 165, 0.9);
+      background: rgba(49, 93, 165, 0.5);
       display: flex;
       align-items: center;
-      font-size: 20px;
+      font-size: 16px;
       height: 100%;
       padding: 4px 11px;
       width: 100%;

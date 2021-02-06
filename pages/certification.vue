@@ -102,9 +102,7 @@ export default {
   transform: translateY(-100%);
   padding: 60px 0px;
   &__title {
-    font-weight: bold;
-    font-size: 32px;
-    line-height: 32px;
+    font-size: 28px;
     color: rgba(47, 47, 47, 0.9);
     text-align: center;
     margin-bottom: 20px;
@@ -166,9 +164,7 @@ export default {
   background-color: rgba(117, 193, 106, 0.3);
   padding: 136px 17px 84px 17px;
   &__title {
-    font-weight: bold;
-    font-size: 40px;
-    line-height: 40px;
+    font-size: 32px;
     text-align: center;
     color: #2f2f2f;
     margin-bottom: 30px;
@@ -184,6 +180,10 @@ export default {
     &__wrapper {
       grid-template-columns: 1fr 1fr;
       column-gap: 30px;
+    }
+
+    &__title {
+      font-size: 36px;
     }
   }
   @media (min-width: 1200px) {

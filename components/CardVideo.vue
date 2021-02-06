@@ -38,14 +38,11 @@ export default {
 <style lang="scss" scoped>
 .video {
   &__title {
-    font-style: normal;
     font-size: 24px;
     line-height: 30px;
   }
   &__upload-time {
-    font-style: normal;
-    font-size: 12px;
-    line-height: 12px;
+    font-size: 14px;
     color: rgba(0, 0, 0, 0.7);
   }
 }
