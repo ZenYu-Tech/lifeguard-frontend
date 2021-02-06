@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="查看" :visible.sync="dialogVisible" width="70%" :show-close="false">
+  <el-dialog title="查看" :visible.sync="dialogVisible" width="70%" :show-close="false" :close-on-click-modal="false">
     <el-row :gutter="20"
       ><el-col :span="12">
         <el-input v-model="articleContent.title" :disabled="true">
@@ -7,7 +7,7 @@
         </el-input></el-col
       >
       <el-col :span="12">
-        <el-input v-model="articleContent.category" :disabled="true">
+        <el-input v-model="category" :disabled="true">
           <template slot="prepend">類別</template>
         </el-input>
       </el-col></el-row
@@ -29,12 +29,18 @@ export default {
     dialogVisible: { type: Boolean, required: true },
     articleContent: { type: Object, required: true }
   },
+  computed: {
+    category() {
+      if (this.articleContent.category === 'news') return '通知中心'
+      return '成果花絮'
+    }
+  },
   methods: {
     handleEdit() {
       this.$router.push(`/admin/articles/update?action=edit`)
     },
     closeDialog() {
-      this.$emit('closeDialog', false)
+      this.$emit('closeDialog')
     }
   }
 }

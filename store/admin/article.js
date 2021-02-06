@@ -4,6 +4,7 @@
  * @property {string} articleId
  * @property {string} category
  * @property {string} title
+ * @property {string} mainPoint
  * @property {string} content
  * @property {number} sort
  * @property {boolean} show
@@ -27,6 +28,7 @@ const state = () => ({
   article: {
     articleId: -1,
     title: '',
+    mainPoint: '',
     content: '',
     category: '',
     /**
@@ -102,6 +104,9 @@ const actions = {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('content', content)
+      if (category === 'news') {
+        formData.append('mainPoint', mainPoint)
+      }
       if (category === 'experience') {
         formData.append('mainImageIndex', mainImageIndex)
         newAddImages.forEach(image => formData.append('images', image))
@@ -116,6 +121,9 @@ const actions = {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('content', content)
+      if (category === 'news') {
+        formData.append('mainPoint', mainPoint)
+      }
       if (category === 'experience') {
         formData.append('mainImageIndex', mainImageIndex)
         newAddImages.forEach(image => formData.append('images', image))
