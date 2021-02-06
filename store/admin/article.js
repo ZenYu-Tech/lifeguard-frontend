@@ -4,6 +4,7 @@
  * @property {string} articleId
  * @property {string} category
  * @property {string} title
+ * @property {string} mainPoint
  * @property {string} content
  * @property {number} sort
  * @property {boolean} show
@@ -27,6 +28,7 @@ const state = () => ({
   article: {
     articleId: -1,
     title: '',
+    mainPoint: '',
     content: '',
     category: '',
     /**
@@ -97,11 +99,14 @@ const actions = {
       console.error(error)
     }
   },
-  async createArticle(context, { category, title, content, mainImageIndex, newAddImages }) {
+  async createArticle(context, { category, title, mainPoint, content, mainImageIndex, newAddImages }) {
     try {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('content', content)
+      if (category === 'news') {
+        formData.append('mainPoint', mainPoint)
+      }
       if (category === 'experience') {
         formData.append('mainImageIndex', mainImageIndex)
         newAddImages.forEach(image => formData.append('images', image))
@@ -111,11 +116,14 @@ const actions = {
       console.error(error)
     }
   },
-  async editArticle(context, { category, articleId, title, content, mainImageIndex, newAddImages }) {
+  async editArticle(context, { category, articleId, title, mainPoint, content, mainImageIndex, newAddImages }) {
     try {
       const formData = new FormData()
       formData.append('title', title)
       formData.append('content', content)
+      if (category === 'news') {
+        formData.append('mainPoint', mainPoint)
+      }
       if (category === 'experience') {
         formData.append('mainImageIndex', mainImageIndex)
         newAddImages.forEach(image => formData.append('images', image))

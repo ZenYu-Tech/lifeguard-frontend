@@ -38,7 +38,7 @@
       v-loading="loading"
       :dialog-visible="dialogVisible"
       :article-content="getArticle"
-      @closeDialog="closeDialog"
+      @closeDialog="dialogVisible = false"
     ></article-preview>
   </div>
 </template>

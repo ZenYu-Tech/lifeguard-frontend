@@ -1,5 +1,9 @@
 <template>
-  <div class="admin-login" :style="{ 'background-image': `url(${require('@/assets/images/login.jpg')})` }">
+  <div
+    v-loading="loading"
+    class="admin-login"
+    :style="{ 'background-image': `url(${require('@/assets/images/login.jpg')})` }"
+  >
     <div class="login-form">
       <div class="login-form__title">後台管理系統</div>
       <el-input v-model="account" class="login-form__input">
@@ -9,7 +13,7 @@
         <template slot="prepend">密碼</template>
       </el-input>
       <div>
-        <el-button type="primary" plain @click="submitForm">登入</el-button>
+        <el-button type="primary" plain :disabled="loading" @click="submitForm">登入</el-button>
       </div>
     </div>
   </div>
@@ -23,7 +27,8 @@ export default {
   data() {
     return {
       account: 'lifeguard2020',
-      password: 'nsysulifeguard'
+      password: 'nsysulifeguard',
+      loading: false
     }
   },
   methods: {
@@ -48,9 +53,12 @@ export default {
       }
 
       try {
+        this.loading = true
         await this.login({ account: this.account, password: this.password })
         this.$router.push('/admin/articles')
+        this.loading = false
       } catch (error) {
+        this.loading = false
         console.log(error)
       }
     }

@@ -15,6 +15,7 @@ export default {
     return {
       articleForm: {
         title: '',
+        mainPoint: '',
         content: '',
         category: '',
         images: [],
@@ -45,7 +46,6 @@ export default {
     async submitForm(formData) {
       this.loading = true
       try {
-        await console.log(formData)
         if (this.getAction === 'edit') {
           await this.editArticle(formData)
         } else {

@@ -50,8 +50,7 @@ export default {
     line-height: 25px;
   }
   &__time {
-    font-size: 14px;
-    line-height: 25px;
+    font-size: 15px;
     color: #a9abb3;
   }
   &__content {
@@ -59,7 +58,7 @@ export default {
     padding: 10px 18px;
     background-color: map-get($map: $colors, $key: primary);
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.5;
     color: #ffffff;
     position: relative;
