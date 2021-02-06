@@ -10,11 +10,6 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  server: {
-    host: '192.168.1.27',
-    port: 9999
-  },
-  
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [
     { src: 'element-ui/lib/theme-chalk/index.css' },
