@@ -55,8 +55,7 @@ export default {
     font-family: Noto Sans TC;
     font-style: normal;
     font-weight: normal;
-    font-size: 16px;
-    line-height: 25px;
+    font-size: 15px;
     color: #a9abb3;
     white-space: nowrap;
   }
@@ -65,8 +64,8 @@ export default {
     padding: 13px 19px;
     background-color: map-get($map: $colors, $key: primary);
     border-radius: 5px;
-    font-size: 18px;
-    line-height: 26px;
+    font-size: 15px;
+    line-height: 1.5;
     color: #ffffff;
     position: relative;
     &::before {
