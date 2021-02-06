@@ -37,7 +37,6 @@ export default {
     height: 40px;
     background: rgba(0, 130, 254, 0.38);
     border-radius: 8px;
-    font-weight: bold;
     font-size: 16px;
     color: #fff;
     display: flex;

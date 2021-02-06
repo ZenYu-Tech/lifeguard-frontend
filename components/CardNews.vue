@@ -26,7 +26,7 @@ export default {
   cursor: pointer;
   &__header {
     display: grid;
-    grid-template-columns: 14px 1fr 83px;
+    grid-template-columns: 14px 1fr 100px;
     grid-template-rows: 25px;
     column-gap: 5px;
     align-items: center;
@@ -44,24 +44,18 @@ export default {
     background-color: #75c26a;
   }
   &__title {
-    font-family: Noto Sans TC;
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
     font-size: 18px;
     line-height: 25px;
   }
   &__time {
-    font-family: Noto Sans TC;
-    font-style: normal;
-    font-weight: normal;
     font-size: 15px;
     color: #a9abb3;
-    white-space: nowrap;
   }
   &__content {
     margin-top: 16px;
-    padding: 13px 19px;
+    padding: 10px 18px;
     background-color: map-get($map: $colors, $key: primary);
     border-radius: 5px;
     font-size: 15px;

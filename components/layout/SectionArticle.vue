@@ -82,7 +82,6 @@ export default {
       outline: none;
       border: none;
       background-color: transparent;
-      font-weight: bold;
       font-size: 20px;
       line-height: 29px;
       padding: 0px;

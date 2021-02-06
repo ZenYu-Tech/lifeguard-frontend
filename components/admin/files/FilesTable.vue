@@ -3,7 +3,7 @@
     <el-table-column prop="title" label="檔案標題"> </el-table-column>
     <el-table-column prop="createdAt" label="建立時間" width="150">
       <template slot-scope="{ row }">
-        {{ $formatDate(row.createdAt, true) }}
+        {{ $formatDate(row.updatedAt, true) }}
       </template>
     </el-table-column>
     <el-table-column align="right" width="50">
@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     handleDelete(rowData) {
-      console.log('handleDelete', rowData)
+      this.$emit('handleDeleteFile', rowData)
     }
   }
 }

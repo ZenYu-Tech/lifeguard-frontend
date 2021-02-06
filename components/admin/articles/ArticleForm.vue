@@ -53,7 +53,7 @@
       <div class="image-wall__button">
         <div>
           <el-button @click="goBack">取消</el-button>
-          <el-button type="primary" @click="previewArticle">預覽</el-button>
+          <!-- <el-button type="primary" @click="previewArticle">預覽</el-button> -->
         </div>
         <div>
           <el-button type="success" @click="submitForm">確認上傳</el-button>
@@ -127,6 +127,25 @@ export default {
     },
     previewArticle() {
       this.dialogVisible = true
+    },
+    async deleteArticleImage(target) {
+      try {
+        if (typeof target === 'object') {
+          await this.deleteImage({
+            category: this.articleContent.category,
+            articleId: this.articleContent.articleId,
+            imageId: target.imageId
+          })
+          const existIndex = this.articleContent.images.indexOf(target)
+          this.articleContent.images.splice(existIndex, 1)
+        } else {
+          const previewIndex = this.newAddPreviewImages.indexOf(target)
+          this.newAddPreviewImages.splice(previewIndex, 1)
+          this.articleContent.newAddImages.splice(previewIndex, 1)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     },
     async deleteArticleImage(target) {
       try {

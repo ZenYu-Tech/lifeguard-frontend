@@ -1,6 +1,8 @@
 <template>
   <header class="header" :class="{ 'side-menu-expand': isSideMenuExpand }">
-    <nuxt-link tag="div" to="/" class="header__logo">LOGO</nuxt-link>
+    <nuxt-link tag="div" to="/" class="header__logo">
+      <img src="@/assets/images/logo.png" alt="西灣學院" />
+    </nuxt-link>
     <div
       class="header__menu hidden-lg-only"
       :style="{ 'background-image': `url(${require('@/assets/icons/menu.svg')})` }"
@@ -166,9 +168,9 @@ export default {
   z-index: 10000;
   top: 0px;
   left: 0px;
-  height: 65px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(4px);
+  height: 50px;
+  background: rgba(255, 255, 255, 1);
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -176,20 +178,16 @@ export default {
   padding: 0px 18px 0px 24px;
   transition: all 0.3s ease;
   &__logo {
-    width: 200px;
-    height: 40px;
-    background: rgba(66, 132, 247, 0.73);
-    opacity: 0.6;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 50px;
     cursor: pointer;
+    img {
+      width: 100%;
+    }
   }
 
   &__menu {
-    width: 40px;
-    height: 40px;
+    width: 25px;
+    height: 25px;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
@@ -198,15 +196,20 @@ export default {
   &.side-menu-expand {
     height: 0px;
     > div {
-      height: 0px;
+      height: 80px;
     }
   }
 
   @media (min-width: 768px) {
     height: 70px;
-    padding: 0px 24px 0px 40px;
+    padding: 0 40px;
     &__logo {
-      width: 240px;
+      width: 85px;
+    }
+
+    &__menu {
+      width: 40px;
+      height: 40px;
     }
   }
   @media (min-width: 1200px) {
@@ -229,7 +232,7 @@ export default {
         display: flex;
         align-items: center;
         text-decoration: none;
-        color: black;
+        color: #2b2b2b;
         i.icon-svg {
           width: 18px;
           height: 18px;
