@@ -89,7 +89,6 @@ export default {
     height: 70px;
 
     .el-breadcrumb__item {
-      font-weight: bold;
       font-size: 20px;
       color: #4a4a4a;
     }

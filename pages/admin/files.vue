@@ -212,13 +212,11 @@ export default {
     margin-bottom: 16px;
   }
   &__label {
-    font-weight: bold;
     font-size: 20px;
     color: #4a4a4a;
     width: 60px;
   }
   &__title {
-    font-weight: bold;
     font-size: 20px;
     color: #4a4a4a;
     margin-bottom: 18px;

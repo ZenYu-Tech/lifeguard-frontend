@@ -45,7 +45,6 @@ export default {
   box-shadow: 6px 0px 6px rgba(0, 0, 0, 0.1);
   &__logo {
     font-size: 28px;
-    font-weight: bold;
     color: #4a4a4a;
     text-align: center;
     padding: 20px 0;
