@@ -75,7 +75,6 @@ export default {
   &__title {
     color: #fff;
     font-size: 28px;
-    font-weight: bold;
     margin-bottom: 30px;
   }
 

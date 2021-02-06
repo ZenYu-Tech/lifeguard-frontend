@@ -21,13 +21,15 @@
     <div class="footer__divider"></div>
     <div class="footer__contact">
       <div>
-        <h6>單位名稱</h6>
-        <p>聯絡電話 02-1234-5678</p>
+        <h6>
+          <span>西灣學院</span>
+          <span>運動與健康教育中心</span>
+        </h6>
+        <p>聯絡電話 07-525-2000 #5865</p>
         <p>地址 80424 高雄市鼓山區蓮海路70號</p>
       </div>
       <div>
-        <p>版權宣告</p>
-        <p>網站製作商資訊</p>
+        <p>Copyright@2021 沉於科技工作室</p>
       </div>
     </div>
   </footer>
@@ -119,6 +121,12 @@ export default {
 $color-title: #ffffff;
 $color-content: rgba(255, 255, 255, 0.4);
 
+.footer__link-section,
+.footer__divider,
+.footer__contact {
+  max-width: 1150px;
+}
+
 .footer {
   background: rgba(0, 0, 0, 0.7);
   padding: 34px 34px 14px 34px;
@@ -143,19 +151,22 @@ $color-content: rgba(255, 255, 255, 0.4);
     > div:nth-child(1) {
       margin-bottom: 60px;
       h6 {
-        font-size: 32px;
-        line-height: 46px;
+        font-size: 28px;
+        line-height: 1.4;
         color: $color-title;
+        margin-bottom: 10px;
+        span {
+          display: block;
+        }
       }
       p {
-        font-size: 18px;
-        line-height: 26px;
+        font-size: 16px;
+        line-height: 1.5;
       }
     }
     > div:nth-child(2) {
       p {
-        font-size: 16px;
-        line-height: 23px;
+        font-size: 12px;
       }
     }
   }
@@ -175,10 +186,22 @@ $color-content: rgba(255, 255, 255, 0.4);
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        h6 {
+          font-size: 32px;
+          span {
+            display: inline;
+          }
+        }
+        p {
+          font-size: 20px;
+        }
       }
       > div:nth-child(2) {
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
+        p {
+          font-size: 14px;
+        }
       }
     }
   }

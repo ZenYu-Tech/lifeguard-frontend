@@ -81,13 +81,13 @@ export default {
 <style lang="scss" scoped>
 .section-wrapper {
   position: relative;
-  padding: 130px 18px 70px 18px;
+  padding: 100px 18px 70px 18px;
 
   @media (min-width: 768px) {
-    padding: 130px 35px 70px 35px;
+    padding: 100px 35px 70px 35px;
   }
   @media (min-width: 1200px) {
-    padding: 130px 90px 70px 90px;
+    padding: 100px 90px 70px 90px;
   }
 }
 
@@ -96,7 +96,6 @@ export default {
   row-gap: 35px;
   &__title {
     justify-self: center;
-    font-weight: bold;
     font-size: 32px;
     line-height: 32px;
     color: #2f2f2f;
@@ -140,7 +139,6 @@ export default {
           height: 100%;
           background: rgba(0, 0, 0, 0.5);
           margin: 0 auto;
-          font-weight: bold;
           display: flex;
           color: #ffffff;
           justify-content: flex-start;
