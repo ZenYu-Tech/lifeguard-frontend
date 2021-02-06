@@ -13,7 +13,7 @@
         <template slot="prepend">密碼</template>
       </el-input>
       <div>
-        <el-button type="primary" plain @click="submitForm" :disabled="loading">登入</el-button>
+        <el-button type="primary" plain :disabled="loading" @click="submitForm">登入</el-button>
       </div>
     </div>
   </div>

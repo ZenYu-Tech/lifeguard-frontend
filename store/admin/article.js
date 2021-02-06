@@ -99,7 +99,7 @@ const actions = {
       console.error(error)
     }
   },
-  async createArticle(context, { category, title, content, mainImageIndex, newAddImages }) {
+  async createArticle(context, { category, title, mainPoint, content, mainImageIndex, newAddImages }) {
     try {
       const formData = new FormData()
       formData.append('title', title)
@@ -116,7 +116,7 @@ const actions = {
       console.error(error)
     }
   },
-  async editArticle(context, { category, articleId, title, content, mainImageIndex, newAddImages }) {
+  async editArticle(context, { category, articleId, title, mainPoint, content, mainImageIndex, newAddImages }) {
     try {
       const formData = new FormData()
       formData.append('title', title)

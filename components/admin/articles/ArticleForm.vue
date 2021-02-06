@@ -62,9 +62,9 @@
     </el-row>
     <inner-article-preview
       v-if="dialogVisible"
-      :articleContent="articleContent"
+      :article-content="articleContent"
       :dialog-visible="dialogVisible"
-      :newAddPreviewImages="newAddPreviewImages"
+      :new-add-preview-images="newAddPreviewImages"
       @closeDialog="dialogVisible = false"
     ></inner-article-preview>
   </div>
