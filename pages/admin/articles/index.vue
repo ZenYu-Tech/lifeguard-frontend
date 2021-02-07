@@ -118,7 +118,7 @@ export default {
     },
     async changeSize(count) {
       this.loading = true
-      await this.fetchArticles({ count, page: this.getPagination.page })
+      await this.fetchArticles({ count, page: 1 })
       this.loading = false
     }
   }

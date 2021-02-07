@@ -2,7 +2,7 @@
   <div v-loading="loading" class="admin-container">
     <el-table :data="getVideos" style="width: 100%">
       <el-table-column prop="title" label="影片標題"> </el-table-column>
-      <el-table-column prop="createdAt" label="建立時間" width="120">
+      <el-table-column prop="createdAt" label="建立時間" width="150">
         <template slot-scope="{ row }">
           {{ $formatDate(row.createdAt, true) }}
         </template>
@@ -131,7 +131,7 @@ export default {
     },
     async changeSize(count) {
       this.loading = true
-      await this.fetchVideos({ count, page: this.getPagination.page })
+      await this.fetchVideos({ count, page: 1 })
       this.loading = false
     }
   }

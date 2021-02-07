@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-container">
+  <div class="admin-container" v-loading="loading">
     <el-row :gutter="30">
       <el-col :span="3">
         <files-nav :files-nav="filesNav" :active-nav.sync="activeNav"></files-nav>
@@ -101,7 +101,8 @@ export default {
         url: '',
         changed: false
       },
-      multiInputGroup: []
+      multiInputGroup: [],
+      loading: false
     }
   },
   computed: {
@@ -138,8 +139,10 @@ export default {
       })
     },
     async changeNav(category) {
+      this.loading = true
       await this.fetchFiles({ category, count: 10, page: 1 })
       this.resetFileData(category)
+      this.loading = false
     },
     handleUpload(e, label) {
       const file = e.target.files[0]
@@ -196,7 +199,7 @@ export default {
     },
     async changeSize(count) {
       this.loading = true
-      await this.fetchFiles({ category: 'certification', count, page: this.getPagination.page })
+      await this.fetchFiles({ category: 'certification', count, page: 1 })
       this.loading = false
     },
     async handleDeleteFile(target) {
