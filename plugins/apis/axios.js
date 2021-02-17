@@ -12,7 +12,13 @@ export default function ({ $axios, $config, redirect, store }, inject) {
   })
 
   $axios.onResponse(response => {
-    if (response.config.method !== 'get') {
+    const url = response.config.url
+    const method = response.config.method
+
+    // 刪除成果花絮圖片不需顯示訊息
+    if (url.includes('/manage/article') && url.split('/').length > 5 && method === 'delete') return
+
+    if (method !== 'get') {
       Message.success(response.data.message)
     }
   })
