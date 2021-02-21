@@ -39,7 +39,6 @@ export default {
 .video {
   &__title {
     font-size: 24px;
-    line-height: 30px;
   }
   &__upload-time {
     font-size: 14px;

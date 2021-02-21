@@ -17,7 +17,7 @@
     </section>
     <section class="news">
       <h3 class="news__title">最新消息</h3>
-      <div v-if="getArticlesByCategory('news').length > 0" class="news__wrapper">
+      <div v-if="getArticlesByCategory('news').length > 0" class="news__wrapper max-width">
         <card-news-square
           v-for="news in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
           :key="news.id"
@@ -26,7 +26,7 @@
       </div>
       <div v-else class="no-data">目前沒有資料喔</div>
     </section>
-    <section-experience></section-experience>
+    <section-experience class="max-width"></section-experience>
   </main>
 </template>
 
@@ -90,12 +90,12 @@ export default {
 
 .pass-list {
   background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0px 0px 8px 6px rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 0px 8px 6px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(4px);
   border-radius: 5px;
   width: calc(100% - 23px * 2);
   margin: 0 23px;
-  height: 566px;
+  height: 450px;
   position: absolute;
   z-index: 100;
   top: 70px;
@@ -103,7 +103,6 @@ export default {
   padding: 60px 0px;
   &__title {
     font-size: 28px;
-    color: rgba(47, 47, 47, 0.9);
     text-align: center;
     margin-bottom: 20px;
   }
@@ -128,8 +127,6 @@ export default {
     }
     span {
       font-size: 20px;
-      line-height: 30px;
-      color: #2f2f2f;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -151,7 +148,8 @@ export default {
   }
   @media (min-width: 1200px) {
     width: calc(100% - 245px * 2);
-    margin: 0 245px;
+    max-width: 900px;
+    margin: 0 calc((100vw - 900px) / 2);
     &__file {
       span {
         max-width: 500px;
@@ -161,18 +159,17 @@ export default {
 }
 
 .news {
-  background-color: rgba(117, 193, 106, 0.3);
+  background: linear-gradient(to bottom, rgba(117, 193, 106, 0.3) 0%, #fff 100%);
   padding: 136px 17px 84px 17px;
   &__title {
     font-size: 32px;
     text-align: center;
-    color: #2f2f2f;
     margin-bottom: 30px;
   }
   &__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-auto-rows: 342px;
+    grid-auto-rows: 270px;
     grid-auto-flow: row;
     row-gap: 30px;
   }

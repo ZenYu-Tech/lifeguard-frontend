@@ -2,7 +2,7 @@
   <div>
     <el-row :gutter="20">
       <el-col :span="10">
-        <el-input v-model="articleContent.title" placeholder="請輸入標題">
+        <el-input v-model="articleContent.title" placeholder="請輸入 25 字內標題">
           <template slot="prepend">文章標題</template>
         </el-input>
       </el-col>

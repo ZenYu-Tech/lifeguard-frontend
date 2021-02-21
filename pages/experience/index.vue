@@ -1,5 +1,5 @@
 <template>
-  <main class="section-wrapper">
+  <main class="section-wrapper max-width">
     <section class="experience">
       <h3 class="experience__title">活動花絮</h3>
       <div v-if="getArticlesByCategory('experience').length > 0" class="experience__wrapper">
@@ -87,7 +87,7 @@ export default {
     padding: 100px 35px 70px 35px;
   }
   @media (min-width: 1200px) {
-    padding: 100px 90px 70px 90px;
+    padding: 150px 90px 70px 90px;
   }
 }
 
@@ -97,16 +97,14 @@ export default {
   &__title {
     justify-self: center;
     font-size: 32px;
-    line-height: 32px;
-    color: #2f2f2f;
     position: relative;
     &:before {
       content: '';
       position: absolute;
-      width: 40px;
-      height: 40px;
-      top: -14px;
-      left: -14px;
+      width: 45px;
+      height: 45px;
+      top: -10px;
+      left: -18px;
       z-index: -1;
       background-color: rgba($color: map-get($map: $colors, $key: primary), $alpha: 0.7);
       border-radius: 50%;
@@ -144,7 +142,6 @@ export default {
           justify-content: flex-start;
           align-items: flex-end;
           font-size: 28px;
-          line-height: 28px;
           padding: 14px;
         }
       }
@@ -165,7 +162,7 @@ export default {
   }
   @media (min-width: 1200px) {
     &__wrapper {
-      --column-count: 4;
+      --column-count: 3;
       column-gap: 20px;
     }
   }

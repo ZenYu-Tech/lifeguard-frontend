@@ -3,7 +3,7 @@
     <section class="news">
       <h3 class="news__title">開課公告</h3>
       <template v-if="newsLength !== 0">
-        <div class="news__wrapper">
+        <div class="news__wrapper max-width">
           <card-news-square
             v-for="(news, index) in getArticlesByCategory('news').slice(0, newsDisplayAmount)"
             :key="`${index}-${news.articleId}`"
@@ -113,7 +113,6 @@ export default {
   &__title {
     justify-self: center;
     font-size: 32px;
-    line-height: 32px;
     color: rgba(47, 47, 47, 0.9);
   }
   &__wrapper {
@@ -123,9 +122,9 @@ export default {
     --row-counts: 5;
     grid-template-columns: repeat(var(--column-count), 1fr);
     grid-auto-flow: row;
-    grid-auto-rows: 342px;
+    grid-auto-rows: 270px;
     row-gap: 30px;
-    height: calc(var(--row-counts) * 342px + (var(--row-counts) - 1) * 30px + 2 * 18px);
+    height: calc(var(--row-counts) * 270px + (var(--row-counts) - 1) * 30px + 2 * 18px);
     overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
@@ -180,7 +179,6 @@ export default {
   align-items: center;
   p {
     font-size: 28px;
-    line-height: 32px;
     text-align: justify;
     word-break: break-all;
     width: 74%;

@@ -4,7 +4,7 @@
     <section
       v-if="haveBanner"
       class="banner"
-      :style="{ 'background-image': `url(${require('@/assets/images/banner.png')})` }"
+      :style="{ 'background-image': `url(${require('@/assets/images/banner.jpg')})` }"
     ></section>
     <div class="main-container">
       <Nuxt />
@@ -28,13 +28,14 @@ export default {
 <style lang="scss" scoped>
 .banner {
   width: 100%;
-  height: 667px;
+  height: 540px;
   background-repeat: no-repeat;
   background-position: right;
   background-size: cover;
 }
 .main-container {
-  max-width: 1280px;
   margin: 0 auto;
+  color: #2f2f2f;
+  line-height: 1.5;
 }
 </style>

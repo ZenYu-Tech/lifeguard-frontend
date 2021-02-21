@@ -1,5 +1,5 @@
 <template>
-  <main class="section-wrapper">
+  <main class="section-wrapper max-width">
     <section-training :display-amount="videoDisplayAmount"></section-training>
     <span v-if="!noMoreVideo" @click="loadMoreVideo">載入更多</span>
     <section-experience></section-experience>
@@ -60,7 +60,6 @@ export default {
     cursor: pointer;
     justify-self: center;
     font-size: 16px;
-    line-height: 16px;
     color: map-get($map: $colors, $key: primary);
     margin-bottom: 20px;
   }

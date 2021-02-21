@@ -4,7 +4,7 @@
       <h6 class="card-news__title">{{ news.title }}</h6>
       <time class="card-news__time">{{ $formatDate(news.createdAt) }}</time>
     </div>
-    <p class="card-news__content" v-html="news.content"></p>
+    <p class="card-news__content" v-html="news.mainPoint"></p>
   </article>
 </template>
 
@@ -47,7 +47,6 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 18px;
-    line-height: 25px;
   }
   &__time {
     font-size: 15px;
@@ -59,7 +58,6 @@ export default {
     background-color: map-get($map: $colors, $key: primary);
     border-radius: 5px;
     font-size: 15px;
-    line-height: 1.5;
     color: #ffffff;
     position: relative;
     &::before {

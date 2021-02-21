@@ -8,7 +8,7 @@
       <div v-html="article.content"></div>
     </div>
     <div class="article__footer">
-      <button class="hidden-lg-only" @click="$router.push(`/${category}`)">返回</button>
+      <button @click="$router.push(`/${category}`)">返回</button>
       <button v-if="!noMoreArticle" @click="next">下一則</button>
     </div>
   </section>
@@ -61,12 +61,10 @@ export default {
     align-items: center;
     h4 {
       font-size: 28px;
-      line-height: 24px;
-      margin-bottom: 5px;
+      letter-spacing: 1px;
     }
     time {
-      font-size: 20px;
-      line-height: 20px;
+      font-size: 18px;
       color: #696875;
     }
   }
@@ -83,7 +81,6 @@ export default {
       border: none;
       background-color: transparent;
       font-size: 20px;
-      line-height: 29px;
       padding: 0px;
     }
   }
