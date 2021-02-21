@@ -88,11 +88,11 @@ export default {
       font-size: 20px;
       margin-right: 3px;
       text-decoration: none;
-      color: black;
+      color: #2b2b2b;
       padding: 10px 0;
     }
     i.icon-svg {
-      background-color: black;
+      background-color: #2b2b2b;
       transform: rotate(180deg);
       transition: all 0.3s;
     }
@@ -120,18 +120,20 @@ export default {
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 0px 0px 5px 5px;
     backdrop-filter: blur(4px);
+    list-style-type: none;
+
     > li > a {
       cursor: pointer;
       display: flex;
       align-items: center;
       padding: 8px 18px;
       text-decoration: none;
-      color: black;
+      color: #2b2b2b;
       i.icon-svg {
         width: 18px;
         height: 18px;
         margin-left: 4px;
-        background-color: black;
+        background-color: #2b2b2b;
       }
       &:hover {
         color: map-get($map: $colors, $key: primary);

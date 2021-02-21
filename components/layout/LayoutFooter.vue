@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <div class="footer__link-section">
+    <div class="footer__link-section max-width">
       <div v-for="menu in menuList" :key="menu.title" class="link-section">
         <h5 class="link-section__title">{{ menu.title }}</h5>
         <template v-if="menu.subMenuList.length > 0">
@@ -18,8 +18,8 @@
         </template>
       </div>
     </div>
-    <div class="footer__divider"></div>
-    <div class="footer__contact">
+    <div class="footer__divider max-width"></div>
+    <div class="footer__contact max-width">
       <div>
         <h6>
           <span>西灣學院</span>
@@ -121,12 +121,6 @@ export default {
 $color-title: #ffffff;
 $color-content: rgba(255, 255, 255, 0.4);
 
-.footer__link-section,
-.footer__divider,
-.footer__contact {
-  max-width: 1150px;
-}
-
 .footer {
   background: rgba(0, 0, 0, 0.7);
   padding: 34px 34px 14px 34px;
@@ -152,7 +146,6 @@ $color-content: rgba(255, 255, 255, 0.4);
       margin-bottom: 60px;
       h6 {
         font-size: 28px;
-        line-height: 1.4;
         color: $color-title;
         margin-bottom: 10px;
         span {
@@ -161,7 +154,6 @@ $color-content: rgba(255, 255, 255, 0.4);
       }
       p {
         font-size: 16px;
-        line-height: 1.5;
       }
     }
     > div:nth-child(2) {
@@ -213,7 +205,6 @@ $color-content: rgba(255, 255, 255, 0.4);
 .link-section {
   &__title {
     font-size: 24px;
-    line-height: 24px;
     color: $color-title;
     margin-bottom: 15px;
     text-align: center;
@@ -225,10 +216,11 @@ $color-content: rgba(255, 255, 255, 0.4);
     grid-auto-flow: row;
     row-gap: 9px;
     justify-items: center;
+    list-style-type: none;
+
     > li > a {
       color: $color-content;
       font-size: 18px;
-      line-height: 18px;
       cursor: pointer;
       text-decoration: none;
       &:hover {

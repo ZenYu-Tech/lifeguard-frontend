@@ -1,5 +1,5 @@
 <template>
-  <main class="section-wrapper">
+  <main class="section-wrapper max-width">
     <section class="news">
       <h3 class="news__title">最新消息</h3>
       <div v-if="getArticlesByCategory('news').length > 0" class="news__wrapper">
@@ -78,8 +78,6 @@ export default {
     top: 0px;
     transform: translateY(-50%);
     font-size: 32px;
-    line-height: 32px;
-    color: #2f2f2f;
   }
   &__wrapper {
     display: grid;

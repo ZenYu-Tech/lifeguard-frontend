@@ -80,12 +80,10 @@ export default {
     align-items: center;
     h4 {
       font-size: 28px;
-      line-height: 24px;
       margin-bottom: 5px;
     }
     time {
       font-size: 20px;
-      line-height: 20px;
       color: #696875;
     }
   }

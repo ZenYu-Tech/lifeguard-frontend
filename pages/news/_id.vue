@@ -1,5 +1,5 @@
 <template>
-  <main class="section-wrapper">
+  <main class="section-wrapper max-width">
     <section-article :article="article" :category="'news'"></section-article>
     <section-training class="hidden-md-and-down" :display-amount="2"></section-training>
   </main>

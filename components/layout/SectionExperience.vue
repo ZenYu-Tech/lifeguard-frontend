@@ -75,10 +75,7 @@ export default {
 
   &__title {
     justify-self: center;
-    // font-weight: bold;
     font-size: 32px;
-    line-height: 32px;
-    color: #2f2f2f;
     position: relative;
     &:before {
       content: '';
@@ -121,7 +118,6 @@ export default {
           justify-content: flex-start;
           align-items: flex-end;
           font-size: 24px;
-          line-height: 1.5;
           padding: 4px 14px;
         }
       }
@@ -149,7 +145,6 @@ export default {
     &__title {
       justify-self: start;
       font-size: 40px;
-      line-height: 40px;
       &:before {
         width: 50px;
         height: 50px;

@@ -1,5 +1,5 @@
 <template>
-  <main class="section-wrapper">
+  <main class="section-wrapper max-width">
     <section class="section-image">
       <div
         class="section-image__main"

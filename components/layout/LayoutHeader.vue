@@ -237,7 +237,7 @@ export default {
           width: 18px;
           height: 18px;
           margin-left: 4px;
-          background-color: black;
+          background-color: #2b2b2b;
         }
         &:hover {
           color: map-get($map: $colors, $key: primary);
