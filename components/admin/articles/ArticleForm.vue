@@ -34,7 +34,7 @@
             v-for="(item, index) in articleContent.images"
             :key="`origin-${index}`"
             class="image-wall__preview"
-            @click="deleteArticleImage(item)"
+            @click="addToDeletedImages(item)"
           >
             <img :src="`data:image/png;base64, ${item.image}`" :alt="`圖片${index + 1}`" />
           </div>
@@ -42,7 +42,7 @@
             v-for="(image, index) in newAddPreviewImages"
             :key="`new-${index}`"
             class="image-wall__preview"
-            @click="deleteArticleImage(image)"
+            @click="addToDeletedImages(image)"
           >
             <img :src="image" :alt="`圖片${index + 1}`" />
           </div>
@@ -100,6 +100,7 @@ export default {
         }
       ],
       newAddPreviewImages: [],
+      deletedImages: [],
       dialogVisible: false
     }
   },
@@ -128,27 +129,33 @@ export default {
     previewArticle() {
       this.dialogVisible = true
     },
-    async deleteArticleImage(target) {
+    addToDeletedImages(target) {
+      if (typeof target === 'object') {
+        this.deletedImages.push(target)
+        const existIndex = this.articleContent.images.indexOf(target)
+        this.articleContent.images.splice(existIndex, 1)
+      } else {
+        const previewIndex = this.newAddPreviewImages.indexOf(target)
+        this.newAddPreviewImages.splice(previewIndex, 1)
+        this.articleContent.newAddImages.splice(previewIndex, 1)
+      }
+    },
+    deleteArticleImage() {
       try {
-        if (typeof target === 'object') {
+        this.deletedImages.forEach(async image => {
           await this.deleteImage({
             category: this.articleContent.category,
             articleId: this.articleContent.articleId,
-            imageId: target.imageId
+            imageId: image.imageId
           })
-          const existIndex = this.articleContent.images.indexOf(target)
-          this.articleContent.images.splice(existIndex, 1)
-        } else {
-          const previewIndex = this.newAddPreviewImages.indexOf(target)
-          this.newAddPreviewImages.splice(previewIndex, 1)
-          this.articleContent.newAddImages.splice(previewIndex, 1)
-        }
+        })
       } catch (error) {
         console.log(error)
       }
     },
     submitForm() {
       if (!this.validateForm()) return
+      this.deleteArticleImage()
       this.$emit('submitForm', this.articleContent)
     },
     validateForm() {
@@ -158,7 +165,10 @@ export default {
         this.$message.error('請選擇文章類別')
       } else if (this.articleContent.content.length < 1) {
         this.$message.error('請輸入文章內容')
-      } else if (this.articleContent.images.length + this.articleContent.newAddImages.length < 1) {
+      } else if (
+        this.articleContent.category === 'experience' &&
+        this.articleContent.images.length + this.articleContent.newAddImages.length < 1
+      ) {
         this.$message.error('請至少選擇一張圖片！')
       } else {
         return true
