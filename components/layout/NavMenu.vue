@@ -17,7 +17,7 @@
           {{ subMenu.title }}
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
         </a>
-        <a v-else>
+        <a v-else @click="download(subMenu.action, index)">
           {{ subMenu.title }}
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
         </a>
@@ -25,8 +25,9 @@
     </ul>
   </div>
 </template>
-
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'NavMenu',
   props: {
@@ -44,11 +45,31 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('client', {
+      getHeaderFiles: 'file/getHeaderFiles'
+    }),
     isExpand() {
       return this.index === this.activeIndex
     },
     haveNoSubMenu() {
       return this.menu.subMenuList.length === 0
+    }
+  },
+  methods: {
+    ...mapActions('client', {
+      downloadFile: 'file/downloadFile'
+    }),
+    download(action, index) {
+      const category = action.split('-')[1]
+      const file = this.getHeaderFiles.find(file => {
+        if (category === 'registration') {
+          const extensionList = ['pdf', 'doc', 'odt']
+          return file.category === category && file.extension === extensionList[index]
+        } else {
+          return file.category === category
+        }
+      })
+      this.downloadFile({ fileId: file.fileId })
     }
   }
 }
