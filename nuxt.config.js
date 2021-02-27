@@ -52,7 +52,7 @@ export default {
     middleware: ['banner']
   },
   publicRuntimeConfig: {
-    baseURL: process.env.BASE_URL || 'https://lifeguard2020.herokuapp.com/'
+    baseURL: process.env.BASE_URL || 'http://13.115.71.131:3000/'
   },
   privateRuntimeConfig: {}
 }
