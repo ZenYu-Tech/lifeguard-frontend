@@ -53,7 +53,7 @@ export default {
               action: 'download'
             },
             {
-              title: '下載 OTC',
+              title: '下載 ODT',
               action: 'download'
             }
           ]

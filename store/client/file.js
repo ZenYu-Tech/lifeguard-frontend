@@ -52,8 +52,13 @@ const actions = {
     try {
       const { data } = await this.$fileApi.downloadFile(fileId)
       const { extension, file, title } = data.result
+      const extenstion2MIMEType = {
+        pdf: 'pdf',
+        doc: 'msword',
+        odt: 'vnd.oasis.opendocument.text'
+      }
 
-      const url = `data:application/${extension};base64,${file}`
+      const url = `data:application/${extenstion2MIMEType[extension]};base64,${file}`
       const a = document.createElement('a')
       a.href = url
       a.download = title
