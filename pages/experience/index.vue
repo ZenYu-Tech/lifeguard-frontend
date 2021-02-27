@@ -30,13 +30,15 @@ export default {
   async asyncData({ store }) {
     const category = 'experience'
     const count = 12
-    await store.dispatch('client/article/fetchArticles', { category, count })
+    const page = 1
+    await store.dispatch('client/article/fetchArticles', { category, count, page })
     return { category, count }
   },
   data() {
     return {
       category: '',
-      count: 0
+      count: 0,
+      page: 1
     }
   },
   computed: {
@@ -64,12 +66,12 @@ export default {
       const scrollTop = document.documentElement.scrollTop
 
       if (totalHeight - footerHeight <= windowHeight + scrollTop) {
-        const { page, totalPage } = this.getPagination
-        if (page === totalPage) {
+        const { totalPage } = this.getPagination
+        if (this.page === totalPage) {
           return
         }
-        if (page !== totalPage) {
-          await this.fetchArticles({ category: this.category, count: this.count, page: page + 1 })
+        if (this.page < totalPage) {
+          await this.fetchArticles({ category: this.category, count: this.count, page: ++this.page })
         }
         this.infiniteScroll()
       }
