@@ -17,7 +17,7 @@ const state = () => ({
 })
 
 const getters = {
-  getVideos: state => state.videos.slice().sort((a, b) => a.sort - b.sort)
+  getVideos: state => state.videos
 }
 
 const mutations = {
