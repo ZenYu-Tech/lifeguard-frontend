@@ -11,13 +11,13 @@
       </template>
     </div>
     <ul v-if="!haveNoSubMenu && isExpand" class="nav-menu__dropdown">
-      <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
+      <li v-for="(subMenu, subIndex) in menu.subMenuList" :key="subMenu.title">
         <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">{{ subMenu.title }}</nuxt-link>
         <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
           {{ subMenu.title }}
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
         </a>
-        <a v-else @click="download(subMenu.action, index)">
+        <a v-else @click="download(subMenu.action, subIndex)">
           {{ subMenu.title }}
           <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
         </a>
