@@ -16,6 +16,7 @@
       </div>
       <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
+    <back-to-top></back-to-top>
   </main>
 </template>
 
