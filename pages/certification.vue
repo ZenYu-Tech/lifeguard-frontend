@@ -35,11 +35,6 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Certification',
-  head() {
-    return {
-      title: this.title
-    }
-  },
   meta: {
     haveBanner: true
   },
@@ -72,6 +67,11 @@ export default {
     ...mapActions('client', {
       downloadFile: 'file/downloadFile'
     })
+  },
+  head() {
+    return {
+      title: this.title
+    }
   }
 }
 </script>

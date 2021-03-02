@@ -10,11 +10,6 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Training',
-  head() {
-    return {
-      title: this.title
-    }
-  },
   meta: {
     haveBanner: true
   },
@@ -50,6 +45,11 @@ export default {
   methods: {
     loadMoreVideo() {
       this.videoDisplayAmount = Math.min(this.getVideos.length, this.videoDisplayAmount + this.increaseUnit)
+    }
+  },
+  head() {
+    return {
+      title: this.title
     }
   }
 }

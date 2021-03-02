@@ -16,12 +16,6 @@
 export default {
   name: 'Admin',
   middleware: 'authenticate',
-  head() {
-    return {
-      title: this.breadcrumbList[0] + ' - ' + this.breadcrumbList[1],
-      titleTemplate: '%s'
-    }
-  },
   data() {
     return {
       breadcrumbList: []
@@ -67,6 +61,12 @@ export default {
       }
 
       return result
+    }
+  },
+  head() {
+    return {
+      title: this.breadcrumbList[0] + ' - ' + this.breadcrumbList[1],
+      titleTemplate: '%s'
     }
   }
 }

@@ -24,11 +24,6 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   layout: 'login',
-  head() {
-    return {
-      title: '後台登入'
-    }
-  },
   data() {
     return {
       account: 'lifeguard2020',
@@ -66,6 +61,11 @@ export default {
         this.loading = false
         console.log(error)
       }
+    }
+  },
+  head() {
+    return {
+      title: '後台登入'
     }
   }
 }

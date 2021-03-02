@@ -10,13 +10,6 @@ export default {
       isScrolled: false
     }
   },
-  created() {
-    if (process.client) {
-      window.onscroll = () => {
-        this.handleScroll()
-      }
-    }
-  },
   methods: {
     handleScroll() {
       if (process.client) {
@@ -30,6 +23,12 @@ export default {
         behavior: 'smooth'
       })
     }
+  },
+  beforeMount() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroy() {
+    window.removeEventListener('scroll', this.handleScroll)
   }
 }
 </script>

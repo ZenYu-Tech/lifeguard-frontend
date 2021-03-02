@@ -30,11 +30,6 @@ import BackToTop from '~/components/BackToTop.vue'
 export default {
   components: { BackToTop },
   name: 'News',
-  head() {
-    return {
-      title: this.title
-    }
-  },
   meta: {
     haveBanner: false
   },
@@ -95,6 +90,11 @@ export default {
     },
     go2DetailPage(id) {
       this.$router.push(`/news/${id}`)
+    }
+  },
+  head() {
+    return {
+      title: this.title
     }
   }
 }

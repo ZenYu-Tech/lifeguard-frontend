@@ -17,11 +17,6 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
-  head() {
-    return {
-      titleTemplate: '%s'
-    }
-  },
   meta: {
     haveBanner: true
   },
@@ -34,6 +29,11 @@ export default {
     ...mapGetters('client', {
       getArticlesByCategory: 'article/getArticlesByCategory'
     })
+  },
+  head() {
+    return {
+      titleTemplate: '%s'
+    }
   }
 }
 </script>

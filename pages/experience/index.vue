@@ -15,8 +15,8 @@
         </nuxt-link>
       </div>
       <div v-else class="no-data">目前沒有資料喔！</div>
-      <back-to-top></back-to-top>
     </section>
+    <back-to-top></back-to-top>
   </main>
 </template>
 
@@ -27,11 +27,6 @@ import BackToTop from '~/components/BackToTop.vue'
 export default {
   name: 'Experience',
   components: { BackToTop },
-  head() {
-    return {
-      title: this.title
-    }
-  },
   meta: {
     haveBanner: false
   },
@@ -84,6 +79,11 @@ export default {
         }
         this.infiniteScroll()
       }
+    }
+  },
+  head() {
+    return {
+      title: this.title
     }
   }
 }
