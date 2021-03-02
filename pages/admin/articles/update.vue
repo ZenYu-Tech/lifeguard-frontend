@@ -45,6 +45,11 @@ export default {
     }),
     async submitForm(formData) {
       this.loading = true
+      if (formData.newAddImages.length === 0) {
+        const oldMainImage = formData.images.find(img => img.main)
+        formData.mainImageIndex = oldMainImage.imageId
+      }
+
       try {
         if (this.getAction === 'edit') {
           await this.editArticle(formData)

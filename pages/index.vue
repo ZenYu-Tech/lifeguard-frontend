@@ -3,7 +3,7 @@
     <section class="news">
       <h3 class="news__title">最新消息</h3>
       <div v-if="getArticlesByCategory('news').length > 0" class="news__wrapper">
-        <card-news v-for="news in getArticlesByCategory('news').slice(0, 4)" :key="news.id" :news="news"></card-news>
+        <card-news v-for="news in getArticlesByCategory('news').slice(0, 6)" :key="news.id" :news="news"></card-news>
       </div>
       <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
@@ -29,6 +29,11 @@ export default {
     ...mapGetters('client', {
       getArticlesByCategory: 'article/getArticlesByCategory'
     })
+  },
+  head() {
+    return {
+      titleTemplate: '%s'
+    }
   }
 }
 </script>

@@ -19,6 +19,7 @@ export default {
   },
   data() {
     return {
+      title: '訓練影片',
       videoDisplayAmount: 6
     }
   },
@@ -44,6 +45,11 @@ export default {
   methods: {
     loadMoreVideo() {
       this.videoDisplayAmount = Math.min(this.getVideos.length, this.videoDisplayAmount + this.increaseUnit)
+    }
+  },
+  head() {
+    return {
+      title: this.title
     }
   }
 }

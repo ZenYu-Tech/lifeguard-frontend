@@ -18,10 +18,7 @@
       </el-input>
     </el-row>
     <el-row>
-      <vue-editor
-        v-model="articleContent.content"
-        :class="{ 'news-option': articleContent.category !== 'experience' }"
-      />
+      <vue-editor v-model="articleContent.content" />
     </el-row>
     <el-row v-if="articleContent.category === 'experience'">
       <el-card shadow="never">
@@ -170,6 +167,11 @@ export default {
         this.articleContent.images.length + this.articleContent.newAddImages.length < 1
       ) {
         this.$message.error('請至少選擇一張圖片！')
+      } else if (
+        this.articleContent.category === 'news' &&
+        (this.articleContent.mainPoint.length < 0 || this.articleContent.mainPoint.length > 60)
+      ) {
+        this.$message.error('請輸入 60 字內的文章簡介')
       } else {
         return true
       }
@@ -246,24 +248,5 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-}
-
-// .main-image::before {
-//   content: '＊';
-//   width: 20px;
-//   height: 20px;
-//   background-color: #72889e;
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   color: #fff;
-// }
-</style>
-<style>
-.news-option .ql-toolbar .ql-formats .ql-image {
-  display: none;
 }
 </style>

@@ -1,11 +1,14 @@
 export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: '西灣學院｜運動與健康教育中心',
+    title: '救生員訓練中心',
+    titleTemplate: '%s | 救生員訓練中心',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: '救生員訓練中心' },
+      { property: 'og:title', content: '救生員訓練中心' },
+      { property: 'og:image', content: '/og-image.jpg' },
     ],
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/logo.png' }],
   },

@@ -62,6 +62,11 @@ export default {
         console.log(error)
       }
     }
+  },
+  head() {
+    return {
+      title: '後台登入'
+    }
   }
 }
 </script>

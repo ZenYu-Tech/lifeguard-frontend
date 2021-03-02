@@ -139,7 +139,7 @@ export default {
     padding: 10px 20px;
     border-radius: 5px;
     color: white;
-    font-size: 20px;
+    font-size: 16px;
   }
   @media (min-width: 768px) {
     &__title {
@@ -151,6 +151,9 @@ export default {
         top: -20px;
         left: -20px;
       }
+    }
+    &__more {
+      font-size: 20px;
     }
   }
 }

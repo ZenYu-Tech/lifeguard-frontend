@@ -86,6 +86,12 @@ export default {
         height: this.getCurrentDevice === 'desktop' ? '120px' : '80px'
       }
     }
+  },
+  head() {
+    return {
+      title: this.article.title,
+      titleTemplate: '%s'
+    }
   }
 }
 </script>

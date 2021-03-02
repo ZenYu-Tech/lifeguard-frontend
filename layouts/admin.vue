@@ -25,14 +25,12 @@ export default {
     '$route.name': {
       immediate: true,
       handler(newValue) {
-        console.log(newValue)
         this.breadcrumbList = this.findCorrespondingChinese(newValue)
       }
     }
   },
   methods: {
     findCorrespondingChinese(word) {
-      console.log(this.$route)
       const mainWord = word.split('-')[1]
       const secondWord = word.split('-')[2]
 
@@ -63,6 +61,12 @@ export default {
       }
 
       return result
+    }
+  },
+  head() {
+    return {
+      title: this.breadcrumbList[0] + ' - ' + this.breadcrumbList[1],
+      titleTemplate: '%s'
     }
   }
 }

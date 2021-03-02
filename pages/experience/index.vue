@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper max-width">
     <section class="experience">
-      <h3 class="experience__title">活動花絮</h3>
+      <h3 class="experience__title">{{ this.title }}</h3>
       <div v-if="getArticlesByCategory('experience').length > 0" class="experience__wrapper">
         <nuxt-link
           v-for="(article, index) in getArticlesByCategory('experience')"
@@ -16,14 +16,17 @@
       </div>
       <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
+    <back-to-top></back-to-top>
   </main>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import BackToTop from '~/components/BackToTop.vue'
 
 export default {
   name: 'Experience',
+  components: { BackToTop },
   meta: {
     haveBanner: false
   },
@@ -36,6 +39,7 @@ export default {
   },
   data() {
     return {
+      title: '活動花絮',
       category: '',
       count: 0,
       page: 1
@@ -75,6 +79,11 @@ export default {
         }
         this.infiniteScroll()
       }
+    }
+  },
+  head() {
+    return {
+      title: this.title
     }
   }
 }

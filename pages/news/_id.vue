@@ -22,6 +22,12 @@ export default {
     ...mapGetters('client', {
       article: 'article/getArticle'
     })
+  },
+  head() {
+    return {
+      title: this.article.title,
+      titleTemplate: '%s'
+    }
   }
 }
 </script>

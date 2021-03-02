@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper">
     <section class="pass-list">
-      <h3 class="pass-list__title">檢定通過名單</h3>
+      <h3 class="pass-list__title">{{ this.title }}</h3>
       <div v-if="getCertificationFiles.length > 0" class="pass-list__file-wrapper">
         <div
           v-for="file in getCertificationFiles.slice(0, 10)"
@@ -45,6 +45,7 @@ export default {
   },
   data() {
     return {
+      title: '檢定通過名單',
       newsDisplayAmount: 3
     }
   },
@@ -66,6 +67,11 @@ export default {
     ...mapActions('client', {
       downloadFile: 'file/downloadFile'
     })
+  },
+  head() {
+    return {
+      title: this.title
+    }
   }
 }
 </script>
