@@ -11,8 +11,10 @@ export default {
     }
   },
   created() {
-    window.onscroll = () => {
-      this.handleScroll()
+    if (process.client) {
+      window.onscroll = () => {
+        this.handleScroll()
+      }
     }
   },
   methods: {
