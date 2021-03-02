@@ -26,7 +26,7 @@ export default {
   cursor: pointer;
   &__header {
     display: grid;
-    grid-template-columns: 14px 1fr 100px;
+    grid-template-columns: 14px 1fr;
     grid-template-rows: 25px;
     column-gap: 5px;
     align-items: center;
@@ -47,10 +47,12 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 18px;
+    white-space: nowrap;
   }
   &__time {
     font-size: 15px;
     color: #a9abb3;
+    display: none;
   }
   &__content {
     margin-top: 16px;
@@ -78,6 +80,15 @@ export default {
   }
   &:nth-child(even) &__content {
     background-color: #75c26a;
+  }
+
+  @media (min-width: 1200px) {
+    &__header {
+      grid-template-columns: 14px 1fr 100px;
+    }
+    &__time {
+      display: block;
+    }
   }
 }
 </style>

@@ -134,7 +134,7 @@ export default {
     --row-counts: 5;
     grid-template-columns: repeat(var(--column-count), 1fr);
     grid-auto-flow: row;
-    grid-auto-rows: 270px;
+    grid-auto-rows: 200px;
     row-gap: 30px;
     &::-webkit-scrollbar {
       display: none;
@@ -169,6 +169,7 @@ export default {
       --column-count: 3;
       --row-counts: 3;
       column-gap: 60px;
+      grid-auto-rows: 270px;
     }
     &__more {
       margin-top: 60px;

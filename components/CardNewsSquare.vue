@@ -27,30 +27,44 @@ export default {
   box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(4px);
   border-radius: 5px;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 75px auto 20px;
-  row-gap: 8px;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
   padding: 15px 20px;
   &__title {
-    font-size: 24px;
+    font-size: 20px;
+    padding-bottom: 10px;
     color: map-get($map: $colors, $key: primary);
     font-weight: bold;
     letter-spacing: 1px;
   }
   &__content {
-    font-size: 20px;
+    font-size: 16px;
     text-align: justify;
     word-break: break-all;
     display: -webkit-box;
     max-width: 100%;
-    -webkit-line-clamp: 9;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
   &__time {
-    justify-self: end;
-    font-size: 16px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    padding-top: 10px;
+  }
+
+  @media (min-width: 1200px) {
+    &__title {
+      font-size: 24px;
+    }
+    &__content {
+      font-size: 20px;
+    }
+    &__time {
+      font-size: 16px;
+    }
   }
 }
 </style>
