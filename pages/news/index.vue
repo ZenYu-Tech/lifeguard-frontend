@@ -169,7 +169,7 @@ export default {
       --column-count: 3;
       --row-counts: 3;
       column-gap: 60px;
-      grid-auto-rows: 270px;
+      grid-auto-rows: 240px;
     }
     &__more {
       margin-top: 60px;
