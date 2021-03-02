@@ -167,6 +167,11 @@ export default {
         this.articleContent.images.length + this.articleContent.newAddImages.length < 1
       ) {
         this.$message.error('請至少選擇一張圖片！')
+      } else if (
+        this.articleContent.category === 'news' &&
+        (this.articleContent.mainPoint.length < 0 || this.articleContent.mainPoint.length > 60)
+      ) {
+        this.$message.error('請輸入 60 字內的文章簡介')
       } else {
         return true
       }
