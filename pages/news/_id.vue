@@ -10,6 +10,12 @@ import { mapGetters } from 'vuex'
 
 export default {
   name: 'NewsDetail',
+  head() {
+    return {
+      title: this.article.title,
+      titleTemplate: '%s'
+    }
+  },
   meta: {
     haveBanner: true
   },

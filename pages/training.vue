@@ -10,6 +10,11 @@
 import { mapGetters } from 'vuex'
 export default {
   name: 'Training',
+  head() {
+    return {
+      title: this.title
+    }
+  },
   meta: {
     haveBanner: true
   },
@@ -19,6 +24,7 @@ export default {
   },
   data() {
     return {
+      title: '訓練影片',
       videoDisplayAmount: 6
     }
   },

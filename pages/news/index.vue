@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper">
     <section class="news">
-      <h3 class="news__title">開課公告</h3>
+      <h3 class="news__title">{{ this.title }}</h3>
       <template v-if="newsLength !== 0">
         <div class="news__wrapper max-width">
           <card-news-square
@@ -15,18 +15,26 @@
       </template>
       <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
-    <section class="section__more">
+    <back-to-top></back-to-top>
+    <!-- <section class="section__more">
       <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been</p>
       <nuxt-link tag="button" to="/experience">看更多成果照片</nuxt-link>
-    </section>
+    </section> -->
   </main>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
+import BackToTop from '~/components/BackToTop.vue'
 
 export default {
+  components: { BackToTop },
   name: 'News',
+  head() {
+    return {
+      title: this.title
+    }
+  },
   meta: {
     haveBanner: false
   },
@@ -35,6 +43,7 @@ export default {
   },
   data() {
     return {
+      title: '開課公告',
       newsDisplayAmount: 3
     }
   },
@@ -105,7 +114,9 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: url('~@/assets/images/news-banner.png');
+  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)),
+    url('~@/assets/images/news-banner.jpg');
+  background-attachment: fixed;
   padding: 100px 0px 50px 0px;
 
   display: grid;
@@ -113,7 +124,8 @@ export default {
   &__title {
     justify-self: center;
     font-size: 32px;
-    color: rgba(47, 47, 47, 0.9);
+    color: #fff;
+    text-shadow: 2px 2px rgb(0 0 0 / 30%);
   }
   &__wrapper {
     padding: 18px;
@@ -124,8 +136,6 @@ export default {
     grid-auto-flow: row;
     grid-auto-rows: 270px;
     row-gap: 30px;
-    height: calc(var(--row-counts) * 270px + (var(--row-counts) - 1) * 30px + 2 * 18px);
-    overflow-y: scroll;
     &::-webkit-scrollbar {
       display: none;
     }
@@ -163,6 +173,9 @@ export default {
     &__more {
       margin-top: 60px;
     }
+    &__title {
+      font-size: 36px;
+    }
   }
 }
 
@@ -199,8 +212,6 @@ export default {
     align-items: flex-end;
     p {
       width: 35%;
-    }
-    button {
     }
   }
   @media (min-width: 1200px) {

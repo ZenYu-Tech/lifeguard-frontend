@@ -24,6 +24,11 @@ import { mapActions } from 'vuex'
 export default {
   name: 'Login',
   layout: 'login',
+  head() {
+    return {
+      title: '後台登入'
+    }
+  },
   data() {
     return {
       account: 'lifeguard2020',
