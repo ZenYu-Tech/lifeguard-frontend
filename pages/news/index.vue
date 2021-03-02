@@ -1,6 +1,6 @@
 <template>
   <main class="section-wrapper">
-    <section class="news">
+    <section class="news" :style="{ 'background-image': `url(${require('@/assets/images/news-banner.jpg')})` }">
       <h3 class="news__title">{{ this.title }}</h3>
       <template v-if="newsLength !== 0">
         <div class="news__wrapper max-width">
@@ -114,8 +114,6 @@ export default {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)),
-    url('~@/assets/images/news-banner.jpg');
   background-attachment: fixed;
   padding: 100px 0px 50px 0px;
 
