@@ -1,5 +1,5 @@
 <template>
-  <div class="admin-container" v-loading="loading">
+  <div v-loading="loading" class="admin-container">
     <el-row :gutter="30">
       <el-col :span="3">
         <files-nav :files-nav="filesNav" :active-nav.sync="activeNav"></files-nav>

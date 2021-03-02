@@ -1,8 +1,18 @@
 export default ({ store }, inject) => {
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Asia/Taipei'
+  }
   inject('formatDate', (date, showTime = false) => {
+    const formattedDate = new Date(date).toLocaleString('zh-TW', options).replace(/\//g, '-')
     if (showTime) {
-      return new Date(date).toISOString().slice(0, 16).replace('T', ' ')
+      return formattedDate
     }
-    return new Date(date).toISOString().slice(0, 10)
+    return formattedDate.slice(0, 10)
   })
 }

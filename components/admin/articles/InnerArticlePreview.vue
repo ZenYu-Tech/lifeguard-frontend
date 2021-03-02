@@ -33,7 +33,7 @@ export default {
   props: {
     articleContent: { type: Object, required: true },
     dialogVisible: { type: Boolean, required: true },
-    newAddPreviewImages: { type: Array, require: true }
+    newAddPreviewImages: { type: Array, required: true }
   },
   data() {
     return {
