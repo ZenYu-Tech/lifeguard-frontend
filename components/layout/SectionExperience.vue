@@ -14,7 +14,7 @@
           <img :src="`data:image/png;base64,${article.mainImage}`" :alt="article.title" />
         </div>
       </slick-carousel>
-      <nuxt-link tag="button" to="/experience" class="experience__more">看更多成果照片</nuxt-link>
+      <nuxt-link tag="button" to="/experience" class="experience__more">看更多活動花絮</nuxt-link>
     </template>
     <div v-else class="no-data">目前沒有資料喔！</div>
   </section>

@@ -62,7 +62,7 @@ export default {
           title: '訓練專區',
           subMenuList: [
             {
-              title: '訓練講義',
+              title: '課程資料',
               action: 'download'
             },
             {
@@ -75,10 +75,10 @@ export default {
               title: '考試題庫',
               action: 'external-link',
               link:
-                'https://isports.sa.gov.tw/Apps/TIS08/TIS0801M_01V1.aspx?MENU_CD=M10&ITEM_CD=T07&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&SUB_PRG_CD=105'
+                'https://isports.sa.gov.tw/apps/FDownload.aspx?SYS=LGM&MENU_CD=M10&ITEM_CD=T07&MENU_PRG_CD=3&ITEM_PRG_CD=3'
             },
             {
-              title: '訓練實施計畫',
+              title: '實施計畫',
               action: 'download'
             }
           ]
@@ -89,20 +89,19 @@ export default {
             {
               title: '相關法規',
               action: 'external-link',
-              link:
-                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_01V1.aspx?MENU_CD=M10&ITEM_CD=T01&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=107&SUB_PRG_CD=100'
+              link: 'https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=H0120054'
             },
             {
               title: '相關表格',
               action: 'external-link',
               link:
-                'https://isports.sa.gov.tw/Apps/TIS08/TIS0801M_01V1.aspx?MENU_CD=M10&ITEM_CD=T11&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=152&SUB_PRG_CD=183'
+                'https://isports.sa.gov.tw/apps/FDownload.aspx?SYS=LGM&MENU_CD=M10&ITEM_CD=T11&MENU_PRG_CD=8&ITEM_PRG_CD=1'
             },
             {
               title: '檢定報名Q&A',
               action: 'external-link',
               link:
-                'https://isports.sa.gov.tw/Apps/TIS05/TIS0501M_02V1.aspx?MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&PKNO=1093'
+                'https://isports.sa.gov.tw/apps/QaList.aspx?SYS=LGM&MENU_CD=M10&ITEM_CD=T05&MENU_PRG_CD=3&ITEM_PRG_CD=7'
             },
             {
               title: '檢定通過名單',

@@ -31,8 +31,8 @@ export default {
   },
   computed: {
     category() {
-      if (this.articleContent.category === 'news') return '通知中心'
-      return '成果花絮'
+      if (this.articleContent.category === 'news') return '活動消息'
+      return '活動花絮'
     }
   },
   methods: {

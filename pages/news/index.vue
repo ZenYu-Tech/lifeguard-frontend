@@ -11,7 +11,7 @@
             @click.native="go2DetailPage(news.articleId)"
           ></card-news-square>
         </div>
-        <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的公告</button>
+        <button v-if="!noMoreNews" class="news__more" @click="loadMoreNews">顯示較早的活動</button>
       </template>
       <div v-else class="no-data">目前沒有資料喔！</div>
     </section>
@@ -38,7 +38,7 @@ export default {
   },
   data() {
     return {
-      title: '開課公告',
+      title: '活動消息',
       newsDisplayAmount: 3
     }
   },

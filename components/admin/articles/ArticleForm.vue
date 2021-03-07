@@ -89,7 +89,7 @@ export default {
       options: [
         {
           value: 'news',
-          label: '通知中心'
+          label: '活動消息'
         },
         {
           value: 'experience',

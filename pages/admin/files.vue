@@ -88,7 +88,7 @@ export default {
       filesNav: [
         { id: 'registration', name: '報名表' },
         { id: 'certification', name: '通過名單' },
-        { id: 'training', name: '訓練講義' },
+        { id: 'training', name: '課程資料' },
         { id: 'plan', name: '實施計畫' }
       ],
       activeNav: 'registration',

@@ -4,8 +4,8 @@
       <el-table-column prop="title" label="文章標題"> </el-table-column>
       <el-table-column prop="category" label="類別" width="120">
         <template slot-scope="{ row }">
-          <span v-if="row.category === 'news'">通知中心</span>
-          <span v-else>成果花絮</span>
+          <span v-if="row.category === 'news'">活動消息</span>
+          <span v-else>活動花絮</span>
         </template>
       </el-table-column>
       <el-table-column prop="createdAt" label="建立時間" width="150">

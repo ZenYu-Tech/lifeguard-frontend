@@ -19,7 +19,7 @@ export default {
   },
   data() {
     return {
-      title: '訓練影片',
+      title: '教學影片',
       videoDisplayAmount: 6
     }
   },
