@@ -8,7 +8,7 @@
           <span v-else>活動花絮</span>
         </template>
       </el-table-column>
-      <el-table-column prop="createdAt" label="建立時間" width="150">
+      <el-table-column prop="updatedAt" label="更新時間" width="150">
         <template slot-scope="{ row }">
           {{ $formatDate(row.createdAt, true) }}
         </template>

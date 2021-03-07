@@ -1,7 +1,7 @@
 <template>
   <el-table :data="tableData" stripe style="width: 100%">
     <el-table-column prop="title" label="檔案標題"> </el-table-column>
-    <el-table-column prop="createdAt" label="建立時間" width="150">
+    <el-table-column prop="updatedAt" label="更新時間" width="150">
       <template slot-scope="{ row }">
         {{ $formatDate(row.updatedAt, true) }}
       </template>
