@@ -45,7 +45,7 @@ export default {
     }),
     async submitForm(formData) {
       this.loading = true
-      if (formData.newAddImages.length === 0) {
+      if (formData.category === 'experience' && formData.newAddImages.length === 0) {
         const oldMainImage = formData.images.find(img => img.main)
         formData.mainImageIndex = oldMainImage.imageId
       }
