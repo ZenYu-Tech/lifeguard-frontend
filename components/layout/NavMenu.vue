@@ -7,7 +7,7 @@
       </template>
       <template v-else>
         <span>{{ menu.title }}</span>
-        <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/chevron-up.svg')})` }"></i>
+        <i class="el-icon-arrow-up hover-rotate"></i>
       </template>
     </div>
     <ul v-if="!haveNoSubMenu && isExpand" class="nav-menu__dropdown">
@@ -15,11 +15,11 @@
         <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">{{ subMenu.title }}</nuxt-link>
         <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
           {{ subMenu.title }}
-          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
+          <i class="el-icon-link"></i>
         </a>
         <a v-else @click="download(subMenu.action, subIndex)">
           {{ subMenu.title }}
-          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/download.svg')})` }"></i>
+          <i class="el-icon-download"></i>
         </a>
       </li>
     </ul>
@@ -87,21 +87,17 @@ export default {
     span {
       font-size: 20px;
       margin-right: 3px;
-      text-decoration: none;
       color: #2b2b2b;
       padding: 10px 0;
     }
-    i.icon-svg {
-      background-color: #2b2b2b;
+    i.hover-rotate {
       transform: rotate(180deg);
       transition: all 0.3s;
     }
     &:hover {
-      span {
-        color: map-get($colors, primary);
-      }
+      span,
       i {
-        background-color: map-get($colors, primary) !important;
+        color: map-get($colors, primary);
       }
     }
     .expand > & {
@@ -127,19 +123,14 @@ export default {
       display: flex;
       align-items: center;
       padding: 8px 18px;
-      text-decoration: none;
       color: #2b2b2b;
-      i.icon-svg {
+      i.hover-rotate {
         width: 18px;
         height: 18px;
         margin-left: 4px;
-        background-color: #2b2b2b;
       }
       &:hover {
         color: map-get($map: $colors, $key: primary);
-        i.icon-svg {
-          background-color: map-get($map: $colors, $key: primary) !important;
-        }
       }
     }
   }

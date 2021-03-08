@@ -2,30 +2,26 @@
   <header class="header" :class="{ 'side-menu-expand': isSideMenuExpand }">
     <nuxt-link tag="div" to="/" class="header__logo">
       <img src="@/assets/images/logo.png" alt="西灣學院" />
+      <h1>中山大學<br />救生員訓練中心</h1>
     </nuxt-link>
     <div
       class="header__menu hidden-lg-only"
-      :style="{ 'background-image': `url(${require('@/assets/icons/menu.svg')})` }"
+      :style="{ 'background-image': `url(${require('@/assets/icons/menu.png')})` }"
       @click="isSideMenuExpand = !isSideMenuExpand"
     >
       <transition name="right-to-left" mode="out-in">
-        <SideMenu
-          v-show="isSideMenuExpand"
-          :title="'西灣學院 國立中山大學'"
-          :menu-list="menuList"
-          @collapse="isSideMenuExpand = false"
-        />
+        <SideMenu v-show="isSideMenuExpand" :menu-list="menuList" @collapse="isSideMenuExpand = false" />
       </transition>
     </div>
     <div class="header__menu hidden-md-and-down">
       <div class="header__external-link">
         <a href="https://siwan.nsysu.edu.tw/" target="_blank">
           西灣學院
-          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
+          <i class="el-icon-link"></i>
         </a>
         <a href="https://www.nsysu.edu.tw/ " target="_blank">
           國立中山大學
-          <i class="icon-svg" :style="{ 'mask-image': `url(${require('@/assets/icons/external-link.svg')})` }"></i>
+          <i class="el-icon-link"></i>
         </a>
       </div>
       <NavMenuGroup :menu-list="menuList" />
@@ -95,7 +91,7 @@ export default {
               link: '/training'
             },
             {
-              title: '題庫',
+              title: '考試題庫',
               action: 'external-link',
               link:
                 'https://isports.sa.gov.tw/apps/FDownload.aspx?SYS=LGM&MENU_CD=M10&ITEM_CD=T07&MENU_PRG_CD=3&ITEM_PRG_CD=3'
@@ -175,10 +171,18 @@ export default {
   padding: 0px 18px 0px 24px;
   transition: all 0.3s ease;
   &__logo {
-    width: 50px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    h1 {
+      font-size: 16px;
+      margin-left: 8px;
+      color: #3a3a3c;
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
     img {
-      width: 100%;
+      width: 50px;
     }
   }
 
@@ -201,7 +205,15 @@ export default {
     height: 70px;
     padding: 0 40px;
     &__logo {
-      width: 85px;
+      h1 {
+        font-size: 22px;
+        margin-left: 10px;
+        letter-spacing: 2px;
+        line-height: 1.4;
+      }
+      img {
+        width: 85px;
+      }
     }
 
     &__menu {
@@ -228,19 +240,9 @@ export default {
         cursor: pointer;
         display: flex;
         align-items: center;
-        text-decoration: none;
         color: #2b2b2b;
-        i.icon-svg {
-          width: 18px;
-          height: 18px;
-          margin-left: 4px;
-          background-color: #2b2b2b;
-        }
         &:hover {
           color: map-get($map: $colors, $key: primary);
-          i.icon-svg {
-            background-color: map-get($map: $colors, $key: primary) !important;
-          }
         }
       }
     }

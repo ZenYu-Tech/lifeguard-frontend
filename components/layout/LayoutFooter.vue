@@ -5,14 +5,17 @@
         <h5 class="link-section__title">{{ menu.title }}</h5>
         <template v-if="menu.subMenuList.length > 0">
           <ul class="link-section__link-group">
-            <li v-for="subMenu in menu.subMenuList" :key="subMenu.title">
+            <li v-for="(subMenu, subIndex) in menu.subMenuList" :key="subMenu.title">
               <nuxt-link v-if="subMenu.action === 'internal-link'" :to="subMenu.link">
                 {{ subMenu.title }}
               </nuxt-link>
               <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
                 {{ subMenu.title }}
+                <i class="el-icon-link"></i>
               </a>
-              <a v-else>{{ subMenu.title }}</a>
+              <a v-else @click="download(subMenu.action, subIndex)"
+                >{{ subMenu.title }}<i class="el-icon-download"></i
+              ></a>
             </li>
           </ul>
         </template>
@@ -29,13 +32,15 @@
         <p>地址 80424 高雄市鼓山區蓮海路70號</p>
       </div>
       <div>
-        <p>Copyright@2021 沉於科技工作室</p>
+        <p>Copyright &#169; 2021 沉於科技工作室</p>
       </div>
     </div>
   </footer>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+
 export default {
   name: 'LayoutFooter',
   data() {
@@ -46,15 +51,15 @@ export default {
           subMenuList: [
             {
               title: '下載 PDF',
-              action: 'download'
+              action: 'download-registration'
             },
             {
-              title: '下載 ODC',
-              action: 'download'
+              title: '下載 DOC',
+              action: 'download-registration'
             },
             {
               title: '下載 ODT',
-              action: 'download'
+              action: 'download-registration'
             }
           ]
         },
@@ -63,7 +68,7 @@ export default {
           subMenuList: [
             {
               title: '課程資料',
-              action: 'download'
+              action: 'download-training'
             },
             {
               title: '檢定科目影片',
@@ -79,7 +84,7 @@ export default {
             },
             {
               title: '實施計畫',
-              action: 'download'
+              action: 'download-plan'
             }
           ]
         },
@@ -111,6 +116,28 @@ export default {
           ]
         }
       ]
+    }
+  },
+  computed: {
+    ...mapGetters('client', {
+      getHeaderFiles: 'file/getHeaderFiles'
+    })
+  },
+  methods: {
+    ...mapActions('client', {
+      downloadFile: 'file/downloadFile'
+    }),
+    download(action, index) {
+      const category = action.split('-')[1]
+      const file = this.getHeaderFiles.find(file => {
+        if (category === 'registration') {
+          const extensionList = ['pdf', 'doc', 'odt']
+          return file.category === category && file.extension === extensionList[index]
+        } else {
+          return file.category === category
+        }
+      })
+      this.downloadFile({ fileId: file.fileId })
     }
   }
 }
@@ -221,7 +248,9 @@ $color-content: rgba(255, 255, 255, 0.4);
       color: $color-content;
       font-size: 18px;
       cursor: pointer;
-      text-decoration: none;
+      display: flex;
+      align-items: center;
+
       &:hover {
         color: $color-title;
       }
