@@ -1,12 +1,17 @@
 <template>
   <div class="side-menu" @click.stop @scroll.stop>
     <div class="side-menu__title">
-      <h4>{{ title }}</h4>
-      <i
-        class="icon-svg"
-        :style="{ 'mask-image': `url(${require('@/assets/icons/cross.svg')})` }"
-        @click="$emit('collapse')"
-      ></i>
+      <div class="side-menu__header">
+        <a href="https://siwan.nsysu.edu.tw/" target="_blank" style="margin-right: 10px">
+          西灣學院
+          <i class="el-icon-link"></i>
+        </a>
+        <a href="https://www.nsysu.edu.tw/ " target="_blank">
+          國立中山大學
+          <i class="el-icon-link"></i>
+        </a>
+      </div>
+      <i class="el-icon-close" @click="$emit('collapse')"></i>
     </div>
     <div class="side-menu__link-section">
       <div v-for="menu in menuList" :key="menu.title" class="link-section">
@@ -19,8 +24,9 @@
               </nuxt-link>
               <a v-else-if="subMenu.action === 'external-link'" :href="subMenu.link" target="_blank">
                 {{ subMenu.title }}
+                <i class="el-icon-link"></i>
               </a>
-              <a v-else @click="download(subMenu.action, index)">{{ subMenu.title }}</a>
+              <a v-else @click="download(subMenu.action, index)">{{ subMenu.title }}<i class="el-icon-download"></i></a>
             </li>
           </ul>
         </template>
@@ -47,10 +53,6 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'SideMenu',
   props: {
-    title: {
-      type: String,
-      required: true
-    },
     menuList: {
       type: Array,
       required: true
@@ -101,12 +103,19 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    h4 {
-      font-size: 18px;
-      color: white;
+    color: white;
+    .el-icon-close {
+      font-size: 22px;
     }
-    i.icon-svg {
-      background-color: white;
+  }
+  &__header {
+    font-size: 15px;
+    a {
+      // color: white;
+      i {
+        font-size: 14px;
+        padding: 0;
+      }
     }
   }
   &__link-section {
@@ -140,7 +149,6 @@ export default {
       height: 100%;
       padding: 4px 11px;
       width: 100%;
-      text-decoration: none;
       color: white;
       cursor: pointer;
     }

@@ -1,6 +1,6 @@
 <template>
   <section class="training">
-    <h3 class="training__title">教學影片</h3>
+    <nuxt-link class="training__title" to="/training"> 教學影片 </nuxt-link>
     <div v-if="getVideos.length > 0" class="training__wrapper">
       <card-video v-for="video in getVideos.slice(0, displayAmount)" :key="video.id" :video="video"></card-video>
     </div>
