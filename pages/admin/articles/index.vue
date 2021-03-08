@@ -2,7 +2,17 @@
   <div v-loading="loading" class="admin-container">
     <el-table :data="getArticles" stripe style="width: 100%">
       <el-table-column prop="title" label="文章標題"> </el-table-column>
-      <el-table-column prop="category" label="類別" width="120">
+      <el-table-column
+        prop="category"
+        label="類別"
+        width="120"
+        :filters="[
+          { text: '活動消息', value: 'news' },
+          { text: '活動花絮', value: 'experience' }
+        ]"
+        :filter-method="filterTag"
+        filter-placement="bottom-end"
+      >
         <template slot-scope="{ row }">
           <span v-if="row.category === 'news'">活動消息</span>
           <span v-else>活動花絮</span>
@@ -120,6 +130,9 @@ export default {
       this.loading = true
       await this.fetchArticles({ count, page: 1 })
       this.loading = false
+    },
+    filterTag(value, row) {
+      return row.category === value
     }
   }
 }
