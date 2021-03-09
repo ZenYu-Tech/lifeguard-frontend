@@ -89,11 +89,22 @@ export default {
     grid-auto-flow: row;
     grid-auto-rows: max-content;
     row-gap: 26px;
-    padding: 0px 12px;
+    padding: 0px 20px;
     overflow-y: scroll;
     height: 100%;
     &::-webkit-scrollbar {
-      display: none;
+      -webkit-appearance: none;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 8px;
+      border: 2px solid white;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+    &::-webkit-scrollbar:vertical {
+      width: 11px;
+    }
+    &::-webkit-scrollbar:horizontal {
+      height: 11px;
     }
     & > :nth-child(odd) {
       justify-self: start;
@@ -103,7 +114,7 @@ export default {
     }
   }
   @media (min-width: 768px) {
-    padding: 40px 30px;
+    padding: 40px 20px;
     &__title {
       font-size: 36px;
     }
