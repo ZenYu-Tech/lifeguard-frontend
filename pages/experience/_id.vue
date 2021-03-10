@@ -3,12 +3,17 @@
     <section class="section-image">
       <div
         class="section-image__main"
-        :style="{ 'background-image': `url(data:image/png;base64,${mainImage.image})` }"
+        :style="{ 'background-image': `url(data:image/png;base64,${article.images[activeSlideIndex].image})` }"
       ></div>
-      <template v-if="carouselImages.length > 0">
-        <slick-carousel :style="carosuelStyle" :options="slickOptions" class="section-image__carousel">
+      <template v-if="article.images.length > 0">
+        <slick-carousel
+          :style="carosuelStyle"
+          :options="slickOptions"
+          class="section-image__carousel"
+          @update:activeSlideIndex="activeSlideIndex = $event"
+        >
           <div
-            v-for="(image, index) in carouselImages"
+            v-for="(image, index) in article.images"
             :key="image.imageId"
             class="section-image__carousel-image"
             :style="carosuelStyle"
@@ -18,6 +23,7 @@
         </slick-carousel>
       </template>
     </section>
+
     <section-article :article="article" :category="category"></section-article>
     <section-training class="hidden-md-and-down" :display-amount="2"></section-training>
   </main>
@@ -25,7 +31,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'ExperienceDetail',
   meta: {
@@ -40,32 +45,23 @@ export default {
     return {
       category: 'experience',
       slickOptions: {
-        dots: false,
-        arrows: true,
-        speed: 500,
-        initialSlide: 0,
-        slidesToScroll: 1,
+        focusOnSelect: true,
+        arrows: false,
         slidesToShow: 5,
+        autoplay: true,
         swipe: false,
         responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: 5,
-              swipe: true,
-              arrows: false
-            }
-          },
           {
             breakpoint: 768,
             settings: {
               slidesToShow: 3,
-              swipe: true,
-              arrows: false
+              slidesToScroll: 1,
+              swipe: true
             }
           }
         ]
-      }
+      },
+      activeSlideIndex: 0
     }
   },
   computed: {
@@ -75,17 +71,16 @@ export default {
     ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
-    mainImage() {
-      return this.article.images.find(image => image.main)
-    },
-    carouselImages() {
-      return this.article.images.filter(image => !image.main)
-    },
     carosuelStyle() {
       return {
         height: this.getCurrentDevice === 'desktop' ? '120px' : '80px'
       }
     }
+  },
+  created() {
+    this.$nuxt.$on('slideChange', value => {
+      this.activeSlideIndex = value
+    })
   },
   head() {
     return {
@@ -107,7 +102,7 @@ export default {
     margin: 100px 50px 30px 50px;
   }
   @media (min-width: 1200px) {
-    margin: 100px 100px 60px 100px;
+    margin: 120px 100px 60px 100px;
     grid-template-columns: 1fr 358px;
     grid-template-rows: auto max-content;
     grid-template-areas:
@@ -127,13 +122,13 @@ export default {
 }
 
 .section-image {
-  --main-height: 450px;
+  --main-height: 270px;
   &__main {
     width: 100%;
     height: var(--main-height);
     background-repeat: no-repeat;
-    background-position: right;
-    background-size: cover;
+    background-position: center;
+    background-size: contain;
   }
   &__carousel {
     margin-top: 20px;
@@ -158,7 +153,7 @@ export default {
     &-image {
       background-size: cover;
       background-clip: content-box;
-      background-position: cent er;
+      background-position: center;
       background-repeat: no-repeat;
       outline: none;
       padding: 0 5px;
@@ -171,7 +166,7 @@ export default {
     }
   }
   @media (min-width: 768px) {
-    --main-height: 372px;
+    --main-height: 450px;
     margin: 0 60px;
   }
   @media (min-width: 1200px) {

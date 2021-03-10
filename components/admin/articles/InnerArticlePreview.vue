@@ -1,33 +1,42 @@
 <template>
   <el-dialog title="預覽" :visible.sync="dialogVisible" width="70%" :show-close="false" :close-on-click-modal="false">
-    <section class="article">
-      <template v-if="articleContent.category === 'experience'">
-        <section class="section-image">
-          <div class="section-image__main" :style="{ 'background-image': `url(${getCarouselImage[0]})` }"></div>
-          <template v-if="getCarouselImage.length > 0">
-            <slick-carousel :options="slickOptions" class="section-image__carousel">
-              <div v-for="(image, index) in getCarouselImage" :key="index" class="section-image__carousel-image">
-                <img :src="`${image}`" :alt="`圖片${index}`" />
-              </div>
-            </slick-carousel>
-          </template>
-        </section>
-      </template>
-      <div class="article__header">
-        <h4>{{ articleContent.title }}</h4>
-        <time>{{ $formatDate(new Date(), true) }}</time>
-      </div>
-      <div class="article__content">
-        <div v-html="articleContent.content"></div>
-      </div>
+    <section v-if="articleContent.category === 'experience'" class="section-image">
+      <div
+        class="section-image__main"
+        :style="{ 'background-image': `url(${getCarouselImage[activeSlideIndex]})` }"
+      ></div>
+      <slick-carousel
+        v-if="getCarouselImage.length > 0"
+        :style="carosuelStyle"
+        :options="slickOptions"
+        @update:activeSlideIndex="activeSlideIndex = $event"
+        class="section-image__carousel"
+      >
+        <div
+          v-for="(image, index) in getCarouselImage"
+          :key="index"
+          class="section-image__carousel-image"
+          :style="carosuelStyle"
+        >
+          <img :src="`${image}`" :alt="`圖片${index}`" />
+        </div>
+      </slick-carousel>
     </section>
-
+    <div class="article__header">
+      <h4>{{ articleContent.title }}</h4>
+      <time>{{ $formatDate(new Date(), true) }}</time>
+    </div>
+    <div class="article__content">
+      <div v-html="articleContent.content"></div>
+    </div>
     <span slot="footer" class="dialog-footer">
       <el-button @click="closeDialog">關閉</el-button>
     </span>
   </el-dialog>
 </template>
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'InnerArticlePreview',
   props: {
@@ -38,17 +47,24 @@ export default {
   data() {
     return {
       slickOptions: {
-        dots: true,
+        focusOnSelect: true,
         arrows: false,
-        speed: 500,
-        initialSlide: 0,
-        slidesToScroll: 1,
-        slidesToShow: 4,
+        slidesToShow: 5,
+        autoplay: true,
         swipe: false
-      }
+      },
+      activeSlideIndex: 0
     }
   },
+  created() {
+    this.$nuxt.$on('slideChange', value => {
+      this.activeSlideIndex = value
+    })
+  },
   computed: {
+    ...mapGetters({
+      getCurrentDevice: 'helper/getCurrentDevice'
+    }),
     getCarouselImage() {
       const result = []
       this.articleContent.images.forEach(image => {
@@ -58,6 +74,11 @@ export default {
         result.push(image)
       })
       return result
+    },
+    carosuelStyle() {
+      return {
+        height: this.getCurrentDevice === 'desktop' ? '120px' : '80px'
+      }
     }
   },
   methods: {
@@ -69,39 +90,34 @@ export default {
 </script>
 <style lang="scss" scoped>
 .article {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-auto-flow: row;
-  row-gap: 30px;
-  height: fit-content;
   &__header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     h4 {
       font-size: 28px;
-      margin-bottom: 5px;
     }
     time {
-      font-size: 20px;
+      font-size: 18px;
       color: #696875;
     }
   }
   &__content {
     text-align: justify;
     word-break: break-all;
+    margin: 30px 0;
+    font-size: 16px;
   }
 }
 
 /** experience */
 
 .section-image {
+  height: 600px;
+  margin-bottom: 30px;
   &__main {
     width: 100%;
     height: 450px;
     background-repeat: no-repeat;
-    background-position: right;
-    background-size: cover;
+    background-position: center;
+    background-size: contain;
   }
   &__carousel {
     margin-top: 20px;
@@ -126,7 +142,7 @@ export default {
     &-image {
       background-size: cover;
       background-clip: content-box;
-      background-position: cent er;
+      background-position: center;
       background-repeat: no-repeat;
       outline: none;
       padding: 0 5px;

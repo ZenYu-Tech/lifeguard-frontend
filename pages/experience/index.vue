@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper max-width">
     <section class="experience">
-      <h3 class="experience__title">{{ this.title }}</h3>
+      <h3 class="experience__title">{{ title }}</h3>
       <div v-if="getArticlesByCategory('experience').length > 0" class="experience__wrapper">
         <nuxt-link
           v-for="(article, index) in getArticlesByCategory('experience')"

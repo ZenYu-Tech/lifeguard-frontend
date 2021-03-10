@@ -1,6 +1,6 @@
 <template>
   <div :style="style">
-    <vue-slick-carousel v-bind="options">
+    <vue-slick-carousel v-bind="options" @beforeChange="handleChange">
       <slot></slot>
     </vue-slick-carousel>
   </div>
@@ -47,6 +47,9 @@ export default {
       } else {
         return `${Number(str)}${unit}`
       }
+    },
+    handleChange(oldSlideIndex, newSlideIndex) {
+      this.$nuxt.$emit('slideChange', newSlideIndex)
     }
   }
 }
