@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper">
     <section class="pass-list">
-      <h3 class="pass-list__title">{{ this.title }}</h3>
+      <h3 class="pass-list__title">{{ title }}</h3>
       <div v-if="getCertificationFiles.length > 0" class="pass-list__file-wrapper">
         <div
           v-for="file in getCertificationFiles.slice(0, 10)"
@@ -175,13 +175,14 @@ export default {
   &__wrapper {
     display: grid;
     grid-template-columns: 1fr;
-    grid-auto-rows: 270px;
+    grid-auto-rows: 200px;
     grid-auto-flow: row;
     row-gap: 30px;
   }
   @media (min-width: 768px) {
     &__wrapper {
       grid-template-columns: 1fr 1fr;
+      grid-auto-rows: 210px;
       column-gap: 30px;
     }
 
@@ -193,6 +194,8 @@ export default {
     padding: 136px 90px 84px 90px;
     &__wrapper {
       grid-template-columns: 1fr 1fr 1fr;
+      grid-auto-rows: 270px;
+
       column-gap: 50px;
     }
   }

@@ -3,17 +3,17 @@
     <section class="section-image">
       <div
         class="section-image__main"
-        :style="{ 'background-image': `url(data:image/png;base64,${carouselImages[activeSlideIndex].image})` }"
+        :style="{ 'background-image': `url(data:image/png;base64,${article.images[activeSlideIndex].image})` }"
       ></div>
-      <template v-if="carouselImages.length > 0">
+      <template v-if="article.images.length > 0">
         <slick-carousel
           :style="carosuelStyle"
           :options="slickOptions"
-          @update:activeSlideIndex="activeSlideIndex = $event"
           class="section-image__carousel"
+          @update:activeSlideIndex="activeSlideIndex = $event"
         >
           <div
-            v-for="(image, index) in carouselImages"
+            v-for="(image, index) in article.images"
             :key="image.imageId"
             class="section-image__carousel-image"
             :style="carosuelStyle"
@@ -31,7 +31,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
 export default {
   name: 'ExperienceDetail',
   meta: {
@@ -65,11 +64,6 @@ export default {
       activeSlideIndex: 0
     }
   },
-  created() {
-    this.$nuxt.$on('slideChange', value => {
-      this.activeSlideIndex = value
-    })
-  },
   computed: {
     ...mapGetters('client', {
       article: 'article/getArticle'
@@ -77,14 +71,16 @@ export default {
     ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
-    carouselImages() {
-      return this.article.images.filter(image => !image.main)
-    },
     carosuelStyle() {
       return {
         height: this.getCurrentDevice === 'desktop' ? '120px' : '80px'
       }
     }
+  },
+  created() {
+    this.$nuxt.$on('slideChange', value => {
+      this.activeSlideIndex = value
+    })
   },
   head() {
     return {

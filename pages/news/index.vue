@@ -1,7 +1,7 @@
 <template>
   <main class="section-wrapper">
     <section class="news" :style="{ 'background-image': `url(${require('@/assets/images/news-banner.jpg')})` }">
-      <h3 class="news__title">{{ this.title }}</h3>
+      <h3 class="news__title">{{ title }}</h3>
       <template v-if="newsLength !== 0">
         <div class="news__wrapper max-width">
           <card-news-square
@@ -28,8 +28,8 @@ import { mapGetters, mapActions } from 'vuex'
 import BackToTop from '~/components/BackToTop.vue'
 
 export default {
-  components: { BackToTop },
   name: 'News',
+  components: { BackToTop },
   meta: {
     haveBanner: false
   },
@@ -122,8 +122,11 @@ export default {
   &__title {
     justify-self: center;
     font-size: 32px;
-    color: #fff;
-    text-shadow: 2px 2px rgb(0 0 0 / 30%);
+    color: #2b2b2b;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 3px;
+    padding: 0px 15px;
+    backdrop-filter: blur(5px);
   }
   &__wrapper {
     padding: 18px;

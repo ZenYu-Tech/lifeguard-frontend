@@ -49,7 +49,7 @@ export default {
       }
     },
     handleChange(oldSlideIndex, newSlideIndex) {
-      $nuxt.$emit('slideChange', newSlideIndex)
+      this.$nuxt.$emit('slideChange', newSlideIndex)
     }
   }
 }
