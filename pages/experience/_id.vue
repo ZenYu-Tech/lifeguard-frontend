@@ -3,10 +3,15 @@
     <section class="section-image">
       <div
         class="section-image__main"
-        :style="{ 'background-image': `url(data:image/png;base64,${mainImage.image})` }"
+        :style="{ 'background-image': `url(data:image/png;base64,${carouselImages[activeSlideIndex].image})` }"
       ></div>
       <template v-if="carouselImages.length > 0">
-        <slick-carousel :style="carosuelStyle" :options="slickOptions" class="section-image__carousel">
+        <slick-carousel
+          :style="carosuelStyle"
+          :options="slickOptions"
+          @update:activeSlideIndex="activeSlideIndex = $event"
+          class="section-image__carousel"
+        >
           <div
             v-for="(image, index) in carouselImages"
             :key="image.imageId"
@@ -18,6 +23,7 @@
         </slick-carousel>
       </template>
     </section>
+
     <section-article :article="article" :category="category"></section-article>
     <section-training class="hidden-md-and-down" :display-amount="2"></section-training>
   </main>
@@ -40,33 +46,29 @@ export default {
     return {
       category: 'experience',
       slickOptions: {
-        dots: false,
-        arrows: true,
-        speed: 500,
-        initialSlide: 0,
-        slidesToScroll: 1,
+        focusOnSelect: true,
+        arrows: false,
         slidesToShow: 5,
+        autoplay: true,
         swipe: false,
         responsive: [
-          {
-            breakpoint: 1200,
-            settings: {
-              slidesToShow: 5,
-              swipe: true,
-              arrows: false
-            }
-          },
           {
             breakpoint: 768,
             settings: {
               slidesToShow: 3,
-              swipe: true,
-              arrows: false
+              slidesToScroll: 3,
+              swipe: true
             }
           }
         ]
-      }
+      },
+      activeSlideIndex: 0
     }
+  },
+  created() {
+    this.$nuxt.$on('slideChange', value => {
+      this.activeSlideIndex = value
+    })
   },
   computed: {
     ...mapGetters('client', {
@@ -75,9 +77,6 @@ export default {
     ...mapGetters({
       getCurrentDevice: 'helper/getCurrentDevice'
     }),
-    mainImage() {
-      return this.article.images.find(image => image.main)
-    },
     carouselImages() {
       return this.article.images.filter(image => !image.main)
     },
@@ -107,7 +106,7 @@ export default {
     margin: 100px 50px 30px 50px;
   }
   @media (min-width: 1200px) {
-    margin: 100px 100px 60px 100px;
+    margin: 120px 100px 60px 100px;
     grid-template-columns: 1fr 358px;
     grid-template-rows: auto max-content;
     grid-template-areas:
@@ -127,13 +126,13 @@ export default {
 }
 
 .section-image {
-  --main-height: 450px;
+  --main-height: 270px;
   &__main {
     width: 100%;
     height: var(--main-height);
     background-repeat: no-repeat;
-    background-position: right;
-    background-size: cover;
+    background-position: center;
+    background-size: contain;
   }
   &__carousel {
     margin-top: 20px;
@@ -158,7 +157,7 @@ export default {
     &-image {
       background-size: cover;
       background-clip: content-box;
-      background-position: cent er;
+      background-position: center;
       background-repeat: no-repeat;
       outline: none;
       padding: 0 5px;
@@ -171,7 +170,7 @@ export default {
     }
   }
   @media (min-width: 768px) {
-    --main-height: 372px;
+    --main-height: 450px;
     margin: 0 60px;
   }
   @media (min-width: 1200px) {
