@@ -56,7 +56,7 @@ export default {
             breakpoint: 768,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 3,
+              slidesToScroll: 1,
               swipe: true
             }
           }
