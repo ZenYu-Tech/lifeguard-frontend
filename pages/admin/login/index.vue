@@ -26,8 +26,8 @@ export default {
   layout: 'login',
   data() {
     return {
-      account: 'lifeguard2020',
-      password: 'nsysulifeguard',
+      account: '',
+      password: '',
       loading: false
     }
   },
