@@ -73,8 +73,7 @@ export default {
             {
               title: '檢定科目影片',
               action: 'external-link',
-              link:
-                'https://isports.sa.gov.tw/Apps/TIS06/TIS0602M_01V1.aspx?MENU_CD=M10&ITEM_CD=T08&MENU_PRG_CD=23&LEFT_MENU_ACTIVE_ID=108&SUB_PRG_CD=189'
+              link: 'https://isports.sa.gov.tw/apps/LGM/index.aspx'
             },
             {
               title: '考試題庫',
